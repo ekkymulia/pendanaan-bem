@@ -266,6 +266,12 @@ Route::prefix('authentication')->group(function () {
     Route::view('maintenance', 'authentication.maintenance')->name('maintenance');
 });
 
+Route::prefix('auth')->group(function () {
+    Route::view('login', 'auth.login')->name('login');
+});
+
+
+
 Route::view('comingsoon', 'comingsoon.comingsoon')->name('comingsoon');
 Route::view('comingsoon-bg-video', 'comingsoon.comingsoon-bg-video')->name('comingsoon-bg-video');
 Route::view('comingsoon-bg-img', 'comingsoon.comingsoon-bg-img')->name('comingsoon-bg-img');
