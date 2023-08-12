@@ -21,17 +21,6 @@ Route::get('lang/{locale}', function ($locale) {
 
 Route::prefix('dashboard')->group(function () {
     Route::view('index', 'dashboard.index')->name('index');
-    Route::view('dashboard-02', 'dashboard.dashboard-02')->name('dashboard-02');
-    Route::view('dashboard-03', 'dashboard.dashboard-03')->name('dashboard-03');
-    Route::view('dashboard-04', 'dashboard.dashboard-04')->name('dashboard-04');
-    Route::view('dashboard-05', 'dashboard.dashboard-05')->name('dashboard-05');
-});
-
-Route::resource('proker', ProkerController::class);
-
-Route::prefix('widgets')->group(function () {
-    Route::view('general-widget', 'widgets.general-widget')->name('general-widget');
-    Route::view('chart-widget', 'widgets.chart-widget')->name('chart-widget');
 });
 
 Route::prefix('page-layouts')->group(function () {
@@ -42,37 +31,6 @@ Route::prefix('page-layouts')->group(function () {
     Route::view('footer-light', 'page-layout.footer-light')->name('footer-light');
     Route::view('footer-dark', 'page-layout.footer-dark')->name('footer-dark');
     Route::view('footer-fixed', 'page-layout.footer-fixed')->name('footer-fixed');
-});
-
-Route::prefix('project')->group(function () {
-    Route::view('projects', 'project.projects')->name('projects');
-    Route::view('projectcreate', 'project.projectcreate')->name('projectcreate');
-});
-
-Route::view('file-manager', 'file-manager')->name('file-manager');
-Route::view('kanban', 'kanban')->name('kanban');
-
-Route::prefix('ecommerce')->group(function () {
-    Route::view('product', 'apps.product')->name('product');
-    Route::view('page-product', 'apps.product-page')->name('product-page');
-    Route::view('list-products', 'apps.list-products')->name('list-products');
-    Route::view('payment-details', 'apps.payment-details')->name('payment-details');
-    Route::view('order-history', 'apps.order-history')->name('order-history');
-    Route::view('invoice-template', 'apps.invoice-template')->name('invoice-template');
-    Route::view('cart', 'apps.cart')->name('cart');
-    Route::view('list-wish', 'apps.list-wish')->name('list-wish');
-    Route::view('checkout', 'apps.checkout')->name('checkout');
-    Route::view('pricing', 'apps.pricing')->name('pricing');
-});
-
-Route::prefix('email')->group(function () {
-    Route::view('email-application', 'apps.email-application')->name('email-application');
-    Route::view('email-compose', 'apps.email-compose')->name('email-compose');
-});
-
-Route::prefix('chat')->group(function () {
-    Route::view('chat', 'apps.chat')->name('chat');
-    Route::view('video-chat', 'apps.video-chat')->name('chat-video');
 });
 
 Route::prefix('users')->group(function () {
@@ -90,15 +48,6 @@ Route::prefix('ormawa-users')->group(function () {
 Route::prefix('departemen-users')->group(function () {
     Route::view('profile', 'departemen.profile')->name('departemen-profile');
 });
-
-
-Route::view('bookmark', 'apps.bookmark')->name('bookmark');
-Route::view('contacts', 'apps.contacts')->name('contacts');
-Route::view('task', 'apps.task')->name('task');
-Route::view('calendar-basic', 'apps.calendar-basic')->name('calendar-basic');
-Route::view('social-app', 'apps.social-app')->name('social-app');
-Route::view('to-do', 'apps.to-do')->name('to-do');
-Route::view('search', 'apps.search')->name('search');
 
 Route::prefix('ui-kits')->group(function () {
     Route::view('state-color', 'ui-kits.state-color')->name('state-color');
@@ -234,24 +183,7 @@ Route::prefix('tables')->group(function () {
     Route::view('jsgrid-table', 'tables.jsgrid-table')->name('jsgrid-table');
 });
 
-Route::prefix('charts')->group(function () {
-    Route::view('echarts', 'charts.echarts')->name('echarts');
-    Route::view('chart-apex', 'charts.chart-apex')->name('chart-apex');
-    Route::view('chart-google', 'charts.chart-google')->name('chart-google');
-    Route::view('chart-sparkline', 'charts.chart-sparkline')->name('chart-sparkline');
-    Route::view('chart-flot', 'charts.chart-flot')->name('chart-flot');
-    Route::view('chart-knob', 'charts.chart-knob')->name('chart-knob');
-    Route::view('chart-morris', 'charts.chart-morris')->name('chart-morris');
-    Route::view('chartjs', 'charts.chartjs')->name('chartjs');
-    Route::view('chartist', 'charts.chartist')->name('chartist');
-    Route::view('chart-peity', 'charts.chart-peity')->name('chart-peity');
-});
-
-Route::view('sample-page', 'pages.sample-page')->name('sample-page');
 Route::view('internationalization', 'pages.internationalization')->name('internationalization');
-
-// Route::prefix('starter-kit')->group(function () {
-// });
 
 // Route::prefix('others')->group(function () {
 //     Route::view('400', 'errors.400')->name('error-400');
@@ -283,8 +215,6 @@ Route::prefix('auth')->group(function () {
     Route::view('login', 'auth.login')->name('login');
 });
 
-
-
 Route::view('comingsoon', 'comingsoon.comingsoon')->name('comingsoon');
 Route::view('comingsoon-bg-video', 'comingsoon.comingsoon-bg-video')->name('comingsoon-bg-video');
 Route::view('comingsoon-bg-img', 'comingsoon.comingsoon-bg-img')->name('comingsoon-bg-img');
@@ -296,50 +226,8 @@ Route::view('template-email-2', 'email-templates.template-email-2')->name('templ
 Route::view('ecommerce-templates', 'email-templates.ecommerce-templates')->name('ecommerce-templates');
 Route::view('email-order-success', 'email-templates.email-order-success')->name('email-order-success');
 
-
-Route::prefix('gallery')->group(function () {
-    Route::view('index', 'apps.gallery')->name('gallery');
-    Route::view('with-gallery-description', 'apps.gallery-with-description')->name('gallery-with-description');
-    Route::view('gallery-masonry', 'apps.gallery-masonry')->name('gallery-masonry');
-    Route::view('masonry-gallery-with-disc', 'apps.masonry-gallery-with-disc')->name('masonry-gallery-with-disc');
-    Route::view('gallery-hover', 'apps.gallery-hover')->name('gallery-hover');
-});
-
-Route::prefix('blog')->group(function () {
-    Route::view('index', 'apps.blog')->name('blog');
-    Route::view('blog-single', 'apps.blog-single')->name('blog-single');
-    Route::view('add-post', 'apps.add-post')->name('add-post');
-});
-
-
 Route::view('faq', 'apps.faq')->name('faq');
 
-Route::prefix('job-search')->group(function () {
-    Route::view('job-cards-view', 'apps.job-cards-view')->name('job-cards-view');
-    Route::view('job-list-view', 'apps.job-list-view')->name('job-list-view');
-    Route::view('job-details', 'apps.job-details')->name('job-details');
-    Route::view('job-apply', 'apps.job-apply')->name('job-apply');
-});
-
-Route::prefix('learning')->group(function () {
-    Route::view('learning-list-view', 'apps.learning-list-view')->name('learning-list-view');
-    Route::view('learning-detailed', 'apps.learning-detailed')->name('learning-detailed');
-});
-
-Route::prefix('maps')->group(function () {
-    Route::view('map-js', 'apps.map-js')->name('map-js');
-    Route::view('vector-map', 'apps.vector-map')->name('vector-map');
-});
-
-Route::prefix('editors')->group(function () {
-    Route::view('summernote', 'apps.summernote')->name('summernote');
-    Route::view('ckeditor', 'apps.ckeditor')->name('ckeditor');
-    Route::view('simple-mde', 'apps.simple-mde')->name('simple-mde');
-    Route::view('ace-code-editor', 'apps.ace-code-editor')->name('ace-code-editor');
-});
-
-Route::view('knowledgebase', 'apps.knowledgebase')->name('knowledgebase');
-Route::view('support-ticket', 'apps.support-ticket')->name('support-ticket');
 Route::view('landing-page', 'pages.landing-page')->name('landing-page');
 
 Route::prefix('layouts')->group(function () {
