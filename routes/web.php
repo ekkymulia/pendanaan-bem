@@ -23,6 +23,8 @@ Route::prefix('dashboard')->group(function () {
     Route::view('index', 'dashboard.index')->name('index');
 });
 
+Route::resource('proker', ProkerController::class);
+
 Route::prefix('page-layouts')->group(function () {
     Route::view('box-layout', 'page-layout.box-layout')->name('box-layout');
     Route::view('layout-rtl', 'page-layout.layout-rtl')->name('layout-rtl');
