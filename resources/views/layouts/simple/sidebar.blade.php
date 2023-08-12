@@ -65,6 +65,11 @@
                             <h6 class="lan-8">Applications</h6>
                         </div>
                     </li>
+                    <li class="sidebar-list"><i class="fa fa-thumb-tack"></i>
+                        <a class="sidebar-link sidebar-title link-nav" href="{{ route('proker.index') }}">
+                        <i data-feather="users"></i><span>Proker</span>
+                        </a>
+                    </li>
                     <li class="sidebar-list"><i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title"
                             href="#">
                             <svg class="stroke-icon">
