@@ -37,103 +37,11 @@
             <svg>
               <use href="{{ asset('assets/svg/icon-sprite.svg#search') }}"></use>
             </svg></span></li>
-        <li class="onhover-dropdown">
-          <svg>
-            <use href="{{ asset('assets/svg/icon-sprite.svg#star') }}"></use>
-          </svg>
-          <div class="onhover-show-div bookmark-flip">
-            <div class="flip-card">
-              <div class="flip-card-inner">
-                <div class="front">
-                  <h6 class="f-18 mb-0 dropdown-title">Bookmark</h6>
-                  <ul class="bookmark-dropdown">
-                    <li>
-                      <div class="row">
-                        <div class="col-4 text-center">
-                          <div class="bookmark-content">
-                            <div class="bookmark-icon"><i data-feather="file-text"></i></div><span>Forms</span>
-                          </div>
-                        </div>
-                        <div class="col-4 text-center">
-                          <div class="bookmark-content">
-                            <div class="bookmark-icon"><i data-feather="user"></i></div><span>Profile</span>
-                          </div>
-                        </div>
-                        <div class="col-4 text-center">
-                          <div class="bookmark-content">
-                            <div class="bookmark-icon"><i data-feather="server"></i></div><span>Tables</span>
-                          </div>
-                        </div>
-                      </div>
-                    </li>
-                    <li class="text-center"><a class="flip-btn f-w-700" id="flip-btn" href="javascript:void(0)">Add New Bookmark</a></li>
-                  </ul>
-                </div>
-                <div class="back">
-                  <ul>
-                    <li>
-                      <div class="bookmark-dropdown flip-back-content">
-                        <input type="text" placeholder="search...">
-                      </div>
-                    </li>
-                    <li><a class="f-w-700 d-block flip-back" id="flip-back" href="javascript:void(0)">Back</a></li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-        </li>
         <li>
           <div class="mode">
             <svg>
               <use href="{{ asset('assets/svg/icon-sprite.svg#moon') }}"></use>
             </svg>
-          </div>
-        </li>
-        <li class="cart-nav onhover-dropdown">
-          <div class="cart-box">
-            <svg>
-              <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-ecommerce') }}"></use>
-            </svg><span class="badge rounded-pill badge-success">2</span>
-          </div>
-          <div class="cart-dropdown onhover-show-div">
-            <h6 class="f-18 mb-0 dropdown-title">Cart</h6>
-            <ul>
-              <li>
-                <div class="media"><img class="img-fluid b-r-5 me-3 img-60" src="{{ asset('assets/images/other-images/cart-img.jpg') }}" alt="">
-                  <div class="media-body"><span>Furniture Chair for Home</span>
-                    <div class="qty-box">
-                      <div class="input-group"><span class="input-group-prepend">
-                          <button class="btn quantity-left-minus" type="button" data-type="minus" data-field="">-</button></span>
-                        <input class="form-control input-number" type="text" name="quantity" value="1"><span class="input-group-prepend">
-                          <button class="btn quantity-right-plus" type="button" data-type="plus" data-field="">+</button></span>
-                      </div>
-                    </div>
-                    <h6 class="font-primary">$500</h6>
-                  </div>
-                  <div class="close-circle"><a class="bg-danger" href="#"><i data-feather="x"></i></a></div>
-                </div>
-              </li>
-              <li>
-                <div class="media"><img class="img-fluid b-r-5 me-3 img-60" src="{{ asset('assets/images/other-images/cart-img.jpg') }}" alt="">
-                  <div class="media-body"><span>Furniture Chair for Home</span>
-                    <div class="qty-box">
-                      <div class="input-group"><span class="input-group-prepend">
-                          <button class="btn quantity-left-minus" type="button" data-type="minus" data-field="">-</button></span>
-                        <input class="form-control input-number" type="text" name="quantity" value="1"><span class="input-group-prepend">
-                          <button class="btn quantity-right-plus" type="button" data-type="plus" data-field="">+</button></span>
-                      </div>
-                    </div>
-                    <h6 class="font-primary">$500.00</h6>
-                  </div>
-                  <div class="close-circle"><a class="bg-danger" href="#"><i data-feather="x"></i></a></div>
-                </div>
-              </li>
-              <li class="total">
-                <h6 class="mb-0">Order Total : <span class="f-right">$1000.00</span></h6>
-              </li>
-              <li class="text-center"><a class="d-block mb-3 view-cart f-w-700" href="{{ route('cart')}}">Go to your cart</a><a class="btn btn-primary view-checkout" href="{{ route('checkout')}}">Checkout</a></li>
-            </ul>
           </div>
         </li>
         <li class="onhover-dropdown">
@@ -169,8 +77,6 @@
           </div>
           <ul class="profile-dropdown onhover-show-div">
             <li><a href="#"><i data-feather="user"></i><span>Account </span></a></li>
-            <li><a href="#"><i data-feather="mail"></i><span>Inbox</span></a></li>
-            <li><a href="#"><i data-feather="file-text"></i><span>Taskboard</span></a></li>
             <li><a href="#"><i data-feather="settings"></i><span>Settings</span></a></li>
             <li><a href="#"><i data-feather="log-in"> </i><span>Log in</span></a></li>
           </ul>
