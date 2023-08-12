@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProkerController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Session;
@@ -25,6 +26,8 @@ Route::prefix('dashboard')->group(function () {
     Route::view('dashboard-04', 'dashboard.dashboard-04')->name('dashboard-04');
     Route::view('dashboard-05', 'dashboard.dashboard-05')->name('dashboard-05');
 });
+
+Route::resource('proker', ProkerController::class);
 
 Route::prefix('widgets')->group(function () {
     Route::view('general-widget', 'widgets.general-widget')->name('general-widget');
