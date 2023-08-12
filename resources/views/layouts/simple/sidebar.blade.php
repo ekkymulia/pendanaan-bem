@@ -519,21 +519,6 @@
                                         <div class="col mega-box">
                                             <div class="link-section">
                                                 <div class="submenu-title">
-                                                    <h5>Error Page</h5>
-                                                </div>
-                                                <ul class="submenu-content opensubmegamenu">
-                                                    <li><a href="{{ route('error-400') }}">Error 400</a></li>
-                                                    <li><a href="{{ route('error-401') }}">Error 401</a></li>
-                                                    <li><a href="{{ route('error-403') }}">Error 403</a></li>
-                                                    <li><a href="{{ route('error-404') }}">Error 404</a></li>
-                                                    <li><a href="{{ route('error-500') }}">Error 500</a></li>
-                                                    <li><a href="{{ route('error-503') }}">Error 503</a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <div class="col mega-box">
-                                            <div class="link-section">
-                                                <div class="submenu-title">
                                                     <h5> Authentication</h5>
                                                 </div>
                                                 <ul class="submenu-content opensubmegamenu">
