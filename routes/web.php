@@ -78,6 +78,16 @@ Route::prefix('users')->group(function () {
     Route::view('user-cards', 'apps.user-cards')->name('user-cards');
 });
 
+// sample route profil ormawa
+Route::prefix('ormawa-users')->group(function () {
+    Route::view('profile', 'ormawa.profile')->name('ormawa-profile');
+});
+
+// sample route profil departemen
+Route::prefix('departemen-users')->group(function () {
+    Route::view('profile', 'departemen.profile')->name('departemen-profile');
+});
+
 
 Route::view('bookmark', 'apps.bookmark')->name('bookmark');
 Route::view('contacts', 'apps.contacts')->name('contacts');
