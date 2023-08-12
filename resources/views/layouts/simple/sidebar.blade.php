@@ -47,6 +47,36 @@
                     <li class="sidebar-list"><i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title"
                             href="#">
                             <svg class="stroke-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-user') }}"></use>
+                            </svg>
+                            <svg class="fill-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-user') }}"></use>
+                            </svg><span>Ormawa Users</span></a>
+                        <ul class="sidebar-submenu">
+                            <li><a href="{{ route('ormawa-profile') }}">Profile</a></li>
+                        </ul>
+                    </li>
+                    <li class="sidebar-list"><i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title"
+                            href="#">
+                            <svg class="stroke-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-user') }}"></use>
+                            </svg>
+                            <svg class="fill-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-user') }}"></use>
+                            </svg><span>Departemen Users</span></a>
+                        <ul class="sidebar-submenu">
+                            <li><a href="{{ route('departemen-profile') }}">Profile</a></li>
+                        </ul>
+                    </li>
+                    
+                    <li class="sidebar-main-title">
+                        <div>
+                            <h6 class="lan-8">Applications</h6>
+                        </div>
+                    </li>
+                    <li class="sidebar-list"><i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title"
+                            href="#">
+                            <svg class="stroke-icon">
                                 <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-widget') }}"></use>
                             </svg>
                             <svg class="fill-icon">
@@ -74,11 +104,6 @@
                             <li><a href="{{ route('footer-dark') }}">Footer Dark</a></li>
                             <li><a href="{{ route('footer-fixed') }}">Footer Fixed</a></li>
                         </ul>
-                    </li>
-                    <li class="sidebar-main-title">
-                        <div>
-                            <h6 class="lan-8">Applications</h6>
-                        </div>
                     </li>
                     <li class="sidebar-list"><i class="fa fa-thumb-tack"></i>
                         <label class="badge badge-light-secondary">New</label><a class="sidebar-link sidebar-title"
