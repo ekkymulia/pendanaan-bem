@@ -58,6 +58,20 @@ body[class='dark-only'] {
     --view-border-marker: #2c2c45d4;
 }
 
+// ME
+#title-edit{
+    i{
+        opacity: 0.5;
+        position: absolute;
+        right: -30px;
+    }
+    &:hover i{
+        opacity: 1;
+    }
+}
+
+// END ME
+
 // *** base ***
 @import "base/reset";
 @import "base/typography";

@@ -51,7 +51,7 @@
                             </svg>
                             <svg class="fill-icon">
                                 <use href="{{ asset('assets/svg/icon-sprite.svg#fill-user') }}"></use>
-                            </svg><span>Ormawa Users</span></a>
+                            </svg><span>Ormawa</span></a>
                         <ul class="sidebar-submenu">
                             <li><a href="{{ route('ormawa-profile') }}">Profile</a></li>
                         </ul>
@@ -63,7 +63,7 @@
                             </svg>
                             <svg class="fill-icon">
                                 <use href="{{ asset('assets/svg/icon-sprite.svg#fill-user') }}"></use>
-                            </svg><span>Departemen Users</span></a>
+                            </svg><span>Departemen</span></a>
                         <ul class="sidebar-submenu">
                             <li><a href="{{ route('departemen-profile') }}">Profile</a></li>
                         </ul>

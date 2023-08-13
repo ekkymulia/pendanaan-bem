@@ -79,13 +79,15 @@ Route::prefix('users')->group(function () {
 });
 
 // sample route profil ormawa
-Route::prefix('ormawa-users')->group(function () {
+Route::prefix('ormawa')->group(function () {
     Route::view('profile', 'ormawa.profile')->name('ormawa-profile');
+    Route::view('profile/edit', 'ormawa.edit-profile')->name('edit-ormawa-profile');
 });
 
 // sample route profil departemen
-Route::prefix('departemen-users')->group(function () {
+Route::prefix('departemen')->group(function () {
     Route::view('profile', 'departemen.profile')->name('departemen-profile');
+    Route::view('profile/edit', 'departemen.edit-profile')->name('edit-departemen-profile');
 });
 
 

@@ -25,52 +25,92 @@
                 <!-- user profile first-style start-->
                 <div class="col-sm-12">
                     <div class="card hovercard text-center">
-                        <div class="cardheader"></div>
-                        <div class="user-image">
-                            <div class="avatar"><img alt="" src="{{ asset('assets/images/user/7.jpg') }}"></div>
-                            <div class="icon-wrapper"><i class="icofont icofont-pencil-alt-5"></i></div>
-                        </div>
                         <div class="info">
-                            <div class="row">
-                                <div class="col-sm-6 col-lg-4 order-sm-1 order-xl-0">
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="ttl-info text-start">
-                                                <h6><i class="fa fa-envelope"></i>   Email</h6>
-                                                <span>OrmawaA@apps.ipb.ac.id</span>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="ttl-info text-start">
-                                                <h6><i class="fa fa-calendar"></i>   Created</h6><span>28 August 2023</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-12 col-lg-4 order-sm-0 order-xl-1">
+                            <div class="row pb-5">
+                                <div class="col-12">
                                     <div class="user-designation">
-                                        <div class="title"><a target="_blank" href="">Ormawa A</a></div>
+                                        <div class="title d-flex justify-content-center">
+                                          <a href="{{ route('edit-ormawa-profile') }}" class="position-relative d-flex align-items-center" id="title-edit">Ormawa ABC <i class="fa fa-edit"></i></a>
+                                        </div>
                                         <div class="desc">ormawa</div>
                                     </div>
                                 </div>
-                                <div class="col-sm-6 col-lg-4 order-sm-2 order-xl-2">
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="ttl-info text-start">
-                                                <h6><i class="fa fa-phone"></i>   Contact Us</h6>
-                                                <span>+62 123-456-7890</span>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="ttl-info text-start">
-                                                <h6><i class="fa fa-location-arrow"></i>   Location</h6>
-                                                <span>Jl. Kumbang No.14, Kota Bogor</span>
-                                            </div>
-                                        </div>
+                              </div>
+                              <div class="row">
+                                  <div class="col-sm-6">
+                                      <div class="row">
+                                          <div class="col-md-6">
+                                              <div class="ttl-info text-start">
+                                                  <h6><i class="fa fa-envelope"></i>   Email</h6>
+                                                  <span>OrmawaABC@apps.ipb.ac.id</span>
+                                              </div>
+                                          </div>
+                                          <div class="col-md-6">
+                                              <div class="ttl-info text-start">
+                                                  <h6><i class="fa fa-calendar"></i>   Created</h6><span>28 August 2023</span>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  
+                                  <div class="col-sm-6">
+                                      <div class="row">
+                                          <div class="col-md-6">
+                                              <div class="ttl-info text-start">
+                                                  <h6><i class="fa fa-phone"></i>   Contact Us</h6>
+                                                  <span>+62 123-456-7890</span>
+                                              </div>
+                                          </div>
+                                          <div class="col-md-6">
+                                              <div class="ttl-info text-start">
+                                                  <h6><i class="fa fa-location-arrow"></i>   Location</h6>
+                                                  <span>Jl. Kumbang No.14, Kota Bogor</span>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                              <hr>
+                              <div class="row pb-5">
+                                <div class="col-12">
+                                    <div class="ttl-info mb-0">
+                                        <h6>President of Ormawa</h6>
+                                        <span>Jhon Doe</span>
                                     </div>
                                 </div>
-                            </div>
-                            <hr>
+                              </div>
+                              <div class="row mb-5">
+                                  <div class="col-sm-6 col-md-4">
+                                      <div class="ttl-info mb-4">
+                                          <h6>Vice President</h6>
+                                          <span>Jhon Doe</span>
+                                      </div>
+                                  </div>
+                                  <div class="col-sm-6 col-md-4">
+                                      <div class="ttl-info mb-4">
+                                          <h6>Secretary</h6>
+                                          <span>Jhon Doe</span>
+                                      </div>
+                                  </div>
+                                  <div class="col-sm-6 col-md-4">
+                                      <div class="ttl-info mb-4">
+                                        <h6>Treasurer</h6>
+                                        <span>Jhon Doe</span>
+                                      </div>
+                                  </div>
+                                  <div class="col-sm-6 col-md-4">
+                                      <div class="ttl-info mb-4">
+                                          <h6>Legislative Council</h6>
+                                          <span>Jhon Doe</span>
+                                      </div>
+                                  </div>
+                                  <div class="col-sm-6 col-md-4">
+                                      <div class="ttl-info mb-4">
+                                          <h6>Supervisory Board</h6>
+                                          <span>Jhon Doe</span>
+                                      </div>
+                                  </div>
+                              </div>
                             <div class="social-media">
                                 <ul class="list-inline">
                                     <li class="list-inline-item"><a href="https://www.facebook.com/" target="_blank"><i
