@@ -219,7 +219,7 @@ var optionsprofit = {
                 fontFamily: 'Rubik, sans-serif',
                 fontWeight: 500,
                 label: '$ 34,098',
-                formatter: () => 'Total Profit'
+                formatter: () => 'Total Proker'
               }
             },
         }

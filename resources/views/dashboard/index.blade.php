@@ -11,12 +11,12 @@
 @endsection
 
 @section('breadcrumb-title')
-    <h3>Default</h3>
+    <h3>Dashboard</h3>
 @endsection
 
 @section('breadcrumb-items')
     <li class="breadcrumb-item">Dashboard</li>
-    <li class="breadcrumb-item active">Default</li>
+    <li class="breadcrumb-item active">{{ ucfirst($role) }}</li>
 @endsection
 
 @section('content')
@@ -28,9 +28,19 @@
 			<div class="media">
 			  <div class="media-body"> 
 				<div class="greeting-user">
-				  <h4 class="f-w-600">Welcome to cuba</h4>
-				  <p>Here whats happing in your account today</p>
-				  <div class="whatsnew-btn"><a class="btn btn-outline-white">Whats New !</a></div>
+					@if ($role == 'ormawa')
+				  <h4 class="f-w-600">Selamat Datang, <br>{{ $role }}</h4>
+				  @else
+				  <h4 class="f-w-600">Selamat Datang, {{ $role }}</h4>
+				  @endif
+				  <p>
+				  @if ($role == 'departemen')
+				 	Ormawa xxxx <br>
+				  @endif	
+				  Berikut Ringkasan Akun Anda Hari Ini</p>
+				  @if ($role != 'superadmin')
+				  <div class="whatsnew-btn"><a class="btn btn-outline-white">Print Ringkasan</a></div>
+				  @endif
 				</div>
 			  </div>
 			  <div>  
@@ -79,12 +89,21 @@
 					</div>
 				  </div>
 				  <div> 
-					<h4>10,000</h4><span class="f-light">Purchase</span>
+					@if ($role == 'departemen')
+					<h4>10</h4><span class="f-light">Jumlah Proker</span>
+					@endif
+					@if ($role == 'ormawa')
+					<h4>10</h4><span class="f-light">Jumlah Departemen</span>
+					@endif
+					@if ($role == 'superadmin')
+					<h4>10</h4><span class="f-light">Jumlah Total Akun</span>
+					@endif
 				  </div>
 				</div>
-				<div class="font-secondary f-w-500"><i class="icon-arrow-up icon-rotate me-1"></i><span>+50%</span></div>
+				<!-- <div class="font-secondary f-w-500"><i class="icon-arrow-up icon-rotate me-1"></i><span>+50%</span></div> -->
 			  </div>
 			</div>
+			@if ($role != 'superadmin')
 			<div class="col-xl-12"> 
 			  <div class="card widget-1">
 				<div class="card-body"> 
@@ -100,13 +119,22 @@
 					  </div>
 					</div>
 					<div> 
-					  <h4>4,200</h4><span class="f-light">Sales</span>
+					@if ($role == 'departemen')
+					<h4>Rp 10.000.000</h4><span class="f-light">Total Dana Diajukan</span>
+					@endif
+					@if ($role == 'ormawa')
+					<h4>10</h4><span class="f-light">Jumlah Proker</span>
+					@endif
+					@if ($role == 'superadmin')
+					<h4>10</h4><span class="f-light">Jumlah Akun Ormawa</span>
+					@endif
 					</div>
 				  </div>
-				  <div class="font-primary f-w-500"><i class="icon-arrow-up icon-rotate me-1"></i><span>+70%</span></div>
+				  <!-- <div class="font-primary f-w-500"><i class="icon-arrow-up icon-rotate me-1"></i><span>+70%</span></div> -->
 				</div>
 			  </div>
 			</div>
+			@endif
 		  </div>
 		</div>
 	  </div>
@@ -127,12 +155,21 @@
 					</div>
 				  </div>
 				  <div> 
-					<h4>7000</h4><span class="f-light">Sales return</span>
+				 	 @if ($role == 'departemen')
+					<h4>10</h4><span class="f-light">Jumlah Proker Disetujui</span>
+					@endif
+					@if ($role == 'ormawa')
+					<h4>10</h4><span class="f-light">Jumlah Proker Menunggu Approval</span>
+					@endif
+					@if ($role == 'superadmin')
+					<h4>10</h4><span class="f-light">Jumlah Akun Ormawa</span>
+					@endif
 				  </div>
 				</div>
-				<div class="font-warning f-w-500"><i class="icon-arrow-down icon-rotate me-1"></i><span>-20%</span></div>
+				<!-- <div class="font-warning f-w-500"><i class="icon-arrow-down icon-rotate me-1"></i><span>-20%</span></div> -->
 			  </div>
 			</div>
+			@if ($role != 'superadmin')
 			<div class="col-xl-12"> 
 			  <div class="card widget-1">
 				<div class="card-body"> 
@@ -148,48 +185,96 @@
 					  </div>
 					</div>
 					<div> 
-					  <h4>5700</h4><span class="f-light">Purchase rate</span>
+					@if ($role == 'departemen')
+					<h4>Rp 8.000.000</h4><span class="f-light">Total Dana diberikan</span>
+					@endif
+					@if ($role == 'ormawa')
+					<h4>Rp 8.000.000</h4><span class="f-light">Total Dana Diberikan</span>
+					@endif
+					@if ($role == 'superadmin')
+					<h4>10</h4><span class="f-light">Jumlah Akun Departemen</span>
+					@endif
 					</div>
 				  </div>
-				  <div class="font-success f-w-500"><i class="icon-arrow-up icon-rotate me-1"></i><span>+70%</span></div>
+				  <!-- <div class="font-success f-w-500"><i class="icon-arrow-up icon-rotate me-1"></i><span>+70%</span></div> -->
 				</div>
 			  </div>
 			</div>
+			@endif
 		  </div>
 		</div>
 	  </div>
-	  <div class="col-xxl-auto col-xl-12 col-sm-6 box-col-6">
+	  <div class="col-xxl-auto col-xl-3 col-sm-6 box-col-6"> 
 		<div class="row"> 
-		  <div class="col-xxl-12 col-xl-6 box-col-12">
-			<div class="card widget-1 widget-with-chart">
+		  <div class="col-xl-12"> 
+			<div class="card widget-1">
 			  <div class="card-body"> 
-				<div> 
-				  <h4 class="mb-1">1,80k</h4><span class="f-light">Orders</span>
+				<div class="widget-content">
+				  <div class="widget-round warning">
+					<div class="bg-round">
+					  <svg class="svg-fill">
+						<use href="{{ asset('assets/svg/icon-sprite.svg#return-box') }}"> </use>
+					  </svg>
+					  <svg class="half-circle svg-fill">
+						<use href="{{ asset('assets/svg/icon-sprite.svg#halfcircle') }}"></use>
+					  </svg>
+					</div>
+				  </div>
+				  <div> 
+				 	 @if ($role == 'departemen')
+					<h4>10</h4><span class="f-light">Jumlah Proker Di Tolak</span>
+					@endif
+					@if ($role == 'ormawa')
+					<h4>10</h4><span class="f-light">Jumlah Proker Di Tolak</span>
+					@endif
+					@if ($role == 'superadmin')
+					<h4>10</h4><span class="f-light">Jumlah Akun Departemen</span>
+					@endif
+				  </div>
 				</div>
-				<div class="order-chart"> 
-				  <div id="orderchart"></div>
+				<!-- <div class="font-warning f-w-500"><i class="icon-arrow-down icon-rotate me-1"></i><span>-20%</span></div> -->
+			  </div>
+			</div>
+			@if ($role != 'superadmin')
+			<div class="col-xl-12"> 
+			  <div class="card widget-1">
+				<div class="card-body"> 
+				  <div class="widget-content">
+					<div class="widget-round success">
+					  <div class="bg-round">
+						<svg class="svg-fill">
+						  <use href="{{ asset('assets/svg/icon-sprite.svg#rate') }}"> </use>
+						</svg>
+						<svg class="half-circle svg-fill">
+						  <use href="{{ asset('assets/svg/icon-sprite.svg#halfcircle') }}"></use>
+						</svg>
+					  </div>
+					</div>
+					<div> 
+					@if ($role == 'departemen')
+					<h4>10</h4><span class="f-light">Jumlah Proker Menunggu Approval</span>
+					@endif
+					@if ($role == 'ormawa')
+					<h4>10</h4><span class="f-light">Jumlah Proker Disetujui</span>
+					@endif
+					@if ($role == 'superadmin')
+					<h4>10</h4><span class="f-light">Jumlah Akun Departemen</span>
+					@endif
+					</div>
+				  </div>
+				  <!-- <div class="font-success f-w-500"><i class="icon-arrow-up icon-rotate me-1"></i><span>+70%</span></div> -->
 				</div>
 			  </div>
 			</div>
-		  </div>
-		  <div class="col-xxl-12 col-xl-6 box-col-12">
-			<div class="card widget-1 widget-with-chart">
-			  <div class="card-body"> 
-				<div> 
-				  <h4 class="mb-1">6,90k</h4><span class="f-light">Profit</span>
-				</div>
-				<div class="profit-chart"> 
-				  <div id="profitchart"></div>
-				</div>
-			  </div>
-			</div>
+			@endif
 		  </div>
 		</div>
 	  </div>
+	  @if ($role != 'superadmin')
 	  <div class="col-xxl-8 col-lg-12 box-col-12">
 		<div class="card">
 		  <div class="card-header card-no-border"> 
-			<h5>Overall balance</h5>
+			<h5>Pemakaian Dana</h5>
 		  </div>
 		  <div class="card-body pt-0">
 			<div class="row m-0 overall-card">
@@ -219,15 +304,23 @@
 						  <use href="{{ asset('assets/svg/icon-sprite.svg#income') }}"></use>
 						</svg>
 					  </div>
-					  <div> <span class="f-light">Income</span>
-						<h6 class="mt-1 mb-0">$22,678</h6>
-					  </div>
-					  <div class="ms-auto text-end">
+						@if ($role == 'departemen')
+						<div> <span class="f-light">Total Dana</span>
+							<h6 class="mt-1 mb-0">Rp 8.000.000</h6>
+						</div>
+						@endif
+						@if ($role == 'ormawa')
+						<div> <span class="f-light">Total Dana</span>
+							<h6 class="mt-1 mb-0">Rp 8.000.000</h6>
+						</div>
+						@endif
+					  
+					  <!-- <div class="ms-auto text-end">
 						<div class="dropdown icon-dropdown">
 						  <button class="btn dropdown-toggle" id="incomedropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="icon-more-alt"></i></button>
 						  <div class="dropdown-menu dropdown-menu-end" aria-labelledby="incomedropdown"><a class="dropdown-item" href="#">Today</a><a class="dropdown-item" href="#">Tomorrow</a><a class="dropdown-item" href="#">Yesterday </a></div>
 						</div><span class="font-success">+$456</span>
-					  </div>
+					  </div> -->
 					</div>
 				  </div>
 				  <div class="col-xl-12 col-md-4">
@@ -237,15 +330,16 @@
 						  <use href="{{ asset('assets/svg/icon-sprite.svg#expense') }}"></use>
 						</svg>
 					  </div>
-					  <div> <span class="f-light">Expense</span>
-						<h6 class="mt-1 mb-0">$12,057</h6>
-					  </div>
-					  <div class="ms-auto text-end">
-						<div class="dropdown icon-dropdown">
-						  <button class="btn dropdown-toggle" id="expensedropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="icon-more-alt"></i></button>
-						  <div class="dropdown-menu dropdown-menu-end" aria-labelledby="expensedropdown"><a class="dropdown-item" href="#">Today</a><a class="dropdown-item" href="#">Tomorrow</a><a class="dropdown-item" href="#">Yesterday </a></div>
-						</div><span class="font-danger">+$256</span>
-					  </div>
+					  	@if ($role == 'departemen')
+						<div> <span class="f-light">Total RAB</span>
+							<h6 class="mt-1 mb-0">Rp 4.000.000</h6>
+						</div>
+						@endif
+						@if ($role == 'ormawa')
+						<div> <span class="f-light">Total RAB</span>
+							<h6 class="mt-1 mb-0">Rp 8.000.000</h6>
+						</div>
+						@endif
 					</div>
 				  </div>
 				  <div class="col-xl-12 col-md-4">
@@ -255,15 +349,16 @@
 						  <use href="{{ asset('assets/svg/icon-sprite.svg#doller-return') }}"></use>
 						</svg>
 					  </div>
-					  <div> <span class="f-light">Cashback</span>
-						<h6 class="mt-1 mb-0">8,475</h6>
-					  </div>
-					  <div class="ms-auto text-end">
-						<div class="dropdown icon-dropdown">
-						  <button class="btn dropdown-toggle" id="cashbackdropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="icon-more-alt"></i></button>
-						  <div class="dropdown-menu dropdown-menu-end" aria-labelledby="cashbackdropdown"><a class="dropdown-item" href="#">Today</a><a class="dropdown-item" href="#">Tomorrow</a><a class="dropdown-item" href="#">Yesterday </a></div>
+					  	@if ($role == 'departemen')
+						<div> <span class="f-light">Pemakaian Riil</span>
+							<h6 class="mt-1 mb-0">Rp 2.000.000</h6>
 						</div>
-					  </div>
+						@endif
+						@if ($role == 'ormawa')
+						<div> <span class="f-light">Penyerapan Riil</span>
+							<h6 class="mt-1 mb-0">Rp 2.000.000</h6>
+						</div>
+						@endif
 					</div>
 				  </div>
 				</div>
@@ -276,13 +371,13 @@
 		<div class="card height-equal"> 
 		  <div class="card-header card-no-border"> 
 			<div class="header-top">
-			  <h5>Recent Orders</h5>
-			  <div class="card-header-right-icon">
+			  <h5>Pengajuan Proker</h5>
+			  <!-- <div class="card-header-right-icon">
 				<div class="dropdown icon-dropdown">
 				  <button class="btn dropdown-toggle" id="recentdropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="icon-more-alt"></i></button>
 				  <div class="dropdown-menu dropdown-menu-end" aria-labelledby="recentdropdown"><a class="dropdown-item" href="#">Weekly</a><a class="dropdown-item" href="#">Monthly</a><a class="dropdown-item" href="#">Yearly</a></div>
 				</div>
-			  </div>
+			  </div> -->
 			</div>
 		  </div>
 		  <div class="card-body pt-0">
@@ -295,13 +390,13 @@
 			  <div class="col-xl-6"> 
 				<ul class="order-content">
 				  <li> <span class="recent-circle bg-primary"> </span>
-					<div> <span class="f-light f-w-500">Cancelled </span>
-					  <h4 class="mt-1 mb-0">2,302<span class="f-light f-14 f-w-400 ms-1">(Last 6 Month) </span></h4>
+					<div> <span class="f-light f-w-500">Proker yang di Approve </span>
+					  <h4 class="mt-1 mb-0">10</h4>
 					</div>
 				  </li>
 				  <li> <span class="recent-circle bg-info"></span>
-					<div> <span class="f-light f-w-500">Delivered</span>
-					  <h4 class="mt-1 mb-0">9,302<span class="f-light f-14 f-w-400 ms-1">(Last 6 Month) </span></h4>
+					<div> <span class="f-light f-w-500">Proker yang di Ajukan</span>
+					  <h4 class="mt-1 mb-0">90</h4>
 					</div>
 				  </li>
 				</ul>
@@ -310,7 +405,7 @@
 		  </div>
 		</div>
 	  </div>
-	  <div class="col-xxl-4 col-xl-5 col-md-6 col-sm-7 notification box-col-6">
+	  <!-- <div class="col-xxl-4 col-xl-5 col-md-6 col-sm-7 notification box-col-6">
 		<div class="card height-equal"> 
 		  <div class="card-header card-no-border">
 			<div class="header-top">
@@ -536,7 +631,8 @@
 			</div>
 		  </div>
 		</div>
-	  </div>
+	  </div> -->
+	  @endif
 	</div>
   </div>
     <script type="text/javascript">

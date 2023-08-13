@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProkerController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
@@ -19,9 +20,10 @@ Route::get('lang/{locale}', function ($locale) {
     return redirect()->back();
 })->name('lang');
 
-Route::prefix('dashboard')->group(function () {
+// Route::prefix('dashboard')->group(function () {
     Route::view('index', 'dashboard.index')->name('index');
-});
+// });
+Route::resource('dashboard', DashboardController::class);
 
 Route::resource('proker', ProkerController::class);
 

@@ -624,7 +624,7 @@ var recentoptions = {
   stroke: {
     lineCap: 'round'
   },
-  labels: ['Total Profit'],
+  labels: ['Total Proker'],
   responsive: [
         {
           breakpoint: 1840,
