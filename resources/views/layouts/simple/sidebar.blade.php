@@ -44,28 +44,18 @@
                             <li><a href="{{ route('dashboard-05') }}">Social</a></li>
                         </ul>
                     </li>
-                    <li class="sidebar-list"><i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title"
-                            href="#">
-                            <svg class="stroke-icon">
-                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-user') }}"></use>
-                            </svg>
-                            <svg class="fill-icon">
-                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-user') }}"></use>
-                            </svg><span>Ormawa</span></a>
+                    <li class="sidebar-list"><i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title" href="#">
+                                <i data-feather="user"></i><span>Ormawa Profile</span>
+                                </a>
                         <ul class="sidebar-submenu">
-                            <li><a href="{{ route('ormawa-profile') }}">Profile</a></li>
+                            <li><a href="{{ route('ormawa-profile') }}">My Profile</a></li>
                         </ul>
                     </li>
-                    <li class="sidebar-list"><i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title"
-                            href="#">
-                            <svg class="stroke-icon">
-                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-user') }}"></use>
-                            </svg>
-                            <svg class="fill-icon">
-                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-user') }}"></use>
-                            </svg><span>Departemen</span></a>
+                    <li class="sidebar-list"><i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title" href="#">
+                        <i data-feather="user"></i><span>Departemen Profile</span>
+                        </a>
                         <ul class="sidebar-submenu">
-                            <li><a href="{{ route('departemen-profile') }}">Profile</a></li>
+                            <li><a href="{{ route('departemen-profile') }}">My Profile</a></li>
                         </ul>
                     </li>
                     
