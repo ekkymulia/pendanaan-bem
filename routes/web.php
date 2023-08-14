@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DepartemenController;
+use App\Http\Controllers\OrmawaController;
 use App\Http\Controllers\ProkerController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
@@ -26,6 +28,10 @@ Route::get('lang/{locale}', function ($locale) {
 Route::resource('dashboard', DashboardController::class);
 
 Route::resource('proker', ProkerController::class);
+
+Route::resource('ormawa', OrmawaController::class);
+
+Route::resource('departemen', DepartemenController::class);
 
 Route::prefix('page-layouts')->group(function () {
     Route::view('box-layout', 'page-layout.box-layout')->name('box-layout');

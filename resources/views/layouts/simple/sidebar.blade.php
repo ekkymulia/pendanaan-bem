@@ -61,6 +61,16 @@
                         <i data-feather="users"></i><span>Proker</span>
                         </a>
                     </li>
+                    <li class="sidebar-list"><i class="fa fa-thumb-tack"></i>
+                        <a class="sidebar-link sidebar-title link-nav" href="{{ route('ormawa.index') }}">
+                        <i data-feather="users"></i><span>Ormawa</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-list"><i class="fa fa-thumb-tack"></i>
+                        <a class="sidebar-link sidebar-title link-nav" href="{{ route('departemen.index') }}">
+                        <i data-feather="users"></i><span>Departemen</span>
+                        </a>
+                    </li>
                     <li class="sidebar-main-title">
                         <div>
                             <h6 class="">Pengaturan Akun</h6>
