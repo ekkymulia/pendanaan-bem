@@ -19026,7 +19026,7 @@ footer {
 }
 
 .premium-wrap {
-  margin-top: -28px;
+  /* margin-top: -28px; */
 }
 .premium-wrap .vector-image {
   top: -50px;
@@ -19483,7 +19483,6 @@ footer {
   border-radius: 50px 16px 16px 50px;
   padding: 18px 16px;
   gap: 16px;
-  margin-left: 30px;
   transition: all 0.5s;
 }
 .framework-box::after {
@@ -19597,6 +19596,7 @@ footer {
 }
 
 .landing-home {
+  height: 100vh;
   scroll-behavior: smooth;
   overflow: hidden;
   position: relative;
@@ -19669,7 +19669,7 @@ footer {
   }
 }
 .landing-home .content {
-  margin-top: 200px;
+  /* margin-top: 200px; */
   display: flex;
   justify-content: center;
   position: relative;
@@ -19677,17 +19677,17 @@ footer {
 }
 @media (max-width: 1366px) {
   .landing-home .content {
-    margin-top: 170px;
+    /* margin-top: 170px; */
   }
 }
 @media (max-width: 1199px) {
   .landing-home .content {
-    margin-top: 140px;
+    /* margin-top: 140px; */
   }
 }
 @media (max-width: 575px) {
   .landing-home .content {
-    margin-top: 100px;
+    /* margin-top: 100px; */
   }
 }
 .landing-home .content-title {
@@ -19788,16 +19788,16 @@ footer {
   }
 }
 .build-section .build-image img {
-  width: calc(100% + 210px);
+  width: calc(100%);
 }
 @media (max-width: 991px) {
   .build-section .build-image img {
-    width: calc(100% + 100px);
+    /* width: calc(100% + 100px); */
   }
 }
 @media (max-width: 767px) {
   .build-section .build-image img {
-    width: 100%;
+    /* width: 100%; */
   }
 }
 
@@ -20061,13 +20061,16 @@ footer {
   border: none;
 }
 .faq-section .accordion-button::after {
-  font-family: "IcoFont";
+  /* font-family: "IcoFont";
   content: "\eb25";
-  font-size: 24px;
-  background: unset;
-  width: auto;
-  height: auto;
-  margin-bottom: -4px;
+  font-size: 24px; */
+  /* background: unset; */
+  background-image: url('/assets/images/landing/arrow-down.svg');
+  background-size: contain;
+  background-position: center;
+  width: 20px;
+  height: 20px;
+  /* margin-bottom: -4px; */
 }
 .faq-section .accordion-body {
   padding-top: 14px;
@@ -21238,8 +21241,8 @@ ul.dot-group li {
     background-color: #fff;
   }
   .landing-home .screen1 {
-    left: 100px;
-    margin-top: 0;
+    /* left: 100px; */
+    /* margin-top: 0; */
   }
   .sticky-header .navbar-nav .nav-item .nav-link {
     color: #000;
