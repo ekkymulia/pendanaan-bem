@@ -96,6 +96,7 @@
                            <th>No.Telp</th>
                            <th>Ketua</th>
                            <th>Wakil</th>
+                           <th></th>
                         </tr>
                      </thead>
                      <tbody>
