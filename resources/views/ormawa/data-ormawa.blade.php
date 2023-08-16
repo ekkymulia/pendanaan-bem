@@ -96,10 +96,10 @@
                            <th>No.Telp</th>
                            <th>Ketua</th>
                            <th>Wakil</th>
+                           <th></th>
                         </tr>
                      </thead>
                      <tbody>
-
                         <tr>
                            <td>1</td>
                            <td><a href="{{ route('ormawa.show', 1) }}"><u>Ormawa ABC</u></a></td>
@@ -122,7 +122,6 @@
                               </ul>
                            </td>
                         </tr>
-
                      </tbody>
                   </table>
                </div>
