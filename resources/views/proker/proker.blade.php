@@ -75,7 +75,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="mb-3 col-md-11 mt-0">
+                            <!-- <div class="mb-3 col-md-11 mt-0">
                                 <div class="row">
                                     <div class="col-6 d-flex align-items-center">
                                         <label for="con-jenis-ternak">Jenis Proker</label>
@@ -91,11 +91,21 @@
                                         </div>
                                     </div>
                                 </div>
+                            </div> -->
+                            <div class="col-md-11">
+                                <div class="mb-3 row">
+                                    <div class="col-6 ">
+                                        <label for="con-paddock">Permintaan Pendanaan RKAT (Rp)</label>
+                                    </div>
+                                    <div class="col-6">
+                                        <input class="form-control" id="con-paddock" type="text" name="harga" required="" placeholder="Permintaan Pendanaan (Rp)" autocomplete="off" value="{{ $proker->harga ?? '' }}">
+                                    </div>
+                                </div>
                             </div>
                             <div class="col-md-11">
                                 <div class="mb-3 row">
                                     <div class="col-6 ">
-                                        <label for="con-paddock">Permintaan Pendanaan (Rp)</label>
+                                        <label for="con-paddock">Permintaan Pendanaan BPTN (Rp)</label>
                                     </div>
                                     <div class="col-6">
                                         <input class="form-control" id="con-paddock" type="text" name="harga" required="" placeholder="Permintaan Pendanaan (Rp)" autocomplete="off" value="{{ $proker->harga ?? '' }}">
