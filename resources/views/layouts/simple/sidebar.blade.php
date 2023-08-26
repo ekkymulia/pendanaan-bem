@@ -28,14 +28,16 @@
                         </div>
                     </li>
                     <li class="sidebar-list"><i class="fa fa-thumb-tack"></i><a
-                        class="sidebar-link sidebar-title link-nav" href="{{ route('dashboard.show', 'departemen') }}">
+                        class="sidebar-link sidebar-title link-nav" 
+                        href="{{ route('dashboard.index') }}"
+                        >
                         <svg class="stroke-icon">
                             <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-home') }}"></use>
                         </svg>
                         <svg class="fill-icon">
                             <use href="{{ asset('assets/svg/icon-sprite.svg#fill-home') }}"></use>
-                        </svg><span>Dashboard Departemen</span></a></li>
-                    <li class="sidebar-list"><i class="fa fa-thumb-tack"></i><a
+                        </svg><span>Dashboard</span></a></li>
+                    <!-- <li class="sidebar-list"><i class="fa fa-thumb-tack"></i><a
                         class="sidebar-link sidebar-title link-nav" href="{{ route('dashboard.show', 'ormawa') }}">
                         <svg class="stroke-icon">
                             <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-home') }}"></use>
@@ -50,7 +52,7 @@
                         </svg>
                         <svg class="fill-icon">
                             <use href="{{ asset('assets/svg/icon-sprite.svg#fill-home') }}"></use>
-                        </svg><span>Dashboard Superadmin</span></a></li>
+                        </svg><span>Dashboard Superadmin</span></a></li> -->
                     <li class="sidebar-main-title">
                         <div>
                             <h6 class="">Menu</h6>
@@ -61,16 +63,20 @@
                         <i data-feather="users"></i><span>Proker</span>
                         </a>
                     </li>
+                    @if (session('u_data')->user_role == '1')
                     <li class="sidebar-list"><i class="fa fa-thumb-tack"></i>
                         <a class="sidebar-link sidebar-title link-nav" href="{{ route('ormawa.index') }}">
                         <i data-feather="users"></i><span>Ormawa</span>
                         </a>
                     </li>
+                    @endif
+                    @if (session('u_data')->user_role == '1' || session('u_data')->user_role == '2')
                     <li class="sidebar-list"><i class="fa fa-thumb-tack"></i>
                         <a class="sidebar-link sidebar-title link-nav" href="{{ route('departemen.index') }}">
                         <i data-feather="users"></i><span>Departemen</span>
                         </a>
                     </li>
+                    @endif
                     <li class="sidebar-main-title">
                         <div>
                             <h6 class="">Pengaturan Akun</h6>
@@ -109,7 +115,7 @@
                         </ul>
                     </li>
                     <li class="sidebar-list"><i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title"
-                            href="#">
+                            href="{{ route('logout') }}">
                             <svg class="stroke-icon">
                                 <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-layout') }}"></use>
                             </svg>
