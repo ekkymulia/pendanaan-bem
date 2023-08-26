@@ -17,70 +17,6 @@
 @section('content')
 <div class="container-fluid">
    <div class="row">
-      <!-- <div class="col-sm-6 col-lg-3 col-md-3">
-         <div class="card h-100 small-widget mb-sm-0">
-            <div class="card-body h-100 primary">
-            <span class="f-light">Jumlah Proker</span>
-            <div class="d-flex align-items-end gap-1">
-                  <h4>2</h4>
-                  <span class="badge badge-primary f-12 f-w-500">Item</span>
-            </div>
-            <div class="bg-gradient">
-                  <svg class="stroke-icon svg-fill">
-                     <use href="../assets/svg/icon-sprite.svg#new-order"></use>
-                  </svg>
-            </div>
-            </div>
-         </div>
-      </div>
-      <div class="col-sm-6 col-lg-3 col-md-3">
-         <div class="card h-100 small-widget mb-sm-0">
-            <div class="card-body h-100 primary">
-            <span class="f-light">Jumlah Karbohidrat</span>
-            <div class="d-flex align-items-end gap-1">
-                  <h4>1</h4>
-                  <span class="badge badge-primary f-12 f-w-500">Item</span>
-            </div>
-            <div class="bg-gradient">
-                  <svg class="stroke-icon svg-fill">
-                     <use href="../assets/svg/icon-sprite.svg#new-order"></use>
-                  </svg>
-            </div>
-            </div>
-         </div>
-      </div>
-      <div class="col-sm-6 col-lg-3 col-md-3">
-         <div class="card h-100 small-widget mb-sm-0">
-            <div class="card-body h-100 primary">
-            <span class="f-light">Jumlah Protein</span>
-            <div class="d-flex align-items-end gap-1">
-                  <h4>0</h4>
-                  <span class="badge badge-primary f-12 f-w-500">Item</span>
-            </div>
-            <div class="bg-gradient">
-                  <svg class="stroke-icon svg-fill">
-                     <use href="../assets/svg/icon-sprite.svg#new-order"></use>
-                  </svg>
-            </div>
-            </div>
-         </div>
-      </div>
-      <div class="col-sm-6 col-lg-3 col-md-3">
-         <div class="card h-100 small-widget mb-sm-0">
-            <div class="card-body h-100 primary">
-            <span class="f-light">Jumlah Konsentrat</span>
-            <div class="d-flex align-items-end gap-1">
-                  <h4>1</h4>
-                  <span class="badge badge-primary f-12 f-w-500">Item</span>
-            </div>
-            <div class="bg-gradient">
-                  <svg class="stroke-icon svg-fill">
-                     <use href="../assets/svg/icon-sprite.svg#new-order"></use>
-                  </svg>
-            </div>
-            </div>
-         </div>
-      </div> -->
       <div class="col-sm-12 mt-3">
          <div class="card">
             <div class="card-header pb-0 card-no-border">
@@ -94,8 +30,9 @@
                         <tr>
                            <th>No.</th>
                            <th>Nama Proker</th>
-                           <th>Tahun</th>
-                           <th>Permintaan Pendanaan</th>
+                           <th>Ketua</th>
+                           <th>departemen</th>
+                           <th>Dana Diberikan</th>
                            <th>Status</th>
                            <th></th>
                         </tr>
@@ -104,15 +41,16 @@
 
                         <tr>
                               <td>1</td>
-                              <td>IT Fest</td>
-                              <td>2023</td>
+                              <td><a href="{{ route('proker.show', 1) }}"><u>IT Fest</u></a></td>
+                              <td>John</td>
+                              <td>abc</td>
                               <td>Rp 4.000.000</td>
                               <td><span class="badge badge-success">Proker Disetujui</span></td>
                               <td>
                                  <ul class="action align-items-center">
                                     <li class="edit"><a href="{{route('proker.edit', 1)}}"><i class="icon-pencil-alt"></i></a></li>
                                     <li class="delete">
-                                       <form action="{{ route('proker.destroy', 1) }}" method="post">
+                                       <form id="form-del-proker" action="{{ route('proker.destroy', 1) }}" method="post">
                                           @csrf
                                           @method('delete')
                                           <button type="submit" class="btn btn-link">
@@ -131,9 +69,30 @@
          </div>
       </div>
    </div>
+   
 </div>
 @endsection
 @section('script')
 <script src="{{ asset('assets/js/datatable/datatables/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('assets/js/datatable/datatables/datatable.custom.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+   document.getElementById('form-del-proker').addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      Swal.fire({
+         title: 'Apakah kamu yakin?',
+         text: "Anda tidak akan dapat mengembalikan ini!",
+         icon: 'warning',
+         showCancelButton: true,
+         confirmButtonColor: '#3085d6',
+         cancelButtonColor: '#d33',
+         confirmButtonText: 'Ya, hapus saja!'
+      }).then((result) => {
+         if (result.isConfirmed) {
+            e.target.submit();
+         }
+      });
+      });
+</script>
 @endsection

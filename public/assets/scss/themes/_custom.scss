@@ -2,3 +2,32 @@
  custom CSS Start
 ==========================**/
 // you can add your custom css here
+body.dark-only{
+    svg{
+        stroke: #fff;
+    }
+}
+
+.cursor-no-drop{
+    cursor: no-drop;
+}
+
+.tab-tbl-budget{
+    #pills-warningtab{
+        a.active{
+            color: #fff !important;
+            &:hover{
+                background-color: var(--theme-deafult) !important;
+                color: #fff !important;
+            }
+        }
+    }
+}
+
+th.non-white-space{
+    white-space: nowrap;
+}
+
+input[disabled]{
+    cursor: no-drop;
+}

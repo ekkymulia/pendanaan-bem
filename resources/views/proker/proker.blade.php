@@ -9,8 +9,6 @@
 <!-- <h3>Sample Page</h3> -->
 @endsection
 @section('breadcrumb-items')
-<li class="breadcrumb-item">Stok</li>
-<li class="breadcrumb-item">Master</li>
 <li class="breadcrumb-item">Proker</li>
 <li class="breadcrumb-item active">
     @if ($pageContext === 'add')
@@ -40,254 +38,308 @@
                </h4>
             </div>
             <div class="card-body">
-            <form class="form-bookmark needs-validation" id="bookmark-form" novalidate="" 
-                method="POST">
-                @csrf
+                <form class="form-bookmark needs-validation" id="bookmark-form" novalidate="" 
+                    method="POST" 
+                    action="{{
+                        $pageContext === 'add'? route('proker.store') : ''
+                    }}"
+                >
+                    @csrf
 
-                <div class="row g-2 col-12">
-                    <div class="mt-0 mb-3 col-md-12">
-                        <h6 class="mb-3">Detail Proker</h6>
-                        <div class="row">
-                            <div class="col-md-11">
-                                <div class="mb-3 row">
-                                    <div class="col-6 d-flex align-items-center">
-                                        <label for="con-kandang">Status Proker</label>
+                    <div class="row g-2 col-12">
+                        <div class="mt-0 mb-3 col-md-12">
+                            <h6 class="mb-3">Detail Proker</h6>
+                            <div class="row">
+                                <div class="col-md-11">
+                                    <div class="mb-3 row">
+                                        <div class="col-6 d-flex align-items-center">
+                                            <label for="con-kandang">Status Proker</label>
+                                        </div>
+                                        <div class="col-6">
+                                            @if ($pageContext === 'add')
+                                            <h6 class="badge badge-primary">Proker Baru</h6>
+                                            @elseif ($pageContext === 'edit')
+                                            <h6 class="badge badge-success">Proker Disetujui</h6><a class="btn-sm btn-link " style="cursor:pointer;">Klik untuk Print Laporan</a>
+                                            @elseif ($pageContext === 'detail')
+                                            <h6 class="badge badge-success">Proker Disetujui</h6><a class="btn-sm btn-link " style="cursor:pointer;">Klik untuk Print Laporan</a>
+                                            @endif
+                                            
+                                        </div>
                                     </div>
-                                    <div class="col-6">
-                                        @if ($pageContext === 'add')
-                                        <h6 class="badge badge-primary">Proker Baru</h6>
-                                        @elseif ($pageContext === 'edit')
-                                        <h6 class="badge badge-success">Proker Disetujui</h6><a class="btn-sm btn-link " style="cursor:pointer;">Klik untuk Print Laporan</a>
-                                        @elseif ($pageContext === 'detail')
-                                        <h6 class="badge badge-success">Proker Disetujui</h6><a class="btn-sm btn-link " style="cursor:pointer;">Klik untuk Print Laporan</a>
+                                </div>
+                                <div class="col-md-11">
+                                    <div class="mb-3 row">
+                                        <div class="col-6 d-flex align-items-center">
+                                            <label for="proker-nama">Nama Proker</label>
+                                        </div>
+                                        <div class="col-6">
+                                            <input class="form-control" id="proker-nama" name="nama_Proker" type="text" required="" placeholder="Nama Proker" autocomplete="off">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-11">
+                                    <div class="mb-3 row">
+                                        <div class="col-6 d-flex align-items-center">
+                                            <label for="proker-ketua">Ketua Proker</label>
+
+                                        </div>
+                                        <div class="col-6">
+                                            <input class="form-control" id="proker-ketua" name="ketua_proker" type="text" required="" placeholder="Ketua Proker" autocomplete="off">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-11">
+                                    <div class="mb-3 row">
+                                        <div class="col-6 d-flex align-items-center">
+                                            <label for="proker-bendahara">Bendahara Proker</label>
+                                        </div>
+                                        <div class="col-6">
+                                            <input class="form-control" id="proker-bendahara" name="bendahara_proker" type="text" required="" placeholder="Bendahara Proker" autocomplete="off">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-11">
+                                    <div class="mb-3 row">
+                                        <div class="col-6 d-flex align-items-center">
+                                            <label for="proker-jenis-bptn">Dana RKAT (Rp)</label>
+                                        </div>
+                                        <div class="col-6">
+                                            <input class="form-control" type="number" name="dana_rkat" id="proker-jenis-rkat" placeholder="Dana RKAT (Rp)" min="0" value="0" disabled>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-11">
+                                    <div class="mb-3 row">
+                                        <div class="col-6 d-flex align-items-center">
+                                            <label for="proker-jenis-bptn">Dana BPTN (Rp)</label>
+                                        </div>
+                                        <div class="col-6">
+                                            <input class="form-control" type="number" name="dana_bptn" id="proker-jenis-bptn" placeholder="Dana BPTN (Rp)" min="0" value="0" disabled>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-11">
+                                    <div class="mb-3 row">
+                                        <div class="col-6">
+                                            <label for="proker-berkas">Upload Proposal</label>
+                                        </div>
+                                        <div class="col-6">
+                                            <input class="form-control" id="proker-berkas" type="file" name="proker_berkas" accept=".pdf, .doc, .docx">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mb-3 col-md-11 mt-0">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <label for="proker-ket">Keterangan</label>
+                                        </div>
+                                        <div class="col-6">
+                                            <textarea id="proker-ket" class="form-control" required name="keterangan" id="con-inhouse-keterangan" placeholder="Keterangan" rows="6"></textarea>    
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <h6 class="my-3">Tabel Budgeting</h6>
+                            <div class="tab-tbl-budget">
+                                <ul class="nav nav-tabs nav-primary" id="pills-warningtab" role="tablist">
+                                    <li class="nav-item"><a class="nav-link active" id="pills-rab-tab" data-bs-toggle="pill" href="#pills-rab" role="tab" aria-controls="pills-rab" aria-selected="true" data-bs-original-title="" title="">Dana RAB</a></li>
+                                    {{-- @if ($pageContext != 'add') --}}
+                                    <li class="nav-item"><a class="nav-link" id="pills-rill-tab" data-bs-toggle="pill" href="#pills-rill" role="tab" aria-controls="pills-rill" aria-selected="false" data-bs-original-title="" title="">Dana Riil</a></li>
+                                    {{-- @endif --}}
+                                </ul>
+                                <div class="tab-content" id="pills-warningtabContent">
+                                    <div class="tab-pane fade active show" id="pills-rab" role="tabpanel" aria-labelledby="pills-rab-tab">
+                                        <div class="col-12">
+                                            <div class="row">
+                                                <h6 class="my-3">Tabel Dana RAB</h6>
+                                                <h6 class="mb-3">Sisa Dana: <span class="badge badge-success">Rp 3.980.000</span></h6>
+                                                <div class="table-responsive">
+                                                    <table class="display tbl-rab" id="basic-1">
+                                                        <thead>
+                                                            <tr>
+                                                                <th class="">No.</th>
+                                                                <th class="">Nama</th>
+                                                                <th class="">Harga Satuan</th>
+                                                                <th class="">Qty</th>
+                                                                <th class="">Total Harga</th>
+                                                                <th class="">Tempat Beli</th>
+                                                                <th class="">Bukti</th>
+                                                                <th class="">Status</th>
+                                                                <th class="">Aksi</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td data-number="1">1</td>
+                                                                <td>
+                                                                    <input class="form-control" id="" type="text" required="" placeholder="Nama" autocomplete="off" name="rab_nama[]">
+                                                                </td>
+                                                                <td>
+                                                                    <input class="form-control" id="" type="text" required="" placeholder="Harga Satuan" autocomplete="off" name="rab_hargasatuan[]">
+                                                                </td>
+                                                                <td>
+                                                                    <input class="form-control" id="" type="number" required="" placeholder="Qty" autocomplete="off" min="0" name="rab_qty[]">
+                                                                </td>
+                                                                <td>
+                                                                    <input class="form-control" id="" type="text" required="" placeholder="Otomatis Terhitung" disabled autocomplete="off" name="rab_totalharga[]">
+                                                                </td>
+                                                                <td>
+                                                                    <input class="form-control" id="" type="text" required="" placeholder="Tempat Pembelian" autocomplete="off" name="rab_tmptbeli[]">
+                                                                </td>
+                                                                <td>
+                                                                    <input class="form-control" id="" type="file" required="" accept=".pdf, .doc, .docx" name="rab_bukti[]" disabled>
+                                                                </td>
+                                                                <td>
+                                                                    <div class="m-checkbox-inline custom-radio-ml">
+                                                                        <div class="form-check form-check-inline radio radio-primary">
+                                                                          <input class="form-check-input" id="radioinline1" type="radio" name="rab_status[]" value="1" disabled>
+                                                                          <label class="form-check-label mb-0" for="radioinline1">Setuju</label>
+                                                                        </div>
+                                                                        <div class="form-check form-check-inline radio radio-primary">
+                                                                          <input class="form-check-input" id="radioinline2" type="radio" name="rab_status[]" value="0" disabled>
+                                                                          <label class="form-check-label mb-0" for="radioinline2">Tolak</label>
+                                                                        </div>
+                                                                      </div>
+                                                                </td>
+                                                                <td>
+                                                                    <ul class="action align-items-center">
+                                                                        <li class="delete">
+                                                                            <button type="button" class="btn btn-link">
+                                                                            <i class="icon-trash"></i>
+                                                                            </button>
+                                                                        </li>
+                                                                    </ul>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div class="row g-2 justify-content-end">
+                                                    <div class="col-auto">
+                                                        <button class="btn btn-success" type="button" id="add-row-table" data-target-table="tbl-rab">
+                                                            <i class="icon-plus"></i>
+                                                            Tambahkan Baris Lagi
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="pills-rill" role="tabpanel" aria-labelledby="pills-rill-tab">
+                                        <div class="col-12">
+                                            <div class="row">
+                                                <h6 class="my-3">Tabel Dana Riil</h6>
+                                                <h6 class="mb-3">Sisa Dana: <span class="badge badge-success">Rp 3.980.000</span></h6>
+                                                <div class="table-responsive">
+                                                    <table class="display tbl-riil" id="basic-1-2">
+                                                        <thead>
+                                                            <tr>
+                                                                <th class="">No.</th>
+                                                                <th class="">Nama</th>
+                                                                <th class="">Harga Satuan</th>
+                                                                <th class="">Qty</th>
+                                                                <th class="">Total Harga</th>
+                                                                <th class="">Tempat Beli</th>
+                                                                <th class="">Bukti</th>
+                                                                <th class="">Status</th>
+                                                                <th class="">Aksi</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td data-number="1">1</td>
+                                                                <td>
+                                                                    <input class="form-control" id="" type="text" required="" placeholder="Nama" autocomplete="off" name="riil_nama">
+                                                                </td>
+                                                                <td>
+                                                                    <input class="form-control" id="" type="text" required="" placeholder="Harga Satuan" autocomplete="off" name="riil_hargasatuan">
+                                                                </td>
+                                                                <td>
+                                                                    <input class="form-control" id="" type="number" required="" placeholder="Qty" autocomplete="off" min="0" name="riil_qty">
+                                                                </td>
+                                                                <td>
+                                                                    <input class="form-control" id="" type="text" required="" placeholder="Otomatis Terhitung" disabled autocomplete="off">
+                                                                </td>
+                                                                <td>
+                                                                    <input class="form-control" id="" type="text" required="" placeholder="Tempat Pembelian" autocomplete="off" name="riil_tmptbeli">
+                                                                </td>
+                                                                <td>
+                                                                    <input class="form-control" id="" type="file" required="" accept=".pdf, .doc, .docx" name="riil_bukti">
+                                                                </td>
+                                                                <td>
+                                                                    <div class="m-checkbox-inline custom-radio-ml">
+                                                                        <div class="form-check form-check-inline radio radio-primary">
+                                                                          <input class="form-check-input" id="radioinline1" type="radio" name="riil_bukti[]" value="1" disabled>
+                                                                          <label class="form-check-label mb-0" for="radioinline1">Setuju</label>
+                                                                        </div>
+                                                                        <div class="form-check form-check-inline radio radio-primary">
+                                                                          <input class="form-check-input" id="radioinline2" type="radio" name="riil_bukti[]" value="0" disabled>
+                                                                          <label class="form-check-label mb-0" for="radioinline2">Tolak</label>
+                                                                        </div>
+                                                                      </div>
+                                                                </td>
+                                                                <td>
+                                                                    <ul class="action align-items-center">
+                                                                        <li class="delete">
+                                                                            <button type="button" class="btn btn-link">
+                                                                            <i class="icon-trash"></i>
+                                                                            </button>
+                                                                        </li>
+                                                                    </ul>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div class="row g-2 justify-content-end">
+                                                    <div class="col-auto">
+                                                        <button class="btn btn-success" type="button" id="add-row-table" data-target-table="tbl-riil">
+                                                            <i class="icon-plus"></i>
+                                                            Tambahkan Baris Lagi
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row g-2 justify-content-end">
+                            <div class="col-auto">
+                            @if ($pageContext == 'add' || $pageContext == 'edit')
+                                <a href="">
+                                        @if ($pageContext == 'add')
+                                    <button class="btn btn-primary" type="button">
+                                            Cancel
+                                        @elseif ($pageContext == 'edit')
+                                    <button class="btn btn-danger" type="button">
+                                            Reject
                                         @endif
-                                        
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-11">
-                                <div class="mb-3 row">
-                                    <div class="col-6 d-flex align-items-center">
-                                        <label for="con-kandang">Nama Proker</label>
-                                    </div>
-                                    <div class="col-6">
-                                        <input class="form-control" id="con-kandang" name="nama_Proker" type="text" required="" placeholder="Nama Proker" autocomplete="off">
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- <div class="mb-3 col-md-11 mt-0">
-                                <div class="row">
-                                    <div class="col-6 d-flex align-items-center">
-                                        <label for="con-jenis-ternak">Jenis Proker</label>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="checkbox" name="jenis_Proker[]" id="rkat" value="RKAT">
-                                            <label class="form-check-label" for="rkat">RKAT</label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="checkbox" name="jenis_Proker[]" id="non-rkat" value="Non-RKAT">
-                                            <label class="form-check-label" for="non-rkat">Non-RKAT</label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> -->
-                            <div class="col-md-11">
-                                <div class="mb-3 row">
-                                    <div class="col-6 ">
-                                        <label for="con-paddock">Permintaan Pendanaan RKAT (Rp)</label>
-                                    </div>
-                                    <div class="col-6">
-                                        <input class="form-control" id="con-paddock" type="text" name="harga" required="" placeholder="Permintaan Pendanaan (Rp)" autocomplete="off" value="{{ $proker->harga ?? '' }}">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-11">
-                                <div class="mb-3 row">
-                                    <div class="col-6 ">
-                                        <label for="con-paddock">Permintaan Pendanaan BPTN (Rp)</label>
-                                    </div>
-                                    <div class="col-6">
-                                        <input class="form-control" id="con-paddock" type="text" name="harga" required="" placeholder="Permintaan Pendanaan (Rp)" autocomplete="off" value="{{ $proker->harga ?? '' }}">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-11">
-                                <div class="mb-3 row">
-                                    <div class="col-6">
-                                        <label for="file-upload">Upload Berkas Pendukung</label>
-                                    </div>
-                                    <div class="col-6">
-                                        <input class="form-control" id="file-upload" type="file" name="uploaded_file" accept=".pdf, .doc, .docx">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="mb-3 col-md-11 mt-0">
-                                <div class="row">
-                                    <div class="col-6">
-                                        <label for="con-inhouse-keterangan">Keterangan</label>
-                                    </div>
-                                    <div class="col-6">
-                                        <textarea class="form-control" required name="deskripsi" id="con-inhouse-keterangan" placeholder="Keterangan" >{{ $proker->deskripsi ?? '' }}</textarea>    
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <h6 class="mb-3">Tabel Budgeting</h6>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="row">
-                                    <h6 class="">Tabel Dana RAB</h6>
-                                    <h6 class="mb-3">Sisa Dana: <span class="badge badge-success">Rp 3.980.000</span></h6>
-                                    <div class="table-responsive">
-                                        <table class="display" id="basic-1-2">
-                                            <thead>
-                                                <tr>
-                                                <th>No.</th>
-                                                <th>Nama</th>
-                                                <th>Harga Satuan</th>
-                                                <th>Qty</th>
-                                                <th>Total Harga</th>
-                                                <th>Aksi</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>1</td>
-                                                    <td>Fotokopi</td>
-                                                    <td>2000</td>
-                                                    <td>10</td>
-                                                    <td>Rp 20.000</td>
-                                                    <td>
-                                                        <ul class="action align-items-center">
-                                                            <li class="delete">
-                                                                <button type="button" class="btn btn-link">
-                                                                <i class="icon-trash"></i>
-                                                                </button>
-                                                            </li>
-                                                        </ul>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>2</td>
-                                                    <td> <input class="form-control" id="con-import-harga-beli" type="text" required="" placeholder="Nama" autocomplete="off"></td>
-                                                    <td> <input class="form-control" id="con-import-harga-beli" type="text" required="" placeholder="Harga Satuan" autocomplete="off"></td>
-                                                    <td> <input class="form-control" id="con-import-harga-beli" type="text" required="" placeholder="Qty" autocomplete="off"></td>
-                                                    <td> <input class="form-control" id="con-import-harga-beli" type="text" required="" placeholder="Otomatis Terhitung" disabled autocomplete="off"></td>
-                                                    <td>
-                                                        <ul class="action align-items-center">
-                                                            <li class="delete">
-                                                                <button type="button" class="btn btn-link">
-                                                                <i class="icon-trash"></i>
-                                                                </button>
-                                                            </li>
-                                                        </ul>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <div class="row g-2 justify-content-end">
-                                        <div class="col-auto">
-                                            <button class="btn btn-success" type="button"><i class="icon-plus"></i>Tambahkan Baris Lagi</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6 mt-4 mt-md-0">
-                                <div class="row">
-                                    <h6 class="mb-3">Tabel Dana Riil</h6>
-                                    <h6 class="mb-3">Sisa Dana: <span class="badge badge-success">Rp 3.980.000</span></h6>
-                                    <div class="table-responsive">
-                                        <table class="display" id="basic-1">
-                                            <thead>
-                                                <th>No.</th>
-                                                <th>Nama</th>
-                                                <th>Harga Satuan</th>
-                                                <th>Qty</th>
-                                                <th>Total Harga</th>
-                                                <th>Aksi</th>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>1</td>
-                                                    <td>Fotokopi</td>
-                                                    <td>2000</td>
-                                                    <td>10</td>
-                                                    <td>Rp 20.000</td>
-                                                    <td>
-                                                        <ul class="action align-items-center">
-                                                            <li class="delete">
-                                                                <button type="button" class="btn btn-link">
-                                                                <i class="icon-trash"></i>
-                                                                </button>
-                                                            </li>
-                                                        </ul>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>2</td>
-                                                    <td> <input class="form-control" id="con-import-harga-beli" type="text" required="" placeholder="Nama" autocomplete="off"></td>
-                                                    <td> <input class="form-control" id="con-import-harga-beli" type="text" required="" placeholder="Harga Satuan" autocomplete="off"></td>
-                                                    <td> <input class="form-control" id="con-import-harga-beli" type="text" required="" placeholder="Qty" autocomplete="off"></td>
-                                                    <td> <input class="form-control" id="con-import-harga-beli" type="text" required="" placeholder="Otomatis Terhitung" disabled autocomplete="off"></td>
-                                                    <td>
-                                                        <ul class="action align-items-center">
-                                                            <li class="delete">
-                                                                <button type="button" class="btn btn-link">
-                                                                <i class="icon-trash"></i>
-                                                                </button>
-                                                            </li>
-                                                        </ul>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <div class="row g-2 justify-content-end">
-                                        <div class="col-auto">
-                                            <button class="btn btn-success" type="button"><i class="icon-plus"></i>Tambahkan Baris Lagi</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row g-2 justify-content-end">
-                        <div class="col-auto">
-                        @if ($pageContext == 'add' || $pageContext == 'edit')
-                            <a href="{{ route('proker.index') }}">
-                                    @if ($pageContext == 'add')
-                                <button class="btn btn-primary" type="button">
-                                        Cancel
-                                    @elseif ($pageContext == 'edit')
-                                <button class="btn btn-danger" type="button">
-                                        Reject
-                                    @endif
-                                </button>
-                            </a>
-                        @else
-                            <a href="{{ route('proker.index') }}">
-                                <button class="btn btn-primary" type="button">Back</button>
-                            </a>
-                        @endif
-                        </div>
-                        <div class="col-auto">
-                            @if ($pageContext == 'edit')
-                            <a href="">
-                                <button class="btn btn-secondary" type="submit">Approve</button>
-                            </a>
+                                    </button>
+                                </a>
+                            @else
+                                <a href="{{ route('proker.index') }}">
+                                    <button class="btn btn-primary" type="button">Back</button>
+                                </a>
                             @endif
-                            @if ($pageContext == 'add')
-                            <a href="{{ route('proker.store') }}">
-                                <button class="btn btn-secondary" type="submit">Save</button>
-                            </a>
-                            @endif
-                        </div>
+                            </div>
+                            <div class="col-auto">
+                                @if ($pageContext == 'edit')
+                                <a href="">
+                                    <button class="btn btn-secondary" type="submit">Approve</button>
+                                </a>
+                                @endif
+                                @if ($pageContext == 'add')
+                                <a href="{{ route('proker.store') }}">
+                                    <button class="btn btn-secondary" type="submit">Save</button>
+                                </a>
+                                @endif
+                            </div>
 
+                        </div>
                     </div>
-                </div>
-            </form>
+                </form>
             </div>
          </div>
       </div>
@@ -296,23 +348,34 @@
 @endsection
 @section('script')
 <script lang="javascript">
-    const selectInput = document.getElementById('asal-ternak');
-    const inhouseSection = document.getElementById('inhouse-section');
-    const importSection = document.getElementById('import-section');
+    const btnAddRowTable = document.querySelectorAll("button#add-row-table");
 
-    selectInput.addEventListener('change', function() {
-        const selectedValue = selectInput.value;
-        
-        if (selectedValue === '1') {
-            inhouseSection.style.display = 'block';
-            importSection.style.display = 'none';
-        } else if (selectedValue === '2') {
-            inhouseSection.style.display = 'none';
-            importSection.style.display = 'block';
-        } else {
-            inhouseSection.style.display = 'none';
-            importSection.style.display = 'none';
-        }
+    btnAddRowTable.forEach(elm => {
+        elm.addEventListener("click", () => {
+            const targetTbl = elm.getAttribute("data-target-table");
+            const tbody = document.querySelector(`table.${targetTbl} tbody`);
+            const lastRow = tbody.querySelector("tr:last-child");
+
+            if (lastRow) {
+                const newRow = lastRow.cloneNode(true); // Salin elemen terakhir
+                const inputs = newRow.querySelectorAll("input, select, textarea");
+                
+                // Reset nilai input pada baris baru
+                inputs.forEach(input => {
+                    if (input.type !== "radio" && input.type !== "checkbox") {
+                        input.value = "";
+                        input.disabled = false;
+                    }
+                });
+
+                const lastNumber = parseInt(lastRow.querySelector("td:first-child").getAttribute("data-number"));
+                const newNumber = lastNumber + 1;
+                newRow.querySelector("td:first-child").setAttribute("data-number", newNumber);
+                newRow.querySelector("td:first-child").innerHTML = newNumber;
+
+                tbody.appendChild(newRow);
+            }
+        });
     });
 </script>
 <script src="{{ asset('assets/js/datatable/datatables/jquery.dataTables.min.js') }}"></script>
