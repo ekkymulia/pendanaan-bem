@@ -11,34 +11,30 @@
 @endsection
 
 @section('breadcrumb-title')
-    <h3>Dashboard</h3>
+    <h3>Dashboard {{ $user->role_name }}</h3>
 @endsection
 
 @section('breadcrumb-items')
     <li class="breadcrumb-item">Dashboard</li>
-    <li class="breadcrumb-item active">{{ ucfirst($role) }}</li>
+    <li class="breadcrumb-item active">{{ ucfirst($user->role_name) }}</li>
 @endsection
 
 @section('content')
 <div class="container-fluid">
 	<div class="row widget-grid">
-	  <div class="col-xxl-4 col-sm-6 box-col-6">
+	  <div class="col-xxl-4 col-sm-6 col-md-12 box-col-6">
 		<div class="card profile-box">
 		  <div class="card-body">
 			<div class="media">
 			  <div class="media-body"> 
 				<div class="greeting-user">
-					@if ($role == 'ormawa')
-				  <h4 class="f-w-600">Selamat Datang, <br>{{ $role }}</h4>
-				  @else
-				  <h4 class="f-w-600">Selamat Datang, {{ $role }}</h4>
-				  @endif
+				  <h4 class="f-w-600">Selamat Datang, <br>{{ $user->user_name }}</h4>
 				  <p>
-				  @if ($role == 'departemen')
-				 	Ormawa xxxx <br>
+				  @if ($dari_ormawa)
+				 	Ormawa {{$dari_ormawa}} <br>
 				  @endif	
 				  Berikut Ringkasan Akun Anda Hari Ini</p>
-				  @if ($role != 'superadmin')
+				  @if ($role != '1')
 				  <div class="whatsnew-btn"><a class="btn btn-outline-white">Print Ringkasan</a></div>
 				  @endif
 				</div>
@@ -72,7 +68,7 @@
 		  </div>
 		</div>
 	  </div>
-	  <div class="col-xxl-auto col-xl-3 col-sm-6 box-col-6"> 
+	  <div class="col-xxl-auto col-xl-4 col-md-4 col-sm-6 box-col-6"> 
 		<div class="row"> 
 		  <div class="col-xl-12"> 
 			<div class="card widget-1">
@@ -89,14 +85,14 @@
 					</div>
 				  </div>
 				  <div> 
-					@if ($role == 'departemen')
-					<h4>10</h4><span class="f-light">Jumlah Proker</span>
+					@if ($role == '3')
+					<h4>{{ $widget_val->w1 }}</h4><span class="f-light">Jumlah Proker</span>
 					@endif
-					@if ($role == 'ormawa')
-					<h4>10</h4><span class="f-light">Jumlah Departemen</span>
+					@if ($role == '2')
+					<h4>{{ $widget_val->w1 }}</h4><span class="f-light">Jumlah Departemen</span>
 					@endif
-					@if ($role == 'superadmin')
-					<h4>10</h4><span class="f-light">Jumlah Total Akun</span>
+					@if ($role == '1')
+					<h4>{{ $widget_val->w1 }}</h4><span class="f-light">Total Akun</span>
 					@endif
 				  </div>
 				</div>
@@ -119,14 +115,14 @@
 					  </div>
 					</div>
 					<div> 
-					@if ($role == 'departemen')
-					<h4>Rp 10.000.000</h4><span class="f-light">Total Dana Diajukan</span>
+					@if ($role == '3')
+					<h4>{{ $widget_val->w2 }}</h4><span class="f-light">Dana Diajukan</span>
 					@endif
-					@if ($role == 'ormawa')
-					<h4>10</h4><span class="f-light">Jumlah Proker</span>
+					@if ($role == '2')
+					<h4>{{ $widget_val->w2 }}</h4><span class="f-light">Jumlah Proker</span>
 					@endif
-					@if ($role == 'superadmin')
-					<h4>10</h4><span class="f-light">Jumlah Akun Ormawa</span>
+					@if ($role == '1')
+					<h4>{{ $widget_val->w2 }}</h4><span class="f-light">Akun Ormawa</span>
 					@endif
 					</div>
 				  </div>
@@ -138,7 +134,7 @@
 		  </div>
 		</div>
 	  </div>
-	  <div class="col-xxl-auto col-xl-3 col-sm-6 box-col-6"> 
+	  <div class="col-xxl-auto col-xl-4 col-md-4 col-sm-6 box-col-6"> 
 		<div class="row"> 
 		  <div class="col-xl-12"> 
 			<div class="card widget-1">
@@ -155,14 +151,14 @@
 					</div>
 				  </div>
 				  <div> 
-				 	 @if ($role == 'departemen')
-					<h4>10</h4><span class="f-light">Jumlah Proker Disetujui</span>
+				 	 @if ($role == '3')
+					<h4>{{ $widget_val->w3 }}</h4><span class="f-light">Proker Disetujui</span>
 					@endif
-					@if ($role == 'ormawa')
-					<h4>10</h4><span class="f-light">Jumlah Proker Menunggu Approval</span>
+					@if ($role == '2')
+					<h4>{{ $widget_val->w3 }}</h4><span class="f-light">Proker Menunggu Approval</span>
 					@endif
-					@if ($role == 'superadmin')
-					<h4>10</h4><span class="f-light">Jumlah Akun Ormawa</span>
+					@if ($role == '1')
+					<h4>{{ $widget_val->w3 }}</h4><span class="f-light">Akun Ormawa</span>
 					@endif
 				  </div>
 				</div>
@@ -185,14 +181,14 @@
 					  </div>
 					</div>
 					<div> 
-					@if ($role == 'departemen')
-					<h4>Rp 8.000.000</h4><span class="f-light">Total Dana diberikan</span>
+					@if ($role == '3')
+					<h4>{{ $widget_val->w4 }}</h4><span class="f-light">Total Dana dipakai</span>
 					@endif
-					@if ($role == 'ormawa')
-					<h4>Rp 8.000.000</h4><span class="f-light">Total Dana Diberikan</span>
+					@if ($role == '2')
+					<h4>{{ $widget_val->w4 }}</h4><span class="f-light">Total Dana Diberikan</span>
 					@endif
-					@if ($role == 'superadmin')
-					<h4>10</h4><span class="f-light">Jumlah Akun Departemen</span>
+					@if ($role == '1')
+					<h4>{{ $widget_val->w4 }}</h4><span class="f-light">Akun Departemen</span>
 					@endif
 					</div>
 				  </div>
@@ -204,7 +200,7 @@
 		  </div>
 		</div>
 	  </div>
-	  <div class="col-xxl-auto col-xl-3 col-sm-6 box-col-6"> 
+	  <div class="col-xxl-auto col-xl-4 col-md-4 col-sm-6 box-col-6"> 
 		<div class="row"> 
 		  <div class="col-xl-12"> 
 			<div class="card widget-1">
@@ -221,14 +217,14 @@
 					</div>
 				  </div>
 				  <div> 
-				 	 @if ($role == 'departemen')
-					<h4>10</h4><span class="f-light">Jumlah Proker Di Tolak</span>
+				 	 @if ($role == '3')
+					<h4>{{ $widget_val->w5 }}</h4><span class="f-light">Proker Di Tolak</span>
 					@endif
-					@if ($role == 'ormawa')
-					<h4>10</h4><span class="f-light">Jumlah Proker Di Tolak</span>
+					@if ($role == '2')
+					<h4>{{ $widget_val->w5 }}</h4><span class="f-light">Proker Di Tolak</span>
 					@endif
-					@if ($role == 'superadmin')
-					<h4>10</h4><span class="f-light">Jumlah Akun Departemen</span>
+					@if ($role == '1')
+					<h4>{{ $widget_val->w5 }}</h4><span class="f-light">Akun Departemen</span>
 					@endif
 				  </div>
 				</div>
@@ -251,14 +247,14 @@
 					  </div>
 					</div>
 					<div> 
-					@if ($role == 'departemen')
-					<h4>10</h4><span class="f-light">Jumlah Proker Menunggu Approval</span>
+					@if ($role == '3')
+					<h4>{{ $widget_val->w6 }}</h4><span class="f-light">Proker Menunggu Approval</span>
 					@endif
-					@if ($role == 'ormawa')
-					<h4>10</h4><span class="f-light">Jumlah Proker Disetujui</span>
+					@if ($role == '2')
+					<h4>{{ $widget_val->w6 }}</h4><span class="f-light">Proker Disetujui</span>
 					@endif
-					@if ($role == 'superadmin')
-					<h4>10</h4><span class="f-light">Jumlah Akun Departemen</span>
+					@if ($role == '1')
+					<h4>{{ $widget_val->w6 }}</h4><span class="f-light">Akun Departemen</span>
 					@endif
 					</div>
 				  </div>
@@ -304,12 +300,12 @@
 						  <use href="{{ asset('assets/svg/icon-sprite.svg#income') }}"></use>
 						</svg>
 					  </div>
-						@if ($role == 'departemen')
+						@if ($role == '3')
 						<div> <span class="f-light">Total Dana</span>
 							<h6 class="mt-1 mb-0">Rp 8.000.000</h6>
 						</div>
 						@endif
-						@if ($role == 'ormawa')
+						@if ($role == '2')
 						<div> <span class="f-light">Total Dana</span>
 							<h6 class="mt-1 mb-0">Rp 8.000.000</h6>
 						</div>
@@ -330,12 +326,12 @@
 						  <use href="{{ asset('assets/svg/icon-sprite.svg#expense') }}"></use>
 						</svg>
 					  </div>
-					  	@if ($role == 'departemen')
+					  	@if ($role == '3')
 						<div> <span class="f-light">Total RAB</span>
 							<h6 class="mt-1 mb-0">Rp 4.000.000</h6>
 						</div>
 						@endif
-						@if ($role == 'ormawa')
+						@if ($role == '2')
 						<div> <span class="f-light">Total RAB</span>
 							<h6 class="mt-1 mb-0">Rp 8.000.000</h6>
 						</div>
@@ -349,12 +345,12 @@
 						  <use href="{{ asset('assets/svg/icon-sprite.svg#doller-return') }}"></use>
 						</svg>
 					  </div>
-					  	@if ($role == 'departemen')
+					  	@if ($role == '3')
 						<div> <span class="f-light">Pemakaian Riil</span>
 							<h6 class="mt-1 mb-0">Rp 2.000.000</h6>
 						</div>
 						@endif
-						@if ($role == 'ormawa')
+						@if ($role == '2')
 						<div> <span class="f-light">Penyerapan Riil</span>
 							<h6 class="mt-1 mb-0">Rp 2.000.000</h6>
 						</div>
