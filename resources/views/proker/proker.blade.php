@@ -81,6 +81,7 @@
                                     <div class="mb-3 row">
                                         <div class="col-6 d-flex align-items-center">
                                             <label for="proker-ketua">Ketua Proker</label>
+
                                         </div>
                                         <div class="col-6">
                                             <input class="form-control" id="proker-ketua" name="ketua_proker" type="text" required="" placeholder="Ketua Proker" autocomplete="off">
