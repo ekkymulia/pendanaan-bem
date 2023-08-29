@@ -10,7 +10,7 @@ class Proker extends Model
     use HasFactory;
     protected $fillable = [
         'user_id', 'departemen_id', 'tahun_proker', 'nama', 'ketua', 'bendahara',
-        'RKAT', 'Proposal', 'keterangan', 'dana',
+        'rkat', 'bptn', 'Proposal', 'keterangan', 'dana',
     ];
 
     public function user()

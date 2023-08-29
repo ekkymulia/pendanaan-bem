@@ -31,3 +31,10 @@ th.non-white-space{
 input[disabled]{
     cursor: no-drop;
 }
+
+input[type="number"].no-arrow::-webkit-outer-spin-button,
+input[type="number"].no-arrow::-webkit-inner-spin-button{
+    appearance: none;
+  -webkit-appearance: none;
+  margin: 0;
+}

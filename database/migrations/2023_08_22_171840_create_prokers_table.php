@@ -19,12 +19,13 @@ return new class extends Migration
             $table->string('nama');
             $table->string('ketua');
             $table->string('bendahara');
-            $table->boolean('RKAT')->default('1');
+            $table->unsignedBigInteger('RKAT')->nullable();
+            $table->unsignedBigInteger('BPTN')->nullable();
             $table->string('Proposal');
             $table->text('keterangan')->nullable();
             $table->decimal('dana', 10, 2)->nullable();
             $table->timestamps();
-        
+
             // Define foreign key relationships
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('departemen_id')->references('id')->on('departemens');

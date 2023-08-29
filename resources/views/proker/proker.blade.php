@@ -38,7 +38,7 @@
                </h4>
             </div>
             <div class="card-body">
-                <form class="form-bookmark needs-validation" id="bookmark-form" novalidate="" 
+                <form class="form-bookmark needs-validation form-proker" id="bookmark-form" novalidate="" 
                     method="POST" 
                     action="{{
                         $pageContext === 'add'? route('proker.store') : ''
@@ -103,7 +103,7 @@
                                             <label for="proker-jenis-bptn">Dana RKAT (Rp)</label>
                                         </div>
                                         <div class="col-6">
-                                            <input class="form-control" type="number" name="dana_rkat" id="proker-jenis-rkat" placeholder="Dana RKAT (Rp)" min="0" value="0" disabled>
+                                            <input class="form-control no-arrow" type="number" name="dana_rkat" id="proker-jenis-rkat" placeholder="Dana RKAT (Rp)" min="0" value="0" disabled>
                                         </div>
                                     </div>
                                 </div>
@@ -113,7 +113,7 @@
                                             <label for="proker-jenis-bptn">Dana BPTN (Rp)</label>
                                         </div>
                                         <div class="col-6">
-                                            <input class="form-control" type="number" name="dana_bptn" id="proker-jenis-bptn" placeholder="Dana BPTN (Rp)" min="0" value="0" disabled>
+                                            <input class="form-control no-arrow" type="number" name="dana_bptn" id="proker-jenis-bptn" placeholder="Dana BPTN (Rp)" min="0" value="0" disabled>
                                         </div>
                                     </div>
                                 </div>
@@ -142,9 +142,9 @@
                             <div class="tab-tbl-budget">
                                 <ul class="nav nav-tabs nav-primary" id="pills-warningtab" role="tablist">
                                     <li class="nav-item"><a class="nav-link active" id="pills-rab-tab" data-bs-toggle="pill" href="#pills-rab" role="tab" aria-controls="pills-rab" aria-selected="true" data-bs-original-title="" title="">Dana RAB</a></li>
-                                    {{-- @if ($pageContext != 'add') --}}
+                                    @if ($pageContext != 'add')
                                     <li class="nav-item"><a class="nav-link" id="pills-rill-tab" data-bs-toggle="pill" href="#pills-rill" role="tab" aria-controls="pills-rill" aria-selected="false" data-bs-original-title="" title="">Dana Riil</a></li>
-                                    {{-- @endif --}}
+                                    @endif
                                 </ul>
                                 <div class="tab-content" id="pills-warningtabContent">
                                     <div class="tab-pane fade active show" id="pills-rab" role="tabpanel" aria-labelledby="pills-rab-tab">
@@ -153,7 +153,7 @@
                                                 <h6 class="my-3">Tabel Dana RAB</h6>
                                                 <h6 class="mb-3">Sisa Dana: <span class="badge badge-success">Rp 3.980.000</span></h6>
                                                 <div class="table-responsive">
-                                                    <table class="display tbl-rab" id="basic-1">
+                                                    <table class="display tbl-rab calc-price" id="basic-1">
                                                         <thead>
                                                             <tr>
                                                                 <th class="">No.</th>
@@ -162,7 +162,6 @@
                                                                 <th class="">Qty</th>
                                                                 <th class="">Total Harga</th>
                                                                 <th class="">Tempat Beli</th>
-                                                                <th class="">Bukti</th>
                                                                 <th class="">Status</th>
                                                                 <th class="">Aksi</th>
                                                             </tr>
@@ -174,19 +173,16 @@
                                                                     <input class="form-control" id="" type="text" required="" placeholder="Nama" autocomplete="off" name="rab_nama[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-control" id="" type="text" required="" placeholder="Harga Satuan" autocomplete="off" name="rab_hargasatuan[]">
+                                                                    <input class="form-control no-arrow" id="hargaSatuan" type="number" required="" placeholder="Harga Satuan" autocomplete="off" name="rab_hargasatuan[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-control" id="" type="number" required="" placeholder="Qty" autocomplete="off" min="0" name="rab_qty[]">
+                                                                    <input class="form-control no-arrow" id="quantity" type="number" required="" placeholder="Qty" autocomplete="off" min="0" name="rab_qty[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-control" id="" type="text" required="" placeholder="Otomatis Terhitung" disabled autocomplete="off" name="rab_totalharga[]">
+                                                                    <input class="form-control" id="calcTotal" type="number" required="" placeholder="Otomatis Terhitung" autocomplete="off" name="rab_totalharga[]" disabled>
                                                                 </td>
                                                                 <td>
                                                                     <input class="form-control" id="" type="text" required="" placeholder="Tempat Pembelian" autocomplete="off" name="rab_tmptbeli[]">
-                                                                </td>
-                                                                <td>
-                                                                    <input class="form-control" id="" type="file" required="" accept=".pdf, .doc, .docx" name="rab_bukti[]" disabled>
                                                                 </td>
                                                                 <td>
                                                                     <div class="m-checkbox-inline custom-radio-ml">
@@ -195,7 +191,7 @@
                                                                           <label class="form-check-label mb-0" for="radioinline1">Setuju</label>
                                                                         </div>
                                                                         <div class="form-check form-check-inline radio radio-primary">
-                                                                          <input class="form-check-input" id="radioinline2" type="radio" name="rab_status[]" value="0" disabled>
+                                                                          <input class="form-check-input" id="radioinline2" type="radio" name="rab_status[]" value="2" disabled>
                                                                           <label class="form-check-label mb-0" for="radioinline2">Tolak</label>
                                                                         </div>
                                                                       </div>
@@ -224,13 +220,14 @@
                                             </div>
                                         </div>
                                     </div>
+                                    @if ($pageContext != 'add')
                                     <div class="tab-pane fade" id="pills-rill" role="tabpanel" aria-labelledby="pills-rill-tab">
                                         <div class="col-12">
                                             <div class="row">
                                                 <h6 class="my-3">Tabel Dana Riil</h6>
                                                 <h6 class="mb-3">Sisa Dana: <span class="badge badge-success">Rp 3.980.000</span></h6>
                                                 <div class="table-responsive">
-                                                    <table class="display tbl-riil" id="basic-1-2">
+                                                    <table class="display tbl-riil calc-price" id="basic-1-2">
                                                         <thead>
                                                             <tr>
                                                                 <th class="">No.</th>
@@ -240,7 +237,6 @@
                                                                 <th class="">Total Harga</th>
                                                                 <th class="">Tempat Beli</th>
                                                                 <th class="">Bukti</th>
-                                                                <th class="">Status</th>
                                                                 <th class="">Aksi</th>
                                                             </tr>
                                                         </thead>
@@ -251,31 +247,19 @@
                                                                     <input class="form-control" id="" type="text" required="" placeholder="Nama" autocomplete="off" name="riil_nama">
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-control" id="" type="text" required="" placeholder="Harga Satuan" autocomplete="off" name="riil_hargasatuan">
+                                                                    <input class="form-control" id="hargaSatuan" type="text" required="" placeholder="Harga Satuan" autocomplete="off" name="riil_hargasatuan">
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-control" id="" type="number" required="" placeholder="Qty" autocomplete="off" min="0" name="riil_qty">
+                                                                    <input class="form-control no-arrow" id="quantity" type="number" required="" placeholder="Qty" autocomplete="off" min="0" name="riil_qty">
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-control" id="" type="text" required="" placeholder="Otomatis Terhitung" disabled autocomplete="off">
+                                                                    <input class="form-control" id="calcTotal" type="number" required="" placeholder="Otomatis Terhitung" disabled autocomplete="off">
                                                                 </td>
                                                                 <td>
                                                                     <input class="form-control" id="" type="text" required="" placeholder="Tempat Pembelian" autocomplete="off" name="riil_tmptbeli">
                                                                 </td>
                                                                 <td>
                                                                     <input class="form-control" id="" type="file" required="" accept=".pdf, .doc, .docx" name="riil_bukti">
-                                                                </td>
-                                                                <td>
-                                                                    <div class="m-checkbox-inline custom-radio-ml">
-                                                                        <div class="form-check form-check-inline radio radio-primary">
-                                                                          <input class="form-check-input" id="radioinline1" type="radio" name="riil_bukti[]" value="1" disabled>
-                                                                          <label class="form-check-label mb-0" for="radioinline1">Setuju</label>
-                                                                        </div>
-                                                                        <div class="form-check form-check-inline radio radio-primary">
-                                                                          <input class="form-check-input" id="radioinline2" type="radio" name="riil_bukti[]" value="0" disabled>
-                                                                          <label class="form-check-label mb-0" for="radioinline2">Tolak</label>
-                                                                        </div>
-                                                                      </div>
                                                                 </td>
                                                                 <td>
                                                                     <ul class="action align-items-center">
@@ -301,6 +285,7 @@
                                             </div>
                                         </div>
                                     </div>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -363,7 +348,6 @@
                 inputs.forEach(input => {
                     if (input.type !== "radio" && input.type !== "checkbox") {
                         input.value = "";
-                        input.disabled = false;
                     }
                 });
 
@@ -374,7 +358,45 @@
 
                 tbody.appendChild(newRow);
             }
+            calcPrice();
         });
+    });
+
+    function calcPrice(){
+        const table = document.querySelectorAll("table.calc-price");
+        table.forEach(elm => {
+            const tr = elm.querySelectorAll("tbody tr");
+            tr.forEach(row => {
+                const hargaSatuan = row.querySelector("input#hargaSatuan");
+                const quantity = row.querySelector("input#quantity");
+                const calcTotal = row.querySelector("input#calcTotal");
+                hargaSatuan.addEventListener("input", ()=>{
+                    if((quantity.value != "") && (hargaSatuan.value != "")){
+                        calcTotal.value = parseInt(hargaSatuan.value) * parseInt(quantity.value);
+                    }else{
+                        calcTotal.value = "";
+                    }
+                });
+                quantity.addEventListener("input", ()=>{
+                    if((quantity.value != "") && (hargaSatuan.value != "")){
+                        calcTotal.value = parseInt(hargaSatuan.value) * parseInt(quantity.value);
+                    }else{
+                        calcTotal.value = "";
+                    }
+                });
+            });
+        });
+    }
+    calcPrice();
+
+    const formProker = document.querySelector('form.form-proker');
+    formProker.addEventListener("submit", e => {
+        e.preventDefault();
+        const disabledInputs = formProker.querySelectorAll("input[disabled]");
+        disabledInputs.forEach(input => {
+            input.removeAttribute("disabled");
+        });
+        formProker.submit();
     });
 </script>
 <script src="{{ asset('assets/js/datatable/datatables/jquery.dataTables.min.js') }}"></script>

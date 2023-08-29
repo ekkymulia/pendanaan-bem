@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Proker;
 use Illuminate\Http\Request;
 
 class ProkerController extends Controller
@@ -29,7 +30,27 @@ class ProkerController extends Controller
      */
     public function store(Request $request)
     {
-        return response()->json($request->all());
+        $data = $request->all();
+        $prokerStore = Proker::create([
+            'user_id' => 3,
+            'departemen_id' => 1,
+            'tahun_proker' => '2023',
+            'nama' => $data['nama_Proker'],
+            'ketua' => $data['ketua_proker'],
+            'bendahara' => $data['bendahara_proker'],
+            'rkat' => $data['dana_rkat'],
+            'bptn' => $data['dana_rkat'],
+            'Proposal' => $data['proker_berkas'],
+            'keterangan' => $data['keterangan'],
+            'dana' => intval($data['dana_rkat']) + intval($data['dana_bptn']),
+        ]);
+
+        if ($prokerStore) {
+            $request->validate([
+                'proker_berkas' => 'mimes:docx,pdf'
+            ]);
+            // return redirect('proker');
+        }
     }
 
     /**
