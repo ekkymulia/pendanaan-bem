@@ -6,6 +6,7 @@ namespace Database\Seeders;
 
 use App\Models\Departemen;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
 {
@@ -16,9 +17,14 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call(RoleSeeder::class);
-        $this->call(UserSeeder::class);
-        $this->call(OrmawaSeeder::class);
-        $this->call(DepartemenSeeder::class);
+        $this->call([
+            StatusDanaSeeder::class,
+            RoleSeeder::class,
+            UserSeeder::class,
+            OrmawaSeeder::class,
+            DepartemenSeeder::class,
+            DanaRabSeeder::class,
+            DanaRiilSeeder::class,
+        ]);
     }
 }

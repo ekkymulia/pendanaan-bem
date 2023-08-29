@@ -25,7 +25,7 @@ return new class extends Migration
             $table->text('keterangan')->nullable();
             $table->decimal('dana', 10, 2)->nullable();
             $table->timestamps();
-        
+
             // Define foreign key relationships
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('departemen_id')->references('id')->on('departemens');

@@ -13,7 +13,6 @@ class DepartemenSeeder extends Seeder
      */
     public function run(): void
     {
-        
         DB::table('departemens')->insert([
             'ormawa_id' => 1,
             'user_id' => 3,
