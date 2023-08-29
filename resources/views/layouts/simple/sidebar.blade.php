@@ -82,7 +82,19 @@
                             <h6 class="">Pengaturan Akun</h6>
                         </div>
                     </li>
-                    <li class="sidebar-list">
+                    <li class="sidebar-list"><i class="fa fa-thumb-tack"></i>
+                    @if (session('u_data')->user_role != '1')
+                        <a class="sidebar-link sidebar-title link-n  av" href="{{route(session('u_data')->role_name.'.edit', 1)}}">
+                        <i data-feather="users"></i><span>Profil {{session('u_data')->role_name}} Saya</span>
+                        </a>
+                    @endif
+                    @if (session('u_data')->user_role == '1')
+                        <a class="sidebar-link sidebar-title link-n  av" href="{{route('ormawa.edit', 1)}}">
+                        <i data-feather="users"></i><span>Profil {{session('u_data')->role_name}} Saya</span>
+                        </a>
+                    @endif
+                    </li>
+                    <!-- <li class="sidebar-list">
                         <i class="fa fa-thumb-tack"></i>
                         <a class="sidebar-link sidebar-title" href="#">
                             <i data-feather="user"></i><span>Ormawa Profile</span>
@@ -113,7 +125,7 @@
                             <li><a href="{{ route('edit-profile') }}">Users Edit</a></li>
                             <li><a href="{{ route('user-cards') }}">Users Cards</a></li>
                         </ul>
-                    </li>
+                    </li> -->
                     <li class="sidebar-list"><i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title"
                             href="{{ route('logout') }}">
                             <svg class="stroke-icon">
