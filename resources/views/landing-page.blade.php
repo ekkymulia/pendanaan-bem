@@ -48,7 +48,7 @@
                     <li class="nav-item"><a class="nav-link" href="#">Panduan</a></li>
                   </ul>
                 </div>
-                <div class="buy-btn rounded-pill"><a class="nav-link js-scroll" href="#" target="_blank">Login</a></div>
+                <div class="buy-btn rounded-pill"><a class="nav-link js-scroll" href="{{ route('login') }}">Login</a></div>
               </nav>
             </header>
           </div>
