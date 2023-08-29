@@ -15,15 +15,16 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('departemen_id');
-            $table->string('tahun_proker');
+            // $table->string('tahun_proker');
             $table->string('nama');
             $table->string('ketua');
             $table->string('bendahara');
-            $table->bigInteger('rkat');
-            $table->bigInteger('bptn');
+            $table->unsignedBigInteger('rkat')->default(0);
+            $table->unsignedBigInteger('bptn')->default(0);
             $table->string('Proposal');
             $table->text('keterangan')->nullable();
-            $table->decimal('dana', 10, 2)->nullable();
+            // $table->decimal('dana', 10, 2)->nullable();
+            $table->unsignedBigInteger('dana')->default(0);
             $table->timestamps();
 
             // Define foreign key relationships

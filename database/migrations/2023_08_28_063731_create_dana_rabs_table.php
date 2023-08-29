@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('dana_rab', function (Blueprint $table) {
+        Schema::create('dana_rabs', function (Blueprint $table) {
             $table->id();
             $table->string('nama');
             $table->unsignedBigInteger('proker_id');
@@ -19,11 +19,11 @@ return new class extends Migration
             $table->unsignedBigInteger('quantity');
             $table->unsignedBigInteger('total_harga');
             $table->string('tempat_pembelian');
-            $table->unsignedBigInteger('status_dana_id');
+            $table->unsignedBigInteger('status_dana_id')->default(3);
             $table->timestamps();
 
             $table->foreign('proker_id')->references('id')->on('prokers');
-            $table->foreign('status_dana_id')->references('id')->on('status_dana');
+            $table->foreign('status_dana_id')->references('id')->on('status_danas');
         });
     }
 
@@ -32,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('dana_rab');
+        Schema::dropIfExists('dana_rabs');
     }
 };

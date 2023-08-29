@@ -13,11 +13,14 @@ class StatusDanaSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('status_dana')->insert([
-            'nama' => 'reject',
+        DB::table('status_danas')->insert([
+            'nama' => 'approved',
         ]);
-        DB::table('status_dana')->insert([
-            'nama' => 'approve',
+        DB::table('status_danas')->insert([
+            'nama' => 'rejected',
+        ]);
+        DB::table('status_danas')->insert([
+            'nama' => 'pending',
         ]);
     }
 }

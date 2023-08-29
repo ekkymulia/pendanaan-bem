@@ -36,12 +36,22 @@
                         Detail Proker
                     @endif
                </h4>
+
+               @if ($errors->any)
+                @foreach ($errors->all() as $error)
+                <div class="alert alert-danger dark alert-dismissible fade show" role="alert">
+                    {{ $error }}
+                    <button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close" data-bs-original-title="" title=""></button>
+                </div>
+                @endforeach
+               @endif
             </div>
             <div class="card-body">
                 <form class="form-bookmark needs-validation form-proker" id="bookmark-form" novalidate="" 
                     method="POST" 
+                    enctype="multipart/form-data"
                     action="{{
-                        $pageContext === 'add'? route('proker.store') : ''
+                        (($pageContext === 'add') && (session('u_data')->user_role == '3')) ? route('proker.store') : ''
                     }}"
                 >
                     @csrf
@@ -73,7 +83,10 @@
                                             <label for="proker-nama">Nama Proker</label>
                                         </div>
                                         <div class="col-6">
-                                            <input class="form-control" id="proker-nama" name="nama_Proker" type="text" required="" placeholder="Nama Proker" autocomplete="off">
+                                            <input class="form-control" id="proker-nama" name="nama_proker" type="text" required placeholder="Nama Proker" autocomplete="off" value="{{ old('nama_proker') }}">
+                                            <div class="invalid-feedback">
+                                                Please choose a username.
+                                              </div>
                                         </div>
                                     </div>
                                 </div>
@@ -84,7 +97,7 @@
 
                                         </div>
                                         <div class="col-6">
-                                            <input class="form-control" id="proker-ketua" name="ketua_proker" type="text" required="" placeholder="Ketua Proker" autocomplete="off">
+                                            <input class="form-control" id="proker-ketua" name="ketua_proker" type="text" required placeholder="Ketua Proker" autocomplete="off" value="{{ old('ketua_proker') }}">
                                         </div>
                                     </div>
                                 </div>
@@ -94,7 +107,7 @@
                                             <label for="proker-bendahara">Bendahara Proker</label>
                                         </div>
                                         <div class="col-6">
-                                            <input class="form-control" id="proker-bendahara" name="bendahara_proker" type="text" required="" placeholder="Bendahara Proker" autocomplete="off">
+                                            <input class="form-control" id="proker-bendahara" name="bendahara_proker" type="text" required placeholder="Bendahara Proker" autocomplete="off" value="{{ old('bendahara_proker') }}">
                                         </div>
                                     </div>
                                 </div>
@@ -124,7 +137,7 @@
                                             <label for="proker-berkas">Upload Proposal</label>
                                         </div>
                                         <div class="col-6">
-                                            <input class="form-control" id="proker-berkas" type="file" name="proker_berkas" accept=".pdf, .doc, .docx">
+                                            <input class="form-control" id="proker-berkas" type="file" name="rab_proposal" accept=".pdf, .doc, .docx" required>
                                         </div>
                                     </div>
                                 </div>
@@ -134,7 +147,7 @@
                                             <label for="proker-ket">Keterangan</label>
                                         </div>
                                         <div class="col-6">
-                                            <textarea id="proker-ket" class="form-control" required name="keterangan" id="con-inhouse-keterangan" placeholder="Keterangan" rows="6"></textarea>    
+                                            <textarea id="proker-ket" class="form-control" required name="keterangan" id="con-inhouse-keterangan" placeholder="Keterangan" rows="6" value="{{ old('keterangan') }}"></textarea>    
                                         </div>
                                     </div>
                                 </div>
@@ -171,31 +184,48 @@
                                                             <tr>
                                                                 <td data-number="1">1</td>
                                                                 <td>
-                                                                    <input class="form-control" id="" type="text" required="" placeholder="Nama" autocomplete="off" name="rab_nama[]">
+                                                                    <input class="form-control" id="" type="text" required placeholder="Nama" autocomplete="off" name="rab_nama[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-control no-arrow" id="hargaSatuan" type="number" required="" placeholder="Harga Satuan" autocomplete="off" name="rab_hargasatuan[]">
+                                                                    <input class="form-control no-arrow" id="hargaSatuan" type="number" required placeholder="Harga Satuan" autocomplete="off" name="rab_hargasatuan[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-control no-arrow" id="quantity" type="number" required="" placeholder="Qty" autocomplete="off" min="0" name="rab_qty[]">
+                                                                    <input class="form-control no-arrow" id="quantity" type="number" required placeholder="Qty" autocomplete="off" min="0" name="rab_qty[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-control" id="calcTotal" type="number" required="" placeholder="Otomatis Terhitung" autocomplete="off" name="rab_totalharga[]" disabled>
+                                                                    <input class="form-control" id="calcTotal" type="number" required placeholder="Otomatis Terhitung" autocomplete="off" name="rab_totalharga[]" disabled>
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-control" id="" type="text" required="" placeholder="Tempat Pembelian" autocomplete="off" name="rab_tmptbeli[]">
+                                                                    <input class="form-control" id="" type="text" required placeholder="Tempat Pembelian" autocomplete="off" name="rab_tmptbeli[]">
                                                                 </td>
                                                                 <td>
+                                                                    @if (
+                                                                        ($pageContext === 'add' || $pageContext === 'edit') && 
+                                                                        (session('u_data')->user_role == '3')
+                                                                    )
+                                                                        <span class="badge badge-warning">Pending</span>
+                                                                    @else
                                                                     <div class="m-checkbox-inline custom-radio-ml">
                                                                         <div class="form-check form-check-inline radio radio-primary">
-                                                                          <input class="form-check-input" id="radioinline1" type="radio" name="rab_status[]" value="1" disabled>
-                                                                          <label class="form-check-label mb-0" for="radioinline1">Setuju</label>
+                                                                          <input class="form-check-input" id="radioinline1" type="radio" name="rab_status[]" value="1">
+                                                                          <label class="form-check-label mb-0" for="radioinline1">
+                                                                            <small>Approved</small>
+                                                                          </label>
                                                                         </div>
                                                                         <div class="form-check form-check-inline radio radio-primary">
-                                                                          <input class="form-check-input" id="radioinline2" type="radio" name="rab_status[]" value="2" disabled>
-                                                                          <label class="form-check-label mb-0" for="radioinline2">Tolak</label>
+                                                                          <input class="form-check-input" id="radioinline2" type="radio" name="rab_status[]" value="2">
+                                                                          <label class="form-check-label mb-0" for="radioinline2">
+                                                                            <small>Rejected</small>
+                                                                          </label>
                                                                         </div>
-                                                                      </div>
+                                                                        <div class="form-check form-check-inline radio radio-primary">
+                                                                          <input class="form-check-input" id="radioinline2" type="radio" name="rab_status[]" value="3" checked>
+                                                                          <label class="form-check-label mb-0" for="radioinline2">
+                                                                            <small>Pending</small>
+                                                                          </label>
+                                                                        </div>
+                                                                    </div>
+                                                                    @endif
                                                                 </td>
                                                                 <td>
                                                                     <ul class="action align-items-center">

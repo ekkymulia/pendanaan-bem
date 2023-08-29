@@ -21,6 +21,12 @@
          <div class="card">
             <div class="card-header pb-0 card-no-border">
                <h4>Daftar Data Proker</h4>
+               @if (session('success'))
+               <div class="alert alert-success dark alert-dismissible fade show" role="alert">
+                  {{ session('success') }}
+                  <button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close" data-bs-original-title="" title=""></button>
+              </div>
+               @endif
                <a href="{{route('proker.create')}}"><button class="btn btn-primary pull-right" type="button">Tambah Data Proker</button></a>
             </div>
             <div class="card-body">
