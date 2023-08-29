@@ -15,17 +15,18 @@
          <div class="login-card">
             <div>
                <div class="login-main">
-                  <form class="theme-form needs-validation" novalidate="">
+               <form class="theme-form needs-validation" novalidate="" method="post" action="{{ route('login') }}">
+                  @csrf
                      <h4>Sign in to account</h4>
                      <p>Enter your email & password to login</p>
                      <div class="form-group">
                         <label class="col-form-label">Email Address</label>
-                        <input class="form-control" type="email" required="" placeholder="Test@gmail.com">
+                        <input class="form-control" type="email" name="email" required="" placeholder="Test@gmail.com">
                         <div class="invalid-tooltip">Please enter proper email.</div>
                      </div>
                      <div class="form-group">
                         <label class="col-form-label">Password</label>
-                        <input class="form-control" type="password" name="login[password]" required="" placeholder="*********">
+                        <input class="form-control" type="password" name="password" required="" placeholder="*********">
                         <div class="invalid-tooltip">Please enter password.</div>
                         <div class="show-hide"><span class="show"></span></div>
                      </div>

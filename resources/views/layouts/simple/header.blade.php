@@ -17,7 +17,7 @@
     </div>
     <div class="nav-right col-xxl-7 col-xl-6 col-md-7 col-8 pull-right right-header p-0 ms-auto">
       <ul class="nav-menus">
-        <li class="language-nav">
+        <!-- <li class="language-nav">
           <div class="translate_wrapper">
             <div class="current_lang">
               <div class="lang"><i class="flag-icon flag-icon-us"></i><span class="lang-txt">EN                               </span></div>
@@ -32,11 +32,12 @@
               <div class="lang" data-value="ae"><i class="flag-icon flag-icon-ae"></i><span class="lang-txt">لعربية <span> (ae)</span></span></div>
             </div>
           </div>
-        </li>
-        <li>                         <span class="header-search">
+        </li> -->
+        <!-- <li>                         <span class="header-search">
             <svg>
               <use href="{{ asset('assets/svg/icon-sprite.svg#search') }}"></use>
-            </svg></span></li>
+            </svg></span>
+        </li> -->
         <li>
           <div class="mode">
             <svg>
@@ -69,17 +70,17 @@
             </ul>
           </div>
         </li>
-        <li class="profile-nav onhover-dropdown pe-0 py-0">
+        <li class="profile-nav pe-0 py-0">
           <div class="media profile-media"><img class="b-r-10" src="{{ asset('assets/images/dashboard/profile.png') }}" alt="">
-            <div class="media-body"><span>Emay Walter</span>
-              <p class="mb-0 font-roboto">Admin <i class="middle fa fa-angle-down"></i></p>
+            <div class="media-body"><span>{{ session('u_data')->user_name }}</span>
+              <p class="mb-0 font-roboto">{{ ucfirst(session('u_data')->role_name) }}</p>
             </div>
           </div>
-          <ul class="profile-dropdown onhover-show-div">
+          <!-- <ul class="profile-dropdown onhover-show-div">
             <li><a href="#"><i data-feather="user"></i><span>Account </span></a></li>
             <li><a href="#"><i data-feather="settings"></i><span>Settings</span></a></li>
             <li><a href="#"><i data-feather="log-in"> </i><span>Log in</span></a></li>
-          </ul>
+          </ul> -->
         </li>
       </ul>
     </div>

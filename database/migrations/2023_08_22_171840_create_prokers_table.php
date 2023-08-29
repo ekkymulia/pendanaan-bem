@@ -19,8 +19,8 @@ return new class extends Migration
             $table->string('nama');
             $table->string('ketua');
             $table->string('bendahara');
-            $table->unsignedBigInteger('RKAT')->nullable();
-            $table->unsignedBigInteger('BPTN')->nullable();
+            $table->bigInteger('rkat');
+            $table->bigInteger('bptn');
             $table->string('Proposal');
             $table->text('keterangan')->nullable();
             $table->decimal('dana', 10, 2)->nullable();

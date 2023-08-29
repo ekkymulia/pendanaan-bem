@@ -51,4 +51,14 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Role::class);
     }
+
+    public function ormawa()
+    {
+        return $this->hasOne(Role::class);
+    }
+
+    public function departemen()
+    {
+        return $this->hasOne(Role::class);
+    }
 }
