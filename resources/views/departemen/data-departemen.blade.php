@@ -100,30 +100,31 @@
                         </tr>
                      </thead>
                      <tbody>
-
+                     @foreach ($departemens as $department)
                         <tr>
-                           <td>1</td>
-                           <td><a href="{{ route('departemen.show', 1) }}"><u>Departemen ABC</u></a></td>
-                           <td>departemenaabc@gmail.com</td>
-                           <td>081-234-567</td>
-                           <td>John Doe</td>
-                           <td>Jane Doe</td>
-                           <td>
-                              <ul class="action align-items-center">
-                                 <li class="edit"><a href="{{route('departemen.edit', 1)}}"><i class="icon-pencil-alt"></i></a></li>
-                                 <li class="delete">
-                                    <form action="{{ route('departemen.destroy', 1) }}" method="post">
-                                       @csrf
-                                       @method('delete')
-                                       <button type="submit" class="btn btn-link">
-                                             <i class="icon-trash"></i>
-                                          </button>
-                                       </form>
-                                 </li>
-                              </ul>
-                           </td>
+                            <td>{{ $loop->iteration }}</td>
+                            <td><a href="{{ route('departemen.show', $department->id) }}"><u>{{ $department->nama_departemen }}</u></a></td>
+                            <td>{{ $department->email }}</td>
+                            <td>{{ $department->no_tlp }}</td>
+                            <td>{{ $department->ketua_departemen }}</td>
+                            <td>{{ $department->wakil_ketua }}</td>
+                            <td>
+                                <ul class="action align-items-center">
+                                    <li class="edit"><a href="{{ route('departemen.edit', $department->id) }}"><i class="icon-pencil-alt"></i></a></li>
+                                    <li class="delete">
+                                        <form action="{{ route('departemen.destroy', $department->id) }}" method="post">
+                                            @csrf
+                                            @method('delete')
+                                            <button type="submit" class="btn btn-link">
+                                                <i class="icon-trash"></i>
+                                            </button>
+                                        </form>
+                                    </li>
+                                </ul>
+                            </td>
                         </tr>
-
+                    @endforeach
+                    
                      </tbody>
                   </table>
                </div>

@@ -27,7 +27,11 @@
                   <button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close" data-bs-original-title="" title=""></button>
               </div>
                @endif
+               @if (session('u_data')->user_role == '3')
                <a href="{{route('proker.create')}}"><button class="btn btn-primary pull-right" type="button">Tambah Data Proker</button></a>
+               @else
+               <a href="{{route('proker.create')}}"><button class="btn btn-primary pull-right disabled" type="button">Tambah Data Proker</button></a>
+               @endif
             </div>
             <div class="card-body">
                <div class="table-responsive">
@@ -44,13 +48,13 @@
                         </tr>
                      </thead>
                      <tbody>
-
+                        @foreach ($prokers as $proker) 
                         <tr>
-                              <td>1</td>
-                              <td><a href="{{ route('proker.show', 1) }}"><u>IT Fest</u></a></td>
-                              <td>John</td>
-                              <td>abc</td>
-                              <td>Rp 4.000.000</td>
+                              <td>{{ $loop->iteration }}</td>
+                              <td><a href="{{ route('proker.show', $proker->id) }}"><u>{{ $proker->nama }}</u></a></td>
+                              <td>{{ $proker->ketua }}</td>
+                              <td>{{ $departemen }}</td>
+                              <td>Rp {{ $proker->dana }}</td>
                               <td><span class="badge badge-success">Proker Disetujui</span></td>
                               <td>
                                  <ul class="action align-items-center">
@@ -67,6 +71,7 @@
                                  </ul>
                               </td>
                         </tr>
+                        @endforeach
 
                      </tbody>
                   </table>

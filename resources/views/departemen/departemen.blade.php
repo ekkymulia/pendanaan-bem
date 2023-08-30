@@ -25,7 +25,16 @@
 @section('content')
 <div class="container-fluid">
     <div class="edit-profile">
-        <form class="card">
+        <form class="card" method="POST" 
+            @if ($pageContext === 'add')
+                action="{{ route('departemen.store') }}"
+            @elseif ($pageContext === 'edit')
+                action="{{ route('departemen.update', ['id' => $departemen->id]) }}" {{-- Replace 'id' with the actual parameter name --}}
+            @endif>
+            @csrf
+            @if ($pageContext === 'edit')
+                @method('PUT')
+            @endif
             <div class="card-body">
                 <h4 class="mb-5">
                     @if ($pageContext === 'add')
@@ -39,20 +48,24 @@
                 <div class="row">
                   <div class="col-xl-4">
                     <div class="mb-3">
+                        <label class="form-label">Tahun Periode</label>
+                        <input class="form-control" type="text" placeholder="Tahun Periode" name="tahun_periode">
+                    </div>
+                    <div class="mb-3">
                         <h6 class="form-label">Nama Departemen</h6>
-                        <input class="form-control" placeholder="Nama Departemen">
+                        <input class="form-control" placeholder="Nama Departemen" name="nama_departemen">
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Email-Address</label>
-                        <input class="form-control" placeholder="your-email@domain.com">
+                        <input class="form-control" placeholder="your-email@domain.com" name="email">
                     </div>
                     <div class="mb-3">
                         <label class="form-label">No.telp</label>
-                        <input class="form-control" placeholder="012-345-678">
+                        <input class="form-control" placeholder="012-345-678" name="no_tlp">
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Password</label>
-                        <input class="form-control" type="password" value="password">
+                        <input class="form-control" type="password" value="password" name="password">
                     </div>
                   </div>
                   <div class="col-xl-8">
@@ -60,61 +73,37 @@
                         <div class="col-12">
                             <div class="mb-3">
                                 <label class="form-label">Ketua Departemen</label>
-                                <input class="form-control" type="text" placeholder="Ketua Departemen">
+                                <input class="form-control" type="text" placeholder="Ketua Departemen" name="ketua_departemen">
                             </div>
                         </div>
                         <div class="col-sm-12 col-md-6">
                             <div class="mb-3">
                                 <label class="form-label">Wakil Ketua</label>
-                                <input class="form-control" type="text" placeholder="Wakil Ketua">
+                                <input class="form-control" type="text" placeholder="Wakil Ketua" name="wakil_ketua">
                             </div>
                         </div>
                         <div class="col-sm-12 col-md-6">
                             <div class="mb-3">
                                 <label class="form-label">Sekretaris</label>
-                                <input class="form-control" type="text" placeholder="Sekretaris">
+                                <input class="form-control" type="text" placeholder="Sekretaris" name="sekretaris">
                             </div>
                         </div>
                         <div class="col-sm-12 col-md-6">
                             <div class="mb-3">
                                 <label class="form-label">Bendahara</label>
-                                <input class="form-control" type="text" placeholder="Bendahara">
+                                <input class="form-control" type="text" placeholder="Bendahara" name="bendahara">
                             </div>
                         </div>
                         <div class="col-sm-12 col-md-6">
                             <div class="mb-3">
-                                <label class="form-label">Komite atau Divisi Kegiatan</label>
-                                <input class="form-control" type="text" placeholder="Komite atau Divisi Kegiatan">
+                                <label class="form-label">Deskripsi Departemen</label>
+                                <textarea class="form-control" placeholder="Deskripsi Departemen" name="deskripsi_departemen"></textarea>
                             </div>
                         </div>
                         <div class="col-12">
                             <div class="mb-3">
                                 <label class="form-label">Alamat</label>
-                                <input class="form-control" type="text" placeholder="Alamat Utama">
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-md-4">
-                            <div class="mb-3">
-                            <label class="form-label">Kota</label>
-                            <input class="form-control" type="text" placeholder="Kota">
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-md-3">
-                            <div class="mb-3">
-                            <label class="form-label">Kode Pos</label>
-                            <input class="form-control" type="number" placeholder="Kode Pos">
-                            </div>
-                        </div>
-                        <div class="col-md-5">
-                            <div class="mb-3">
-                            <label class="form-label">Negara</label>
-                            <select class="form-control btn-square">
-                                <option value="0">--Pilih--</option>
-                                <option value="1">Indonesia</option>
-                                <option value="2">Indonesia</option>
-                                <option value="3">Indonesia</option>
-                                <option value="4">Indonesia</option>
-                            </select>
+                                <input class="form-control" type="text" placeholder="Alamat Utama" name="alamat">
                             </div>
                         </div>
                     </div>

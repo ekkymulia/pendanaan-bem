@@ -11,7 +11,7 @@ class Departemen extends Model
 
     protected $fillable = [
         'ormawa_id', 'user_id', 'tahun_periode', 'nama_departemen', 'ketua_departemen',
-        'alamat', 'no_tlp', 'password', 'wakil_ketua', 'bendahara', 'sekretaris',
+        'alamat', 'email', 'no_tlp', 'password', 'wakil_ketua', 'bendahara', 'sekretaris',
         'deskripsi_departemen',
     ];
 

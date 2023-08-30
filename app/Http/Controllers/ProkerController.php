@@ -16,7 +16,10 @@ class ProkerController extends Controller
      */
     public function index()
     {
-        return view('proker.data-proker');
+        $user = session('u_data');
+        $prokers = Proker::where('departemen_id', 1)->get();
+        $departemen = $user->user_name;
+        return view('proker.data-proker', compact('prokers', 'departemen'));
     }
 
     /**
@@ -34,8 +37,8 @@ class ProkerController extends Controller
      */
     public function store(Request $request)
     {
-        // return response()->json($request);
         $user = Auth::user();
+        return response()->json($user);
 
         // store
         if ($user->role_id == 3) {

@@ -15,18 +15,19 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('ormawa_id');
             $table->unsignedBigInteger('user_id'); // Added user_id
-            $table->string('tahun_periode');
-            $table->string('nama_departemen');
-            $table->string('ketua_departemen');
-            $table->string('alamat');
-            $table->string('no_tlp');
-            $table->string('password');
-            $table->string('wakil_ketua');
-            $table->string('bendahara');
-            $table->string('sekretaris');
+            $table->string('tahun_periode')->nullable();
+            $table->string('nama_departemen')->nullable();
+            $table->string('ketua_departemen')->nullable();
+            $table->string('alamat')->nullable();
+            $table->string('email')->nullable();
+            $table->string('no_tlp')->nullable();
+            $table->string('password')->nullable();
+            $table->string('wakil_ketua')->nullable();
+            $table->string('bendahara')->nullable();
+            $table->string('sekretaris')->nullable();
             $table->text('deskripsi_departemen')->nullable();
             $table->timestamps();
-        
+
             // Define foreign key relationships
             $table->foreign('ormawa_id')->references('id')->on('ormawas');
             $table->foreign('user_id')->references('id')->on('users');
