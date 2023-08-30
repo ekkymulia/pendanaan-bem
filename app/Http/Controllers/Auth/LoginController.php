@@ -29,14 +29,33 @@ class LoginController extends Controller
 
             $request->session()->forget(['user_id', 'user_name']); 
             $request->session()->regenerate();
-    
+
+            $ormawaId = null;
+            $departemenId = null;
+        
+            if ($role->id == 2) {
+                $ormawa = Ormawa::where('user_id', $user->id)->first();
+                if ($ormawa) {
+                    $ormawaId = $ormawa->id;
+                }
+            } 
+            if ($role->id == 3) {
+                $departemen = Departemen::where('user_id', $user->id)->first();
+                if ($departemen) {
+                    $departemenId = $departemen->id;
+                    $ormawaId = $departemen->ormawa_id;
+                }
+            }
+        
             $request->session()->put('u_data', (object) [
                 'user_id' => $user->id,
                 'user_name' => $user->name,
                 'user_role' => $user->role_id,
-                'role_name' => $role->name
+                'role_name' => $role->name,
+                'ormawa_id' => $ormawaId,
+                'departemen_id' => $departemenId,
             ]);
- 
+        
             return redirect()->intended('dashboard');
         }
  
