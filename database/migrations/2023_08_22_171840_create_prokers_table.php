@@ -25,11 +25,13 @@ return new class extends Migration
             $table->text('keterangan')->nullable();
             // $table->decimal('dana', 10, 2)->nullable();
             $table->unsignedBigInteger('dana')->default(0);
+            $table->unsignedBigInteger('status_id')->default(3);
             $table->timestamps();
 
             // Define foreign key relationships
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('departemen_id')->references('id')->on('departemens');
+            $table->foreign('status_id')->references('id')->on('status');
         });
     }
 

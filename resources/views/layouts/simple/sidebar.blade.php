@@ -27,16 +27,11 @@
                             <h6 class="">Dashboard</h6>
                         </div>
                     </li>
-                    <li class="sidebar-list"><i class="fa fa-thumb-tack"></i><a
-                        class="sidebar-link sidebar-title link-nav" 
-                        href="{{ route('dashboard.index') }}"
-                        >
-                        <svg class="stroke-icon">
-                            <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-home') }}"></use>
-                        </svg>
-                        <svg class="fill-icon">
-                            <use href="{{ asset('assets/svg/icon-sprite.svg#fill-home') }}"></use>
-                        </svg><span>Dashboard</span></a></li>
+                    <li class="sidebar-list"><i class="fa fa-thumb-tack"></i>
+                        <a class="sidebar-link sidebar-title link-nav" href="{{ route('dashboard.index') }}">
+                        <i data-feather="home"></i><span>Dashboard</span>
+                        </a>
+                    </li>
                     <!-- <li class="sidebar-list"><i class="fa fa-thumb-tack"></i><a
                         class="sidebar-link sidebar-title link-nav" href="{{ route('dashboard.show', 'ormawa') }}">
                         <svg class="stroke-icon">
@@ -126,14 +121,10 @@
                             <li><a href="{{ route('user-cards') }}">Users Cards</a></li>
                         </ul>
                     </li> -->
-                    <li class="sidebar-list"><i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title"
-                            href="{{ route('logout') }}">
-                            <svg class="stroke-icon">
-                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-layout') }}"></use>
-                            </svg>
-                            <svg class="fill-icon">
-                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-layout') }}"></use>
-                            </svg><span class="">Log Out</span></a>
+                    <li class="sidebar-list"><i class="fa fa-thumb-tack"></i>
+                        <a class="sidebar-link sidebar-title link-nav" href="{{ route('logout') }}">
+                        <i data-feather="log-out"></i><span>Log Out</span>
+                        </a>
                     </li>
                 </ul>
             </div>

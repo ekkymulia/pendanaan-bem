@@ -41,6 +41,7 @@
                            <th>No.</th>
                            <th>Nama Proker</th>
                            <th>Ketua</th>
+                           <th>ormawa</th>
                            <th>departemen</th>
                            <th>Dana Diberikan</th>
                            <th>Status</th>
@@ -48,19 +49,28 @@
                         </tr>
                      </thead>
                      <tbody>
-                        @foreach ($prokers as $proker) 
+                        @foreach ($prokers as $proker)
                         <tr>
                               <td>{{ $loop->iteration }}</td>
-                              <td><a href="{{ route('proker.show', $proker->id) }}"><u>{{ $proker->nama }}</u></a></td>
+                              <td><a href="{{ route('proker.edit', $proker->id) }}"><u>{{ $proker->nama }}</u></a></td>
                               <td>{{ $proker->ketua }}</td>
-                              <td>{{ $departemen }}</td>
+                              <td>{{ $proker->departemen->ormawa->nama_ormw }}</td>
+                              <td>{{ $proker->departemen->nama_departemen }}</td>
                               <td>Rp {{ $proker->dana }}</td>
-                              <td><span class="badge badge-success">Proker Disetujui</span></td>
+                              <td>
+                                 @if ($proker->status_id == 1)
+                                 <span class="badge badge-success">Proker Disetujui</span>
+                                 @elseif($proker->status_id == 2)
+                                 <span class="badge badge-danger">Proker Ditolak</span>
+                                 @else
+                                 <span class="badge badge-warning">Menunggu</span>
+                                 @endif
+                              </td>
                               <td>
                                  <ul class="action align-items-center">
-                                    <li class="edit"><a href="{{route('proker.edit', 1)}}"><i class="icon-pencil-alt"></i></a></li>
+                                    <li class="edit"><a href="{{route('proker.edit', $proker->id)}}"><i class="icon-pencil-alt"></i></a></li>
                                     <li class="delete">
-                                       <form id="form-del-proker" action="{{ route('proker.destroy', 1) }}" method="post">
+                                       <form id="form-del-proker" action="{{ route('proker.destroy', $proker->id) }}" method="post">
                                           @csrf
                                           @method('delete')
                                           <button type="submit" class="btn btn-link">
@@ -72,7 +82,6 @@
                               </td>
                         </tr>
                         @endforeach
-
                      </tbody>
                   </table>
                </div>

@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class StatusDana extends Model
+class Status extends Model
 {
     use HasFactory;
 
@@ -13,13 +13,13 @@ class StatusDana extends Model
         'nama'
     ];
 
+    public function proker()
+    {
+        return $this->hasMany(Proker::class);
+    }
+
     public function dana_rab()
     {
         return $this->hasMany(DanaRab::class);
-    }
-
-    public function dana_riil()
-    {
-        return $this->hasMany(DanaRiil::class);
     }
 }

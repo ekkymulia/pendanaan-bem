@@ -17,9 +17,4 @@ class DanaRiil extends Model
     {
         return $this->belongsTo(Proker::class);
     }
-
-    public function status_dana()
-    {
-        return $this->belongsTo(StatusDana::class);
-    }
 }

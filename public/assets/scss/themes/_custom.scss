@@ -2,21 +2,21 @@
  custom CSS Start
 ==========================**/
 // you can add your custom css here
-body.dark-only{
-    svg{
-        stroke: #fff;
+body.dark-only {
+    nav svg {
+        stroke: #fff !important;
     }
 }
 
-.cursor-no-drop{
+.cursor-no-drop {
     cursor: no-drop;
 }
 
-.tab-tbl-budget{
-    #pills-warningtab{
-        a.active{
+.tab-tbl-budget {
+    #pills-warningtab {
+        a.active {
             color: #fff !important;
-            &:hover{
+            &:hover {
                 background-color: var(--theme-deafult) !important;
                 color: #fff !important;
             }
@@ -24,17 +24,22 @@ body.dark-only{
     }
 }
 
-th.non-white-space{
+th.non-white-space {
     white-space: nowrap;
 }
 
-input[disabled]{
+input[disabled] {
     cursor: no-drop;
 }
 
 input[type="number"].no-arrow::-webkit-outer-spin-button,
-input[type="number"].no-arrow::-webkit-inner-spin-button{
+input[type="number"].no-arrow::-webkit-inner-spin-button {
     appearance: none;
-  -webkit-appearance: none;
-  margin: 0;
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.form-check-input:checked {
+    background-color: #0d6efd !important;
+    border-color: #0d6efd !important;
 }

@@ -10,7 +10,7 @@ class DanaRab extends Model
     use HasFactory;
 
     protected $fillable = [
-        'nama', 'proker_id', 'harga_satuan', 'quantity', 'total_harga', 'tempat_pembelian', 'status_dana_id'
+        'nama', 'proker_id', 'harga_satuan', 'quantity', 'total_harga', 'status_id'
     ];
 
     public function proker()
@@ -18,8 +18,8 @@ class DanaRab extends Model
         return $this->belongsTo(Proker::class);
     }
 
-    public function status_dana()
+    public function status()
     {
-        return $this->belongsTo(StatusDana::class);
+        return $this->belongsTo(Status::class);
     }
 }

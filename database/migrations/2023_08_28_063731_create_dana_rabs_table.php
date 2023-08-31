@@ -18,12 +18,11 @@ return new class extends Migration
             $table->unsignedBigInteger('harga_satuan');
             $table->unsignedBigInteger('quantity');
             $table->unsignedBigInteger('total_harga');
-            $table->string('tempat_pembelian');
-            $table->unsignedBigInteger('status_dana_id')->default(3);
+            $table->unsignedBigInteger('status_id')->default(3);
             $table->timestamps();
 
             $table->foreign('proker_id')->references('id')->on('prokers');
-            $table->foreign('status_dana_id')->references('id')->on('status_danas');
+            $table->foreign('status_id')->references('id')->on('status');
         });
     }
 

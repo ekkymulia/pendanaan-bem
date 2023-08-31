@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\DanaRab;
 use App\Models\Departemen;
+use App\Models\Ormawa;
 use App\Models\Proker;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -17,9 +18,24 @@ class ProkerController extends Controller
     public function index()
     {
         $user = session('u_data');
-        $prokers = Proker::where('departemen_id', 1)->get();
-        $departemen = $user->user_name;
-        return view('proker.data-proker', compact('prokers', 'departemen'));
+        $prokers = [];
+        if ($user->user_role == '1') {
+            $prokers = Proker::with('departemen.ormawa')->get();
+        } elseif ($user->user_role == '2') {
+            $prokers = Proker::with([
+                'departemen.ormawa:id,nama_ormw'
+            ])->whereHas('departemen', function ($query) use ($user) {
+                $query->where('ormawa_id', $user->ormawa_id);
+            })->get();
+        } else {
+            $prokers = Proker::with([
+                'departemen:id,nama_departemen,ormawa_id',
+                'departemen.ormawa:id,nama_ormw'
+            ])->where('departemen_id', $user->departemen_id)->get();
+        }
+
+        // return response()->json($prokers);
+        return view('proker.data-proker', compact('prokers'));
     }
 
     /**
@@ -27,8 +43,12 @@ class ProkerController extends Controller
      */
     public function create()
     {
+        $proker = [];
+        $danaRab = [];
         return view('proker.proker', with([
-            'pageContext' => 'add'
+            'pageContext' => 'add',
+            'proker' => $proker,
+            'danaRabs' => $danaRab
         ]));
     }
 
@@ -37,11 +57,11 @@ class ProkerController extends Controller
      */
     public function store(Request $request)
     {
-        $user = Auth::user();
-        return response()->json($user);
+        $user = session('u_data');
+        // return response()->json($user);
 
         // store
-        if ($user->role_id == 3) {
+        if ($user->user_role == 3) {
             $request->validate([
                 'nama_proker' => 'required',
                 'ketua_proker' => 'required',
@@ -58,18 +78,15 @@ class ProkerController extends Controller
 
                 $path = $file->storePubliclyAs('proposal_rab', $newFileName, 'public');
 
-                $userDepartment = Departemen::where('user_id', $user->id)->first();
-                $prokerData = [
-                    'user_id' => $userDepartment->user_id,
-                    'departemen_id' => $userDepartment->id,
+                $prokerStore = Proker::create([
+                    'user_id' => $user->user_id,
+                    'departemen_id' => $user->departemen_id,
                     'nama' => $request->nama_proker,
                     'ketua' => $request->ketua_proker,
                     'bendahara' => $request->bendahara_proker,
                     'Proposal' => $path,
                     'keterangan' => $request->keterangan,
-                ];
-
-                $prokerStore = Proker::create($prokerData);
+                ]);
 
                 if ($prokerStore && count($request->rab_nama) > 0) {
                     $rabData = [];
@@ -80,7 +97,6 @@ class ProkerController extends Controller
                             'harga_satuan' => $request->rab_hargasatuan[$i],
                             'quantity' => $request->rab_qty[$i],
                             'total_harga' => $request->rab_totalharga[$i],
-                            'tempat_pembelian' => $request->rab_tmptbeli[$i],
                         ];
                     }
                     DanaRab::insert($rabData);
@@ -108,9 +124,17 @@ class ProkerController extends Controller
      */
     public function edit(string $id)
     {
+        $proker = Proker::findOrFail($id);
+        $danaRab = DanaRab::where('proker_id', $proker->id)->get();
         return view('proker.proker', with([
-            'pageContext' => 'edit'
+            'pageContext' => 'edit',
+            'proker' => $proker,
+            'danaRabs' => $danaRab
         ]));
+    }
+
+    public function reject(string $id)
+    {
     }
 
     /**
