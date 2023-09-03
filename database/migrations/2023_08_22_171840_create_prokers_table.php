@@ -19,18 +19,19 @@ return new class extends Migration
             $table->string('nama');
             $table->string('ketua');
             $table->string('bendahara');
-            $table->unsignedBigInteger('rkat')->default(0);
-            $table->unsignedBigInteger('bptn')->default(0);
-            $table->string('Proposal');
+            $table->string('file_proposal');
+            $table->string('file_lpj')->nullable();
             $table->text('keterangan')->nullable();
-            // $table->decimal('dana', 10, 2)->nullable();
             $table->unsignedBigInteger('dana')->default(0);
+            // $table->decimal('dana', 10, 2)->nullable();
+            $table->unsignedBigInteger('tipe_dana_id');
             $table->unsignedBigInteger('status_id')->default(3);
             $table->timestamps();
 
             // Define foreign key relationships
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('departemen_id')->references('id')->on('departemens');
+            $table->foreign('tipe_dana_id')->references('id')->on('tipe_danas');
             $table->foreign('status_id')->references('id')->on('status');
         });
     }

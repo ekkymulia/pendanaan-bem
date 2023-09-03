@@ -5,16 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class DanaRiil extends Model
+class TipeDana extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'nama', 'proker_id', 'harga_satuan', 'quantity', 'total_harga', 'tempat_pembelian', 'bukti', 'status_id'
+        'nama',
     ];
 
     public function proker()
     {
-        return $this->belongsTo(Proker::class);
+        return $this->hasMany(Proker::class);
     }
 }

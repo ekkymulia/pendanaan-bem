@@ -10,7 +10,7 @@ class Proker extends Model
     use HasFactory;
     protected $fillable = [
         'user_id', 'departemen_id', 'tahun_proker', 'nama', 'ketua', 'bendahara',
-        'rkat', 'bptn', 'Proposal', 'keterangan', 'dana', 'status_id'
+        'tipe_dana_id', 'file_proposal', 'file_lpj', 'keterangan', 'dana',
     ];
 
     public function user()
@@ -26,5 +26,10 @@ class Proker extends Model
     public function status()
     {
         return $this->belongsTo(Status::class);
+    }
+
+    public function tipeDana()
+    {
+        return $this->belongsTo(TipeDana::class);
     }
 }

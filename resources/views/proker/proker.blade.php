@@ -66,29 +66,31 @@
                                 <div class="col-md-11">
                                     <div class="mb-3 row">
                                         <div class="col-6 d-flex align-items-center">
-                                            <label for="con-kandang">Status Proker</label>
+                                            <label for="proker-nama">Status Proker</label>
                                         </div>
+                                        @if (session('u_data')->user_role == '1')
+                                        <div class="col-6">
+                                            <select class="form-select" aria-label="Default select example" name="status_dana">
+                                                <option value="1">Setujui</option>
+                                                <option value="2">Tolak</option>
+                                                <option value="3">Menunggu</option>
+                                            </select>
+                                        </div>
+                                        @else
                                         <div class="col-6">
                                             @if ($pageContext === 'add')
                                             <h6 class="badge badge-primary">Proker Baru</h6>
                                             @elseif ($pageContext === 'edit')
-                                                @if (session('u_data')->user_role == '1')
-                                                <select class="form-select form-select-sm" aria-label=".form-select-sm example" name="proker_status[]">
-                                                    <option value="1" {{$proker->status_id == '1' ? 'selected' : ''}}>Setujui</option>
-                                                    <option value="2" {{$proker->status_id == '2' ? 'selected' : ''}}>Tolak</option>
-                                                    <option value="3" {{$proker->status_id == '3' ? 'selected' : ''}}>Menunggu</option>
-                                                </select>
+                                                @if ($proker->status_id == '1')
+                                                <h6 class="badge badge-success">Proker Disetujui</h6><a class="btn-sm btn-link " style="cursor:pointer;">Klik untuk Print Laporan</a>
+                                                @elseif($proker->status_id == '2')
+                                                <h6 class="badge badge-danger">Proker Ditolak</h6><a class="btn-sm btn-link " style="cursor:pointer;">Klik untuk Print Laporan</a>
                                                 @else
-                                                    @if ($proker->status_id == '1')
-                                                    <h6 class="badge badge-success">Proker Disetujui</h6><a class="btn-sm btn-link " style="cursor:pointer;">Klik untuk Print Laporan</a>
-                                                    @elseif($proker->status_id == '2')
-                                                    <h6 class="badge badge-danger">Proker Ditolak</h6><a class="btn-sm btn-link " style="cursor:pointer;">Klik untuk Print Laporan</a>
-                                                    @else
-                                                    <h6 class="badge badge-warning">Proker Menunggu</h6><a class="btn-sm btn-link " style="cursor:pointer;">Klik untuk Print Laporan</a>
-                                                    @endif
+                                                <h6 class="badge badge-warning">Proker Menunggu</h6><a class="btn-sm btn-link " style="cursor:pointer;">Klik untuk Print Laporan</a>
                                                 @endif
                                             @endif
                                         </div>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="col-md-11">
@@ -128,20 +130,13 @@
                                 <div class="col-md-11">
                                     <div class="mb-3 row">
                                         <div class="col-6 d-flex align-items-center">
-                                            <label for="proker-jenis-bptn">Dana RKAT (Rp)</label>
+                                            <label for="proker-jenis-bptn">{{ session('u_data')->user_role == '1' ? 'Berikan dana' : 'Dana yang diterima' }} (Rp)</label>
                                         </div>
                                         <div class="col-6">
-                                            <input class="form-control no-arrow" type="number" name="dana_rkat" id="proker-jenis-rkat" placeholder="Dana RKAT (Rp)" min="0" value="0" {{ session('u_data')->user_role != '1' ? 'disabled' : '' }} >
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-11">
-                                    <div class="mb-3 row">
-                                        <div class="col-6 d-flex align-items-center">
-                                            <label for="proker-jenis-bptn">Dana BPTN (Rp)</label>
-                                        </div>
-                                        <div class="col-6">
-                                            <input class="form-control no-arrow" type="number" name="dana_bptn" id="proker-jenis-bptn" placeholder="Dana BPTN (Rp)" min="0" value="0" {{ session('u_data')->user_role != '1' ? 'disabled' : '' }}>
+                                            <input class="form-control no-arrow" type="number" name="dana" id="proker-jenis-bptn" 
+                                                placeholder="{{ session('u_data')->user_role == '1' ? 'Berikan dana' : 'Dana yang diterima' }} (Rp)" min="0" 
+                                                value="{{ $proker->dana ?? old('bendahara_proker') }}" 
+                                                {{ session('u_data')->user_role != '1' ? 'disabled' : '' }}>
                                         </div>
                                     </div>
                                 </div>
@@ -151,10 +146,25 @@
                                             <label for="proker-berkas">Upload Proposal</label>
                                         </div>
                                         <div class="col-6">
-                                            <input class="form-control" id="proker-berkas" type="file" name="rab_proposal" accept=".pdf, .doc, .docx" required {{ session('u_data')->user_role != '3' ? 'disabled' : '' }}>
+                                            <input class="form-control" id="proker-berkas" type="file" name="file_proposal" accept=".pdf, .doc, .docx" required {{ session('u_data')->user_role != '3' ? 'disabled' : '' }}>
                                             @if ($proker)
-                                                <a href="/storage/{{ $proker->Proposal }}" class="text-decoration-underline mt-2 d-inline-block" target="_blank">
-                                                    Proposal Sebelumnya
+                                                <a href="/storage/{{ $proker->file_proposal }}" class="text-decoration-underline mt-2 d-inline-block" target="_blank">
+                                                    File proposal Sebelumnya
+                                                </a>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-11">
+                                    <div class="mb-3 row">
+                                        <div class="col-6">
+                                            <label for="proker-berkas">Upload LPJ</label>
+                                        </div>
+                                        <div class="col-6">
+                                            <input class="form-control" id="proker-berkas" type="file" name="file_lpj" accept=".pdf, .doc, .docx" required {{ session('u_data')->user_role != '3' ? 'disabled' : '' }}>
+                                            @if ($proker)
+                                                <a href="/storage/{{ $proker->file_lpj }}" class="text-decoration-underline mt-2 d-inline-block" target="_blank">
+                                                    File LPJ Sebelumnya
                                                 </a>
                                             @endif
                                         </div>
@@ -182,7 +192,7 @@
                                         <div class="col-12">
                                             <div class="row">
                                                 <h6 class="my-3">Tabel Dana RAB</h6>
-                                                <h6 class="mb-3">Dana yang diterima: <span class="badge badge-success">Rp {{ $proker->dana }}</span></h6>
+                                                <h6 class="mb-3">Dana yang diterima: <span class="badge badge-success">Rp {{ $pageContext == 'add' ? '0' : $proker->dana }}</span></h6>
                                                 <div class="table-responsive">
                                                     <table class="display tbl-rab calc-price" id="basic-1">
                                                         <thead>
@@ -192,7 +202,6 @@
                                                                 <th class="">Harga Satuan</th>
                                                                 <th class="">Qty</th>
                                                                 <th class="">Total Harga</th>
-                                                                <th class="">Status</th>
                                                                 <th class="">Aksi</th>
                                                             </tr>
                                                         </thead>
@@ -211,23 +220,6 @@
                                                                 </td>
                                                                 <td>
                                                                     <input class="form-control" id="calcTotal" type="number" required placeholder="Otomatis Terhitung" autocomplete="off" name="rab_totalharga[]" disabled value="{{ $danaRab->total_harga }}" {{ session('u_data')->user_role != '3' ? 'disabled' : '' }}>
-                                                                </td>
-                                                                <td>
-                                                                    @if (($pageContext === 'add' || $pageContext === 'edit') && (session('u_data')->user_role != '1'))
-                                                                        @if ($danaRab->status_id == '1')
-                                                                        <span class="badge badge-success">Disetujui</span>
-                                                                        @elseif($danaRab->status_id == '2')
-                                                                        <span class="badge badge-danger">Ditolak</span>
-                                                                        @else
-                                                                        <span class="badge badge-warning">Pending</span>
-                                                                        @endif
-                                                                    @else
-                                                                    <select class="form-select form-select-sm" aria-label=".form-select-sm example" name="rab_status[]">
-                                                                        <option value="1" {{$danaRab->status_id == '1' ? 'selected' : ''}}>Setujui</option>
-                                                                        <option value="2" {{$danaRab->status_id == '2' ? 'selected' : ''}}>Tolak</option>
-                                                                        <option value="3" {{$danaRab->status_id == '3' ? 'selected' : ''}}>Menunggu</option>
-                                                                    </select>
-                                                                    @endif
                                                                 </td>
                                                                 <td>
                                                                     <ul class="action align-items-center">
@@ -253,17 +245,6 @@
                                                                 </td>
                                                                 <td>
                                                                     <input class="form-control" id="calcTotal" type="number" required placeholder="Otomatis Terhitung" autocomplete="off" name="rab_totalharga[]" disabled>
-                                                                </td>
-                                                                <td>
-                                                                    @if (($pageContext == 'add' || $pageContext == 'edit') && (session('u_data')->user_role != '1'))
-                                                                    <span class="badge badge-warning">Menunggu</span>
-                                                                    @else
-                                                                    <select class="form-select form-select-sm" aria-label=".form-select-sm example" name="rab_status[]">
-                                                                        <option value="1">Setujui</option>
-                                                                        <option value="2">Tolak</option>
-                                                                        <option value="3" selected>Menunggu</option>
-                                                                    </select>
-                                                                    @endif
                                                                 </td>
                                                                 <td>
                                                                     <ul class="action align-items-center">

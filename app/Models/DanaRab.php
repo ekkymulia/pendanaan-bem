@@ -10,7 +10,7 @@ class DanaRab extends Model
     use HasFactory;
 
     protected $fillable = [
-        'nama', 'proker_id', 'harga_satuan', 'quantity', 'total_harga', 'status_id'
+        'nama', 'proker_id', 'harga_satuan', 'quantity', 'total_harga',
     ];
 
     public function proker()

@@ -7,6 +7,7 @@ use App\Models\Departemen;
 use App\Models\Ormawa;
 use App\Models\Proker;
 use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
@@ -57,6 +58,7 @@ class ProkerController extends Controller
      */
     public function store(Request $request)
     {
+        return response()->json($request->all());
         $user = session('u_data');
         // return response()->json($user);
 
@@ -66,17 +68,13 @@ class ProkerController extends Controller
                 'nama_proker' => 'required',
                 'ketua_proker' => 'required',
                 'bendahara_proker' => 'required',
-                'rab_proposal' => 'required|mimes:pdf,doc,docx',
+                'file_proposal' => 'required|mimes:pdf,doc,docx',
+                'file_lpj' => 'required|mimes:pdf,doc,docx',
             ]);
 
-            if ($request->hasFile('rab_proposal')) {
-                $file = $request->file('rab_proposal');
-                $originalName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-                $extension = $file->getClientOriginalExtension();
-                $randomString = Str::random(10);
-                $newFileName = $originalName . '_' . $randomString . '.' . $extension;
-
-                $path = $file->storePubliclyAs('proposal_rab', $newFileName, 'public');
+            if ($request->hasFile('file_proposal') || ($request->hasFile('file_lpj'))) {
+                $file = $request->file('file_proposal');
+                $path = $file->storePubliclyAs('file_proposal', $this->renameFileToRandom($file), 'public');
 
                 $prokerStore = Proker::create([
                     'user_id' => $user->user_id,
@@ -84,7 +82,7 @@ class ProkerController extends Controller
                     'nama' => $request->nama_proker,
                     'ketua' => $request->ketua_proker,
                     'bendahara' => $request->bendahara_proker,
-                    'Proposal' => $path,
+                    'proposal' => $path,
                     'keterangan' => $request->keterangan,
                 ]);
 
@@ -133,8 +131,13 @@ class ProkerController extends Controller
         ]));
     }
 
-    public function reject(string $id)
+    public function renameFileToRandom(UploadedFile $file)
     {
+        $originalName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+        $extension = $file->getClientOriginalExtension();
+        $randomString = Str::random(10);
+        $newFileName = $originalName . '_' . $randomString . '.' . $extension;
+        return $newFileName;
     }
 
     /**

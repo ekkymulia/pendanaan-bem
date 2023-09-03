@@ -20,9 +20,11 @@ return new class extends Migration
             $table->unsignedBigInteger('total_harga');
             $table->string('tempat_pembelian');
             $table->string('bukti');
+            $table->unsignedBigInteger('status_id')->default('3');
             $table->timestamps();
 
             $table->foreign('proker_id')->references('id')->on('prokers');
+            $table->foreign('status_id')->references('id')->on('status');
         });
     }
 

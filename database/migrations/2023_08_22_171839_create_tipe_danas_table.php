@@ -11,16 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('dana_rabs', function (Blueprint $table) {
+        Schema::create('tipe_danas', function (Blueprint $table) {
             $table->id();
             $table->string('nama');
-            $table->unsignedBigInteger('proker_id');
-            $table->unsignedBigInteger('harga_satuan');
-            $table->unsignedBigInteger('quantity');
-            $table->unsignedBigInteger('total_harga');
             $table->timestamps();
-
-            $table->foreign('proker_id')->references('id')->on('prokers');
         });
     }
 
@@ -29,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('dana_rabs');
+        Schema::dropIfExists('tipe_danas');
     }
 };

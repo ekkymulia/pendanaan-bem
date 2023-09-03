@@ -44,7 +44,6 @@
                            <th>ormawa</th>
                            <th>departemen</th>
                            <th>Dana Diberikan</th>
-                           <th>Status</th>
                            <th></th>
                         </tr>
                      </thead>
@@ -57,15 +56,6 @@
                               <td>{{ $proker->departemen->ormawa->nama_ormw }}</td>
                               <td>{{ $proker->departemen->nama_departemen }}</td>
                               <td>Rp {{ $proker->dana }}</td>
-                              <td>
-                                 @if ($proker->status_id == 1)
-                                 <span class="badge badge-success">Proker Disetujui</span>
-                                 @elseif($proker->status_id == 2)
-                                 <span class="badge badge-danger">Proker Ditolak</span>
-                                 @else
-                                 <span class="badge badge-warning">Menunggu</span>
-                                 @endif
-                              </td>
                               <td>
                                  <ul class="action align-items-center">
                                     <li class="edit"><a href="{{route('proker.edit', $proker->id)}}"><i class="icon-pencil-alt"></i></a></li>
