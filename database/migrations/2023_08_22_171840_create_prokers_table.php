@@ -26,6 +26,7 @@ return new class extends Migration
             // $table->decimal('dana', 10, 2)->nullable();
             $table->unsignedBigInteger('tipe_dana_id');
             $table->unsignedBigInteger('status_id')->default(3);
+            $table->softDeletes(); 
             $table->timestamps();
 
             // Define foreign key relationships

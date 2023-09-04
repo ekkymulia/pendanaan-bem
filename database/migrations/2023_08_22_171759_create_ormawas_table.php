@@ -15,15 +15,15 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->string('tahun_periode');
-            $table->string('nama_ormw');
-            $table->string('ketua');
-            $table->string('wakil');
-            $table->string('bendahara');
-            $table->string('sekretaris');
-            $table->string('ketua_pengawas');
-            $table->string('fakultas');
-            $table->string('alamat');
-            $table->string('no_telp');
+            $table->string('ketua')->nullable();
+            $table->string('wakil')->nullable();
+            $table->string('bendahara')->nullable();
+            $table->string('sekretaris')->nullable();
+            $table->string('ketua_pengawas')->nullable();
+            $table->string('fakultas')->nullable();
+            $table->string('alamat')->nullable();
+            $table->string('no_telp')->nullable();
+            $table->softDeletes(); 
             $table->timestamps();
 
             // Define foreign key relationship

@@ -4,13 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Ormawa extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'user_id', 'tahun_periode', 'nama_ormw', 'ketua', 'wakil', 'bendahara',
+        'user_id', 'tahun_periode', 'ketua', 'wakil', 'bendahara',
         'sekretaris', 'ketua_pengawas', 'fakultas', 'alamat', 'no_telp',
     ];
 

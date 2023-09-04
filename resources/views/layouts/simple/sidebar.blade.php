@@ -79,12 +79,12 @@
                     </li>
                     <li class="sidebar-list"><i class="fa fa-thumb-tack"></i>
                     @if (session('u_data')->user_role != '1')
-                        <a class="sidebar-link sidebar-title link-n  av" href="{{route(session('u_data')->role_name.'.edit', 1)}}">
+                        <a class="sidebar-link sidebar-title link-n  av" href="{{route('profile')}}">
                         <i data-feather="users"></i><span>Profil {{session('u_data')->role_name}} Saya</span>
                         </a>
                     @endif
                     @if (session('u_data')->user_role == '1')
-                        <a class="sidebar-link sidebar-title link-n  av" href="{{route('ormawa.edit', 1)}}">
+                        <a class="sidebar-link sidebar-title link-n  av" href="{{route('profile')}}">
                         <i data-feather="users"></i><span>Profil {{session('u_data')->role_name}} Saya</span>
                         </a>
                     @endif

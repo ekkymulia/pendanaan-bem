@@ -29,9 +29,18 @@ Route::view('index', 'dashboard.index')->name('index');
 // });
 Route::middleware(['auth','login'])->group(function () {
     Route::resource('dashboard', DashboardController::class);
-    Route::resource('proker', ProkerController::class);
-    Route::resource('ormawa', OrmawaController::class);
-    Route::resource('departemen', DepartemenController::class);
+
+    Route::middleware(['role:superadmin'])->group(function () {
+        Route::resource('ormawa', OrmawaController::class);
+    });
+
+    Route::middleware(['role:superadmin,ormawa'])->group(function () {
+        Route::resource('departemen', DepartemenController::class);
+    });
+
+    Route::middleware(['role:superadmin,departemen,ormawa'])->group(function () {
+        Route::resource('proker', ProkerController::class);
+    });    
 
     Route::prefix('users')->group(function () {
         Route::view('user-profile', 'apps.user-profile')->name('user-profile');
@@ -85,6 +94,7 @@ Route::prefix('auth')->group(function () {
     Route::view('login', 'auth.login')->name('login');
     Route::post('login', [LoginController::class, 'authenticate'])->name('login');
     Route::get('logout', [LoginController::class, 'logout'])->name('logout');
+    Route::get('profile', [LoginController::class, 'profile'])->name('profile');
 });
 
 

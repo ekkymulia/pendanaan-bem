@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('tempat_pembelian');
             $table->string('bukti');
             $table->unsignedBigInteger('status_id')->default('3');
+            $table->softDeletes(); 
             $table->timestamps();
 
             $table->foreign('proker_id')->references('id')->on('prokers');

@@ -73,4 +73,35 @@ class LoginController extends Controller
 
         return redirect()->route('login'); // Redirect to the login page
     }
+
+    public function profile(){
+
+        $user = session('u_data');
+
+        if($user->user_role == 2){
+            $ormawa = Ormawa::with('user')->where('user_id', $user->user_id)->first();
+
+            if (!$ormawa) {
+                return redirect()->route('ormawa.index')->with('error', 'Ormawa not found.');
+            }
+    
+            return view('ormawa.ormawa', [
+                'pageContext' => 'edit',
+                'ormawa' => $ormawa, 
+            ]);
+        }
+
+        if($user->user_role == 3){
+            $departemen = Departemen::with('user')->where('user_id', $user->user_id)->first();
+
+            if (!$departemen) {
+                return redirect()->route('dashboard.index')->with('error', 'Departemen not found.');
+            }
+    
+            return view('departemen.departemen', [
+                'pageContext' => 'edit',
+                'departemen' => $departemen, 
+            ]);
+        }
+    }
 }

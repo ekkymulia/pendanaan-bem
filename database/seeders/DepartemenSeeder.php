@@ -17,12 +17,12 @@ class DepartemenSeeder extends Seeder
             'ormawa_id' => 1,
             'user_id' => 3,
             'tahun_periode' => '2023',
-            'nama_departemen' => 'Vymalyinz',
+            // 'nama_departemen' => 'Vymalyinz',
             'ketua_departemen' => 'Ketua 1',
             'alamat' => 'Address 1',
-            'email' => 'vymalyinz@gmail.com',
+            // 'email' => 'vymalyinz@gmail.com',
             'no_tlp' => '1234567890',
-            'password' => bcrypt('password1'), // Hashed password
+            // 'password' => bcrypt('password1'), // Hashed password
             'wakil_ketua' => 'Wakil Ketua 1',
             'bendahara' => 'Bendahara 1',
             'sekretaris' => 'Sekretaris 1',
