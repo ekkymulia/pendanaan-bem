@@ -10,8 +10,7 @@ class Proker extends Model
 {
     use HasFactory, SoftDeletes;
     protected $fillable = [
-        'user_id', 'departemen_id', 'tahun_proker', 'nama', 'ketua', 'bendahara',
-        'tipe_dana_id', 'file_proposal', 'file_lpj', 'keterangan', 'dana',
+        'user_id', 'departemen_id', 'nama', 'ketua', 'bendahara', 'file_proposal', 'file_lpj', 'tipe_dana_id', 'keterangan', 'dana', 'status_id'
     ];
 
     public function user()
