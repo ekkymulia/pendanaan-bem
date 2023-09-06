@@ -103,8 +103,8 @@
                      @foreach ($departemens as $department)
                         <tr>
                             <td>{{ $loop->iteration }}</td>
-                            <td><a href="{{ route('departemen.show', $department->id) }}"><u>{{ $department->nama_departemen }}</u></a></td>
-                            <td>{{ $department->email }}</td>
+                            <td>{{ $department->user->name }}</td>
+                            <td>{{ $department->user->email }}</td>
                             <td>{{ $department->no_tlp }}</td>
                             <td>{{ $department->ketua_departemen }}</td>
                             <td>{{ $department->wakil_ketua }}</td>
@@ -112,13 +112,13 @@
                                 <ul class="action align-items-center">
                                     <li class="edit"><a href="{{ route('departemen.edit', $department->id) }}"><i class="icon-pencil-alt"></i></a></li>
                                     <li class="delete">
-                                        <form action="{{ route('departemen.destroy', $department->id) }}" method="post">
-                                            @csrf
-                                            @method('delete')
-                                            <button type="submit" class="btn btn-link">
-                                                <i class="icon-trash"></i>
-                                            </button>
-                                        </form>
+                                    <form action="{{ route('departemen.destroy', $department->id) }}" method="post">
+                                       @csrf
+                                       @method('delete')
+                                       <button type="submit" class="btn btn-link">
+                                          <i class="icon-trash"></i>
+                                       </button>
+                                    </form>
                                     </li>
                                 </ul>
                             </td>

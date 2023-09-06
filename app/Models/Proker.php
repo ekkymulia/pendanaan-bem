@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Proker extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
     protected $fillable = [
         'user_id', 'departemen_id', 'nama', 'ketua', 'bendahara', 'file_proposal', 'file_lpj', 'tipe_dana_id', 'keterangan', 'dana', 'status_id'
     ];

@@ -100,28 +100,30 @@
                         </tr>
                      </thead>
                      <tbody>
+                     @foreach($ormawas as $key => $ormawa)
                         <tr>
-                           <td>1</td>
-                           <td><a href="{{ route('ormawa.show', 1) }}"><u>Ormawa ABC</u></a></td>
-                           <td>ormawaabc@gmail.com</td>
-                           <td>081-234-567</td>
-                           <td>John Doe</td>
-                           <td>Jane Doe</td>
-                           <td>
-                              <ul class="action align-items-center">
-                                 <li class="edit"><a href="{{route('ormawa.edit', 1)}}"><i class="icon-pencil-alt"></i></a></li>
-                                 <li class="delete">
-                                    <form action="{{ route('ormawa.destroy', 1) }}" method="post">
-                                       @csrf
-                                       @method('delete')
-                                       <button type="submit" class="btn btn-link">
-                                             <i class="icon-trash"></i>
-                                          </button>
-                                       </form>
-                                 </li>
-                              </ul>
-                           </td>
+                              <td>{{ $key + 1 }}</td>
+                              <td><a href="{{ route('ormawa.show', $ormawa->id) }}"><u>{{ $ormawa->user->name }}</u></a></td>
+                              <td>{{ $ormawa->user->email }}</td>
+                              <td>{{ $ormawa->no_telp }}</td>
+                              <td>{{ $ormawa->ketua ?? '-' }}</td>
+                              <td>{{ $ormawa->wakil ?? '-' }}</td>
+                              <td>
+                                 <ul class="action align-items-center">
+                                    <li class="edit"><a href="{{ route('ormawa.edit', $ormawa->id) }}"><i class="icon-pencil-alt"></i></a></li>
+                                    <li class="delete">
+                                          <form action="{{ route('ormawa.destroy', $ormawa->id) }}" method="post">
+                                             @csrf
+                                             @method('delete')
+                                             <button type="submit" class="btn btn-link">
+                                                <i class="icon-trash"></i>
+                                             </button>
+                                          </form>
+                                    </li>
+                                 </ul>
+                              </td>
                         </tr>
+                        @endforeach
                      </tbody>
                   </table>
                </div>

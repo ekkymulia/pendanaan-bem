@@ -16,7 +16,6 @@ class OrmawaSeeder extends Seeder
         DB::table('ormawas')->insert([
             'user_id' => 2,
             'tahun_periode' => '2023',
-            'nama_ormw' => 'Hyumilzam',
             'ketua' => 'Ketua 1',
             'wakil' => 'Wakil 1',
             'bendahara' => 'Bendahara 1',

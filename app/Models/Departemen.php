@@ -4,14 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Departemen extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'ormawa_id', 'user_id', 'tahun_periode', 'nama_departemen', 'ketua_departemen',
-        'alamat', 'email', 'no_tlp', 'password', 'wakil_ketua', 'bendahara', 'sekretaris',
+        'ormawa_id', 'user_id', 'tahun_periode', 'ketua_departemen',
+        'alamat', 'no_tlp', 'wakil_ketua', 'bendahara', 'sekretaris',
         'deskripsi_departemen',
     ];
 
