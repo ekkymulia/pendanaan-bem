@@ -53,6 +53,13 @@
                             <h6 class="">Menu</h6>
                         </div>
                     </li>
+                    @if (session('u_data')->user_role == '1')
+                    <li class="sidebar-list"><i class="fa fa-thumb-tack"></i>
+                        <a class="sidebar-link sidebar-title link-nav" href="{{ route('kalender.index') }}">
+                        <i data-feather="users"></i><span>Kalender</span>
+                        </a>
+                    </li>
+                    @endif
                     <li class="sidebar-list"><i class="fa fa-thumb-tack"></i>
                         <a class="sidebar-link sidebar-title link-nav" href="{{ route('proker.index') }}">
                         <i data-feather="users"></i><span>Proker</span>
@@ -89,38 +96,6 @@
                         </a>
                     @endif
                     </li>
-                    <!-- <li class="sidebar-list">
-                        <i class="fa fa-thumb-tack"></i>
-                        <a class="sidebar-link sidebar-title" href="#">
-                            <i data-feather="user"></i><span>Ormawa Profile</span>
-                        </a>
-                        <ul class="sidebar-submenu">
-                            <li><a href="{{ route('ormawa-profile') }}">My Profile</a></li>
-                        </ul>
-                    </li>
-                    <li class="sidebar-list">
-                        <i class="fa fa-thumb-tack"></i>
-                        <a class="sidebar-link sidebar-title" href="#">
-                            <i data-feather="user"></i><span>Departemen Profile</span>
-                        </a>
-                        <ul class="sidebar-submenu">
-                            <li><a href="{{ route('departemen-profile') }}">My Profile</a></li>
-                        </ul>
-                    </li>
-                    <li class="sidebar-list"><i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title"
-                            href="#">
-                            <svg class="stroke-icon">
-                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-user') }}"></use>
-                            </svg>
-                            <svg class="fill-icon">
-                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-user') }}"></use>
-                            </svg><span>Users</span></a>
-                        <ul class="sidebar-submenu">
-                            <li><a href="{{ route('user-profile') }}">Users Profile</a></li>
-                            <li><a href="{{ route('edit-profile') }}">Users Edit</a></li>
-                            <li><a href="{{ route('user-cards') }}">Users Cards</a></li>
-                        </ul>
-                    </li> -->
                     <li class="sidebar-list"><i class="fa fa-thumb-tack"></i>
                         <a class="sidebar-link sidebar-title link-nav" href="{{ route('logout') }}">
                         <i data-feather="log-out"></i><span>Log Out</span>

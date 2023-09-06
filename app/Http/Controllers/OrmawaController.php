@@ -61,6 +61,13 @@ class OrmawaController extends Controller
             'password' => Hash::make($validatedData['password']),
             'role_id' => 2,
         ]);
+
+        if ($request->hasFile('profile_img')) {
+            $profileImage = $request->file('profile_img');
+            $imageName = 'profile_' . time() . '.' . $profileImage->getClientOriginalExtension();
+            $profileImage->storeAs('public/profile_images', $imageName);
+            $user->profile_img = 'storage/profile_images/' . $imageName;
+        }
     
         $user->save();
     
@@ -106,6 +113,7 @@ class OrmawaController extends Controller
 
         return view('ormawa.ormawa', [
             'pageContext' => 'edit',
+            'mode' => '',
             'ormawa' => $ormawa, 
         ]);
     }
@@ -115,6 +123,8 @@ class OrmawaController extends Controller
      */
     public function update(Request $request, string $id)
     {
+
+        ddd($request);
         $validatedData = $request->validate([
             'nama_ormawa' => 'required|string',
             'email' => 'required|email',
@@ -128,6 +138,7 @@ class OrmawaController extends Controller
             'fakultas' => 'string|nullable',
             'alamat' => 'string|nullable',
             'no_telp' => 'string|nullable',
+            'profile_img' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', 
         ]);
     
         $ormawa = Ormawa::find($id);
@@ -139,6 +150,13 @@ class OrmawaController extends Controller
         $user = $ormawa->user;
         $user->email = $validatedData['email'];
         $user->name = $validatedData['nama_ormawa'];
+
+        if ($request->hasFile('profile_img')) {
+            $profileImage = $request->file('profile_img');
+            $imageName = 'profile_' . time() . '.' . $profileImage->getClientOriginalExtension();
+            $profileImage->storeAs('public/profile_images', $imageName);
+            $user->profile_img = 'storage/profile_images/' . $imageName;
+        }
     
         if (!empty($validatedData['password'])) {
             $user->password = Hash::make($validatedData['password']);
@@ -159,6 +177,10 @@ class OrmawaController extends Controller
     
         $ormawa->push();
         $user->push();
+
+        if($request->input('mode') == 'profile'){
+            return redirect()->route('profile');
+        }
     
         return redirect()->route('ormawa.index')->with('success', 'Ormawa updated successfully.');
     }

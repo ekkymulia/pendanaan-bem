@@ -46,6 +46,7 @@
                     @endif
                 </h4>
                 <div class="row">
+                    <input type="hidden" name="mode" value="{{$mode}} ?? ''">
                     <div class="col-xl-4">
                         <div class="mb-3">
                             <h6 class="form-label">Tahun Periode</h6>
@@ -70,6 +71,10 @@
                         <div class="mb-3">
                             <label class="form-label">No.telp</label>
                             <input class="form-control" placeholder="012-345-678" name="no_telp" value="{{ old('no_telp', isset($ormawa) ? $ormawa->no_telp : '') }}">
+                        </div>
+                        <div class="mb-3">
+                            <label for="profile_img">Profile Image</label>
+                            <input type="file" name="profile_img" accept="image/*">
                         </div>
                     </div>
                     <div class="col-xl-8">

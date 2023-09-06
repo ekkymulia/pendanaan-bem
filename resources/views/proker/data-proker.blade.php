@@ -41,9 +41,9 @@
                            <th>No.</th>
                            <th>Nama Proker</th>
                            <th>Ketua</th>
-                           <th>ormawa</th>
-                           <th>departemen</th>
-                           <th>Dana Diberikan</th>
+                           <th>Ormawa</th>
+                           <th>Departemen</th>
+                           <th>Dana Diterima</th>
                            <th></th>
                         </tr>
                      </thead>

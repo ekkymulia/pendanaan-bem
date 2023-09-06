@@ -64,6 +64,7 @@ class UserController extends Controller
             'name' => 'required',
             'email' => 'required|email|unique:users,email,' . $user->id,
             'password' => 'nullable|min:6',
+            'profile_img' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', 
         ]);
 
         $user->name = $validatedData['name'];
@@ -72,6 +73,14 @@ class UserController extends Controller
         // Update password if provided
         if (!empty($validatedData['password'])) {
             $user->password = Hash::make($validatedData['password']);
+        }
+
+        // Handle profile image upload
+        if ($request->hasFile('profile_img')) {
+            $profileImage = $request->file('profile_img');
+            $imageName = 'profile_' . time() . '.' . $profileImage->getClientOriginalExtension();
+            $profileImage->storeAs('public/profile_images', $imageName);
+            $user->profile_img = 'storage/profile_images/' . $imageName;
         }
 
         $user->save();

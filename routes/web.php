@@ -3,14 +3,17 @@
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DepartemenController;
+use App\Http\Controllers\KalendarController;
+use App\Http\Controllers\LandingController;
 use App\Http\Controllers\OrmawaController;
 use App\Http\Controllers\ProkerController;
+use App\Models\Ormawa;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Session;
 
 Route::get('/', function () {
-    return view('landing-page');
+    return redirect()->route('landing-page');
 })->name('/');
 
 //Language Change
@@ -30,8 +33,19 @@ Route::view('index', 'dashboard.index')->name('index');
 Route::middleware(['auth','login'])->group(function () {
     Route::resource('dashboard', DashboardController::class);
 
+    Route::middleware(['role:superadmin,ormawa'])->group(function () {
+        Route::put('ormawa/{ormawa}', [DepartemenController::class, 'update'])->name('ormawa.update');
+    });
+
+    Route::middleware(['role:departemen'])->group(function () {
+        Route::put('departemen/{ormawa}', [DepartemenController::class, 'update'])->name('departemen-profile');
+    });
+
     Route::middleware(['role:superadmin'])->group(function () {
-        Route::resource('ormawa', OrmawaController::class);
+        Route::get('ormawa', [DepartemenController::class, 'index'])->name('ormawa.index');
+        Route::get('ormawa', [DepartemenController::class, 'create'])->name('ormawa.create');
+        Route::post('ormawa', [DepartemenController::class, 'store'])->name('ormawa.store');
+        Route::delete('ormawa/{ormawa}', [DepartemenController::class, 'delete'])->name('ormawa.delete');
     });
 
     Route::middleware(['role:superadmin,ormawa'])->group(function () {
@@ -42,23 +56,15 @@ Route::middleware(['auth','login'])->group(function () {
         Route::resource('proker', ProkerController::class);
     });    
 
+    Route::resource('kalender', KalendarController::class);
+
     Route::prefix('users')->group(function () {
         Route::view('user-profile', 'apps.user-profile')->name('user-profile');
         Route::view('edit-profile', 'apps.edit-profile')->name('edit-profile');
         Route::view('user-cards', 'apps.user-cards')->name('user-cards');
     });
     
-    // sample route profil ormawa
-    Route::prefix('ormawa-profile')->group(function () {
-        Route::view('profile', 'ormawa-myprofile.profile')->name('ormawa-profile');
-        Route::view('profile/edit', 'ormawa-myprofile.edit-profile')->name('edit-ormawa-profile');
-    });
-    
-    // sample route profil departemen
-    Route::prefix('departemen-profile')->group(function () {
-        Route::view('profile', 'departemen-myprofile.profile')->name('departemen-profile');
-        Route::view('profile/edit', 'departemen-myprofile.edit-profile')->name('edit-departemen-profile');
-    });
+
 });
 
 
@@ -97,8 +103,7 @@ Route::prefix('auth')->group(function () {
     Route::get('profile', [LoginController::class, 'profile'])->name('profile');
 });
 
-
-Route::view('landing-page', 'pages.landing-page')->name('landing-page');
+Route::get('landing-page', [LandingController::class, 'landing_page'])->name('landing-page');
 
 Route::get('/clear-cache', function () {
     Artisan::call('config:cache');

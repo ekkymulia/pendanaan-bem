@@ -68,6 +68,7 @@
                         </select>
                     </div>
                     @endif
+                    <input type="hidden" name="mode" value="{{$mode}} ?? ''">
                     <div class="mb-3">
                         <label class="form-label">Email-Address</label>
                         <input class="form-control" placeholder="your-email@domain.com" name="email" value="{{ old('email', isset($departemen) ? $departemen->user->email : '') }}">
@@ -79,6 +80,10 @@
                     <div class="mb-3">
                         <label class="form-label">No.telp</label>
                         <input class="form-control" placeholder="012-345-678" name="no_tlp" value="{{ old('no_tlp', isset($departemen) ? $departemen->no_tlp : '') }}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="profile_img">Profile Image</label>
+                        <input type="file" name="profile_img" accept="image/*">
                     </div>
                   </div>
                   <div class="col-xl-8">

@@ -33,7 +33,7 @@
 				  @if ($dari_ormawa)
 				 	Ormawa {{$dari_ormawa}} <br>
 				  @endif	
-				  Berikut Ringkasan Akun Anda Hari Ini</p>
+				  Berikut Ringkasan @if ($role == '3') Proker @else Akun @endif Anda Hari Ini</p>
 				  @if ($role != '1')
 				  <div class="whatsnew-btn"><a class="btn btn-outline-white">Print Ringkasan</a></div>
 				  @endif
@@ -86,13 +86,13 @@
 				  </div>
 				  <div> 
 					@if ($role == '3')
-					<h4>{{ $widget_val->w1 }}</h4><span class="f-light">Jumlah Proker</span>
+					<h4>{{ $widget_val->w1 }}</h4><span class="f-light">Jumlah Proker RKAT</span>
 					@endif
 					@if ($role == '2')
 					<h4>{{ $widget_val->w1 }}</h4><span class="f-light">Jumlah Departemen</span>
 					@endif
 					@if ($role == '1')
-					<h4>{{ $widget_val->w1 }}</h4><span class="f-light">Total Akun</span>
+					<h4>{{ $widget_val->w1 }}</h4><span class="f-light">Total Ormawa</span>
 					@endif
 				  </div>
 				</div>
@@ -116,13 +116,13 @@
 					</div>
 					<div> 
 					@if ($role == '3')
-					<h4>{{ $widget_val->w2 }}</h4><span class="f-light">Dana Diajukan</span>
+					<h4>{{ $widget_val->w2 }}</h4><span class="f-light">Jumlah Proker BPTN</span>
 					@endif
 					@if ($role == '2')
 					<h4>{{ $widget_val->w2 }}</h4><span class="f-light">Jumlah Proker</span>
 					@endif
 					@if ($role == '1')
-					<h4>{{ $widget_val->w2 }}</h4><span class="f-light">Akun Ormawa</span>
+					<h4>{{ $widget_val->w2 }}</h4><span class="f-light">Total Proker RKAT</span>
 					@endif
 					</div>
 				  </div>
@@ -158,7 +158,7 @@
 					<h4>{{ $widget_val->w3 }}</h4><span class="f-light">Proker Menunggu Approval</span>
 					@endif
 					@if ($role == '1')
-					<h4>{{ $widget_val->w3 }}</h4><span class="f-light">Akun Ormawa</span>
+					<h4>{{ $widget_val->w3 }}</h4><span class="f-light">Total Proker BPTN</span>
 					@endif
 				  </div>
 				</div>
@@ -182,13 +182,13 @@
 					</div>
 					<div> 
 					@if ($role == '3')
-					<h4>{{ $widget_val->w4 }}</h4><span class="f-light">Total Dana dipakai</span>
+					<h4>{{ $widget_val->w4 }}</h4><span class="f-light">Total Dana Diterima</span>
 					@endif
 					@if ($role == '2')
 					<h4>{{ $widget_val->w4 }}</h4><span class="f-light">Total Dana Diberikan</span>
 					@endif
 					@if ($role == '1')
-					<h4>{{ $widget_val->w4 }}</h4><span class="f-light">Akun Departemen</span>
+					<h4>{{ $widget_val->w4 }}</h4><span class="f-light">Total Dana BPTN</span>
 					@endif
 					</div>
 				  </div>
@@ -218,13 +218,13 @@
 				  </div>
 				  <div> 
 				 	 @if ($role == '3')
-					<h4>{{ $widget_val->w5 }}</h4><span class="f-light">Proker Di Tolak</span>
+					<h4>{{ $widget_val->w5 }}</h4><span class="f-light">Total Dana Menunggu</span>
 					@endif
 					@if ($role == '2')
 					<h4>{{ $widget_val->w5 }}</h4><span class="f-light">Proker Di Tolak</span>
 					@endif
 					@if ($role == '1')
-					<h4>{{ $widget_val->w5 }}</h4><span class="f-light">Akun Departemen</span>
+					<h4>{{ $widget_val->w5 }}</h4><span class="f-light">Total Dana RKAT</span>
 					@endif
 				  </div>
 				</div>
@@ -248,13 +248,13 @@
 					</div>
 					<div> 
 					@if ($role == '3')
-					<h4>{{ $widget_val->w6 }}</h4><span class="f-light">Proker Menunggu Approval</span>
+					<h4>{{ $widget_val->w6 }}</h4><span class="f-light">Proposal Menunggu Approval</span>
 					@endif
 					@if ($role == '2')
 					<h4>{{ $widget_val->w6 }}</h4><span class="f-light">Proker Disetujui</span>
 					@endif
 					@if ($role == '1')
-					<h4>{{ $widget_val->w6 }}</h4><span class="f-light">Akun Departemen</span>
+					<h4>{{ $widget_val->w6 }}</h4><span class="f-light">Total Dana Diberikan</span>
 					@endif
 					</div>
 				  </div>

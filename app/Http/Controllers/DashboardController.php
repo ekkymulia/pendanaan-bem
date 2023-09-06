@@ -34,7 +34,7 @@ class DashboardController extends Controller
         $widget_value = (object) [];
 
         if ($user->user_role == 1) {
-            $widget_value->w1 = 0;
+            $widget_value->w1 = Ormawa::count();
             $widget_value->w2 = 0;
             $widget_value->w3 = 0;
             $widget_value->w4 = 0;
