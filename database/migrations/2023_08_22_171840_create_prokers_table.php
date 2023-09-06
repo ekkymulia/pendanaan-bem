@@ -24,7 +24,7 @@ return new class extends Migration
             $table->text('keterangan')->nullable();
             $table->unsignedBigInteger('dana')->default(0);
             // $table->decimal('dana', 10, 2)->nullable();
-            $table->unsignedBigInteger('tipe_dana_id');
+            $table->unsignedBigInteger('tipe_dana_id')->nullable();
             $table->unsignedBigInteger('status_id')->default(3);
             $table->timestamps();
 

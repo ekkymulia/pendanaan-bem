@@ -47,17 +47,16 @@
                @endif
             </div>
             <div class="card-body">
-                <form class="form-bookmark needs-validation form-proker" id="bookmark-form" novalidate="" 
-                    method="POST" 
-                    enctype="multipart/form-data"
-                    @if (session('u_data')->user_role == '3')
-                        @if ($pageContext === 'add')
-                        action="{{ route('proker.store') }}"
-                        @elseif($pageContext === 'edit')
-                        action="{{ route('proker.update', $proker->id) }}"
-                        @endif
-                    @endif>
-                    @csrf
+                @if (session('u_data')->user_role == '3')
+                    @if ($pageContext == 'add')
+                    <form class="form-bookmark needs-validation form-proker" id="bookmark-form" novalidate="" method="POST" enctype="multipart/form-data"
+                    action="{{ route('proker.store') }}"> @csrf @method('POST')
+                    @endif
+                @endif
+                @if($pageContext == 'edit')
+                <form class="form-bookmark needs-validation form-proker" id="bookmark-form" novalidate="" method="POST" enctype="multipart/form-data"
+                action="{{ route('proker.update', $proker->id) }}"> @csrf @method('PUT')
+                @endif
 
                     <div class="row g-2 col-12">
                         <div class="mt-0 mb-3 col-md-12">
@@ -70,10 +69,10 @@
                                         </div>
                                         @if (session('u_data')->user_role == '1')
                                         <div class="col-6">
-                                            <select class="form-select" aria-label="Default select example" name="status_dana">
-                                                <option value="1">Setujui</option>
-                                                <option value="2">Tolak</option>
-                                                <option value="3">Menunggu</option>
+                                            <select class="form-select" aria-label="Default select example" name="status_proker">
+                                                <option value="1" {{$proker->status_id == '1' ? 'selected' : ''}}>Setujui</option>
+                                                <option value="2" {{$proker->status_id == '2' ? 'selected' : ''}}>Tolak</option>
+                                                <option value="3" {{$proker->status_id == '3' ? 'selected' : ''}}>Menunggu</option>
                                             </select>
                                         </div>
                                         @else
@@ -91,6 +90,51 @@
                                             @endif
                                         </div>
                                         @endif
+                                    </div>
+                                </div>
+                                <div class="col-md-11">
+                                    <div class="mb-3 row">
+                                        <div class="col-6 d-flex align-items-center">
+                                            <label for="proker-bendahara">Tipe Dana</label>
+                                        </div>
+                                        @if (session('u_data')->user_role == '1')
+                                        <div class="col-6">
+                                            <select class="form-select" aria-label="Default select example" name="tipe_dana" required>
+                                                <option disabled {{ !$proker->tipe_dana_id || ($proker->tipe_dana_id == null) ? 'selected' : '' }}>Pilih Tipe Dana</option>
+                                                <option value="1" {{ $proker->tipe_dana_id && ($proker->tipe_dana_id == '1') ? 'selected' : '' }}>RKAT</option>
+                                                <option value="2" {{ $proker->tipe_dana_id && ($proker->tipe_dana_id == '2') ? 'selected' : '' }}>BPPTN</option>
+                                            </select>
+                                        </div>
+                                        @else
+                                        <div class="col-6">
+                                            @if ($pageContext === 'add')
+                                            <h6 class="badge badge-primary">—</h6>
+                                            @elseif ($pageContext === 'edit')
+                                                @if ($proker->tipe_dana_id)
+                                                    @if ($proker->tipe_dana_id == '1')
+                                                    <h6 class="badge badge-success">RKAT</h6>
+                                                    @else
+                                                    <h6 class="badge badge-success">BPPTN</h6>
+                                                    @endif
+                                                @else
+                                                <h6 class="badge badge-warning">Menunggu</h6>
+                                                @endif
+                                            @endif
+                                        </div>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="col-md-11">
+                                    <div class="mb-3 row">
+                                        <div class="col-6 d-flex align-items-center">
+                                            <label for="proker-jenis-bptn">{{ session('u_data')->user_role == '1' ? 'Berikan dana' : 'Dana yang diterima' }} (Rp)</label>
+                                        </div>
+                                        <div class="col-6">
+                                            <input class="form-control no-arrow" type="number" name="dana" id="proker-jenis-bptn" 
+                                                placeholder="{{ session('u_data')->user_role == '1' ? 'Berikan dana' : 'Dana yang diterima' }} (Rp)" min="0" 
+                                                value="{{ $proker->dana ?? old('bendahara_proker') }}" 
+                                                {{ session('u_data')->user_role != '1' ? 'disabled' : '' }}>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-md-11">
@@ -129,26 +173,13 @@
                                 </div>
                                 <div class="col-md-11">
                                     <div class="mb-3 row">
-                                        <div class="col-6 d-flex align-items-center">
-                                            <label for="proker-jenis-bptn">{{ session('u_data')->user_role == '1' ? 'Berikan dana' : 'Dana yang diterima' }} (Rp)</label>
+                                        <div class="col-6">
+                                            <label for="file-proposal">Upload Proposal</label>
                                         </div>
                                         <div class="col-6">
-                                            <input class="form-control no-arrow" type="number" name="dana" id="proker-jenis-bptn" 
-                                                placeholder="{{ session('u_data')->user_role == '1' ? 'Berikan dana' : 'Dana yang diterima' }} (Rp)" min="0" 
-                                                value="{{ $proker->dana ?? old('bendahara_proker') }}" 
-                                                {{ session('u_data')->user_role != '1' ? 'disabled' : '' }}>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-11">
-                                    <div class="mb-3 row">
-                                        <div class="col-6">
-                                            <label for="proker-berkas">Upload Proposal</label>
-                                        </div>
-                                        <div class="col-6">
-                                            <input class="form-control" id="proker-berkas" type="file" name="file_proposal" accept=".pdf, .doc, .docx" required {{ session('u_data')->user_role != '3' ? 'disabled' : '' }}>
+                                            <input class="form-control" id="file-proposal" type="file" name="file_proposal" accept=".pdf, .doc, .docx" required {{ session('u_data')->user_role != '3' ? 'disabled' : '' }}>
                                             @if ($proker)
-                                                <a href="/storage/{{ $proker->file_proposal }}" class="text-decoration-underline mt-2 d-inline-block" target="_blank">
+                                                <a href="/storage/{{ $proker->file_proposal }}" class="text-decoration-underline mt-2 d-inline-block {{ !$proker->file_proposal ? 'disabled' : '' }}" target="_blank">
                                                     File proposal Sebelumnya
                                                 </a>
                                             @endif
@@ -158,12 +189,12 @@
                                 <div class="col-md-11">
                                     <div class="mb-3 row">
                                         <div class="col-6">
-                                            <label for="proker-berkas">Upload LPJ</label>
+                                            <label for="file-lpj">Upload LPJ</label>
                                         </div>
                                         <div class="col-6">
-                                            <input class="form-control" id="proker-berkas" type="file" name="file_lpj" accept=".pdf, .doc, .docx" required {{ session('u_data')->user_role != '3' ? 'disabled' : '' }}>
+                                            <input class="form-control" id="file-lpj" type="file" name="file_lpj" accept=".pdf, .doc, .docx" {{ (session('u_data')->user_role != '3') || ($proker->status_id != '1') ? 'disabled' : '' }}>
                                             @if ($proker)
-                                                <a href="/storage/{{ $proker->file_lpj }}" class="text-decoration-underline mt-2 d-inline-block" target="_blank">
+                                                <a href="/storage/{{ $proker->file_lpj }}" class="text-decoration-underline mt-2 d-inline-block {{ !$proker->file_lpj ? 'disabled' : '' }}" target="_blank">
                                                     File LPJ Sebelumnya
                                                 </a>
                                             @endif
@@ -192,7 +223,7 @@
                                         <div class="col-12">
                                             <div class="row">
                                                 <h6 class="my-3">Tabel Dana RAB</h6>
-                                                <h6 class="mb-3">Dana yang diterima: <span class="badge badge-success">Rp {{ $pageContext == 'add' ? '0' : $proker->dana }}</span></h6>
+                                                <h6 class="mb-3">Dana yang diterima: <span class="badge badge-primary">Rp {{ $pageContext == 'add' ? '0' : $proker->dana }}</span></h6>
                                                 <div class="table-responsive">
                                                     <table class="display tbl-rab calc-price" id="basic-1">
                                                         <thead>
@@ -208,8 +239,9 @@
                                                         <tbody>
                                                             @forelse ($danaRabs as $danaRab)
                                                             <tr>
-                                                                <td data-number="1">{{ $loop->iteration; }}</td>
+                                                                <td data-number="{{ $loop->iteration; }}">{{ $loop->iteration; }}</td>
                                                                 <td>
+                                                                    <input type="hidden" name="id_rab[]" value="{{ $danaRab->id }}">
                                                                     <input class="form-control" id="" type="text" required placeholder="Nama" autocomplete="off" name="rab_nama[]" value="{{ $danaRab->nama }}" {{ session('u_data')->user_role != '3' ? 'disabled' : '' }}>
                                                                 </td>
                                                                 <td>
@@ -224,7 +256,7 @@
                                                                 <td>
                                                                     <ul class="action align-items-center">
                                                                         <li class="delete">
-                                                                            <button type="button" class="btn btn-link">
+                                                                            <button type="button" class="btn btn-link {{ session('u_data')->user_role != '3' ? 'disabled' : '' }}">
                                                                             <i class="icon-trash"></i>
                                                                             </button>
                                                                         </li>
@@ -276,7 +308,8 @@
                                         <div class="col-12">
                                             <div class="row">
                                                 <h6 class="my-3">Tabel Dana Riil</h6>
-                                                <h6 class="mb-3">Sisa Dana: <span class="badge badge-success">Rp 3.980.000</span></h6>
+                                                <h6 class="mb-3">Dana yang diterima: <span class="badge badge-primary">Rp <span>{{ $proker->dana }}</span></span></h6>
+                                                <h6 class="mb-3">Dana dipakai: <span class="badge badge-primary">Rp <span>{{ $sisaDanaRiils }}</span></span></h6>
                                                 <div class="table-responsive">
                                                     <table class="display tbl-riil calc-price" id="basic-1-2">
                                                         <thead>
@@ -288,29 +321,54 @@
                                                                 <th class="">Total Harga</th>
                                                                 <th class="">Tempat Beli</th>
                                                                 <th class="">Bukti</th>
+                                                                <th class="">Status</th>
                                                                 <th class="">Aksi</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
+                                                            @forelse ($danaRiils as $danaRiil)
                                                             <tr>
-                                                                <td data-number="1">1</td>
+                                                                <td data-number="{{ $loop->iteration; }}">{{ $loop->iteration; }}</td>
                                                                 <td>
-                                                                    <input class="form-control" id="" type="text" required="" placeholder="Nama" autocomplete="off" name="riil_nama">
+                                                                    <input type="hidden" name="id_riil[]" value="{{ $danaRiil->id }}">
+                                                                    <input class="form-control" id="" type="text" required="" placeholder="Nama" autocomplete="off" name="riil_nama[]" value="{{ $danaRiil->nama }}" {{ session('u_data')->user_role != '3' ? 'disabled' : '' }}>
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-control" id="hargaSatuan" type="text" required="" placeholder="Harga Satuan" autocomplete="off" name="riil_hargasatuan">
+                                                                    <input class="form-control" id="hargaSatuan" type="text" required="" placeholder="Harga Satuan" autocomplete="off" name="riil_hargasatuan[]" value="{{ $danaRiil->harga_satuan }}" {{ session('u_data')->user_role != '3' ? 'disabled' : '' }}>
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-control no-arrow" id="quantity" type="number" required="" placeholder="Qty" autocomplete="off" min="0" name="riil_qty">
+                                                                    <input class="form-control no-arrow" id="quantity" type="number" required="" placeholder="Qty" autocomplete="off" min="0" name="riil_qty[]" value="{{ $danaRiil->quantity }}" {{ session('u_data')->user_role != '3' ? 'disabled' : '' }}>
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-control" id="calcTotal" type="number" required="" placeholder="Otomatis Terhitung" disabled autocomplete="off">
+                                                                    <input class="form-control" id="calcTotal" type="number" required="" placeholder="Otomatis Terhitung" disabled autocomplete="off" name="total_harga[]" value="{{ $danaRiil->total_harga }}">
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-control" id="" type="text" required="" placeholder="Tempat Pembelian" autocomplete="off" name="riil_tmptbeli">
+                                                                    <input class="form-control" id="" type="text" required="" placeholder="Tempat Pembelian" autocomplete="off" name="riil_tmptbeli[]" value="{{ $danaRiil->tempat_pembelian }}" {{ session('u_data')->user_role != '3' ? 'disabled' : '' }}>
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-control" id="" type="file" required="" accept=".pdf, .doc, .docx" name="riil_bukti">
+                                                                    <input type="hidden" name="riil_bukti[]" value="{{ $danaRiil->bukti }}">
+                                                                    <input class="form-control" id="" type="file" required="" accept=".png, .jpg, .jpeg" name="riil_bukti[]" {{ session('u_data')->user_role != '3' ? 'disabled' : '' }}>
+                                                                    <a href="/storage/{{ $danaRiil->bukti }}" class="text-decoration-underline mt-2 d-inline-block" target="_blank">
+                                                                        <small>Bukti <i class="fa fa-external-link"></i></small>
+                                                                    </a>
+                                                                </td>
+                                                                <td>
+                                                                    @if (session('u_data')->user_role == '1')
+                                                                    <select class="form-select" aria-label="Default select example" name="status_riil[]" required>
+                                                                        <option value="1" {{ ($danaRiil->status_id == '1') ? 'selected' : '' }}>Setujui</option>
+                                                                        <option value="2" {{ ($danaRiil->status_id == '2') ? 'selected' : '' }}>Tolak</option>
+                                                                        <option value="3" {{ ($danaRiil->status_id == '3') ? 'selected' : '' }}>Menunggu</option>
+                                                                    </select>
+                                                                    @else
+                                                                        <input type="hidden" name="status_riil[]" value="{{$danaRiil->status_id}}">
+                                                                        @if ($danaRiil->status_id == '1')
+                                                                        <h6 class="badge badge-success">Setuju</h6>
+                                                                        @elseif($danaRiil->status_id == '2')
+                                                                        <h6 class="badge badge-danger">Tolak</h6>
+                                                                        @else
+                                                                        <h6 class="badge badge-warning">Menunggu</h6>
+                                                                        @endif
+                                                                    @endif
                                                                 </td>
                                                                 <td>
                                                                     <ul class="action align-items-center">
@@ -322,12 +380,56 @@
                                                                     </ul>
                                                                 </td>
                                                             </tr>
+                                                            @empty
+                                                            <tr>
+                                                                <td data-number="1">1</td>
+                                                                <td>
+                                                                    <input class="form-control" id="" type="text" required="" placeholder="Nama" autocomplete="off" name="riil_nama[]" {{ session('u_data')->user_role != '3' ? 'disabled' : '' }}>
+                                                                </td>
+                                                                <td>
+                                                                    <input class="form-control" id="hargaSatuan" type="text" required="" placeholder="Harga Satuan" autocomplete="off" name="riil_hargasatuan[]" {{ session('u_data')->user_role != '3' ? 'disabled' : '' }}>
+                                                                </td>
+                                                                <td>
+                                                                    <input class="form-control no-arrow" id="quantity" type="number" required="" placeholder="Qty" autocomplete="off" min="0" name="riil_qty[]" {{ session('u_data')->user_role != '3' ? 'disabled' : '' }}>
+                                                                </td>
+                                                                <td>
+                                                                    <input class="form-control" id="calcTotal" type="number" required="" placeholder="Otomatis Terhitung" disabled autocomplete="off" name="total_harga[]">
+                                                                </td>
+                                                                <td>
+                                                                    <input class="form-control" id="" type="text" required="" placeholder="Tempat Pembelian" autocomplete="off" name="riil_tmptbeli[]" {{ session('u_data')->user_role != '3' ? 'disabled' : '' }}>
+                                                                </td>
+                                                                <td>
+                                                                    <input class="form-control" id="" type="file" required="" accept=".png, .jpg, .jpeg" name="riil_bukti[]" {{ session('u_data')->user_role != '3' ? 'disabled' : '' }}>
+                                                                </td>
+                                                                <td>
+                                                                    @if (session('u_data')->user_role == '1')
+                                                                    <select class="form-select" aria-label="Default select example" name="status_riil[]" required>
+                                                                        <option disabled selected>Pilih Status</option>
+                                                                        <option value="1">Setujui</option>
+                                                                        <option value="2">Tolak</option>
+                                                                        <option value="3">Menunggu</option>
+                                                                    </select>
+                                                                    @else
+                                                                    <h6 class="badge badge-warning">Menunggu</h6>
+                                                                    @endif
+                                                                </td>
+                                                                <td>
+                                                                    <ul class="action align-items-center">
+                                                                        <li class="delete">
+                                                                            <button type="button" class="btn btn-link">
+                                                                            <i class="icon-trash"></i>
+                                                                            </button>
+                                                                        </li>
+                                                                    </ul>
+                                                                </td>
+                                                            </tr>
+                                                            @endforelse
                                                         </tbody>
                                                     </table>
                                                 </div>
                                                 <div class="row g-2 justify-content-end">
                                                     <div class="col-auto">
-                                                        <button class="btn btn-success" type="button" id="add-row-table" data-target-table="tbl-riil">
+                                                        <button class="btn btn-success {{ session('u_data')->user_role != '3' ? 'disabled' : '' }}" type="button" id="add-row-table" data-target-table="tbl-riil">
                                                             <i class="icon-plus"></i>
                                                             Tambahkan Baris Lagi
                                                         </button>
@@ -342,7 +444,6 @@
                         </div>
                         @if (session('u_data')->user_role != '2')
                         <div class="row g-2 justify-content-end">
-                            @if (($pageContext == 'add' || $pageContext == 'edit') && (session('u_data')->user_role == '3'))
                             <div class="col-auto">
                                 <a href="{{route('proker.index')}}" class="d-inline-block">
                                     <button class="btn btn-primary" type="button">Cancel</button>
@@ -351,15 +452,6 @@
                             <div class="col-auto">
                                 <button class="btn btn-secondary" type="submit">Save</button>
                             </div>
-                            @endif
-                            @if (($pageContext == 'edit') && (session('u_data')->user_role == '1'))
-                            <div class="col-auto">
-                                <button class="btn btn-danger" type="submit">Reject</button>
-                            </div>
-                            <div class="col-auto">
-                                <button class="btn btn-secondary" type="submit">Approve</button>
-                            </div>
-                            @endif
                         </div>
                         @endif
                     </div>

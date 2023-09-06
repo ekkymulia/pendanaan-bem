@@ -21,12 +21,6 @@
          <div class="card">
             <div class="card-header pb-0 card-no-border">
                <h4>Daftar Data Proker</h4>
-               @if (session('success'))
-               <div class="alert alert-success dark alert-dismissible fade show" role="alert">
-                  {{ session('success') }}
-                  <button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close" data-bs-original-title="" title=""></button>
-              </div>
-               @endif
                @if (session('u_data')->user_role == '3')
                <a href="{{route('proker.create')}}"><button class="btn btn-primary pull-right" type="button">Tambah Data Proker</button></a>
                @else
@@ -51,7 +45,7 @@
                         @foreach ($prokers as $proker)
                         <tr>
                               <td>{{ $loop->iteration }}</td>
-                              <td><a href="{{ route('proker.edit', $proker->id) }}"><u>{{ $proker->nama }}</u></a></td>
+                              <td><a href="{{ route('proker.show', $proker->id) }}"><u>{{ $proker->nama }}</u></a></td>
                               <td>{{ $proker->ketua }}</td>
                               <td>{{ $proker->departemen->ormawa->nama_ormw }}</td>
                               <td>{{ $proker->departemen->nama_departemen }}</td>
@@ -85,7 +79,6 @@
 @section('script')
 <script src="{{ asset('assets/js/datatable/datatables/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('assets/js/datatable/datatables/datatable.custom.js') }}"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
    document.getElementById('form-del-proker').addEventListener('submit', function (e) {
       e.preventDefault();

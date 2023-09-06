@@ -70,6 +70,25 @@
       </div>
     </div>
     <!-- latest jquery-->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    @if(session('failed'))
+    <script lang="javascript">
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: '{{ session('failed') }}',
+        });
+    </script>
+    @endif
+    @if(session('success'))
+    <script lang="javascript">
+        Swal.fire({
+            icon: 'success',
+            title: 'Yeah...',
+            text: '{{ session('success') }}',
+        });
+    </script>
+    @endif
     @include('layouts.simple.script')  
     <!-- Plugin used-->
 
