@@ -84,8 +84,8 @@ class DepartemenController extends Controller
         if ($request->hasFile('profile_img')) {
             $profileImage = $request->file('profile_img');
             $imageName = 'profile_' . time() . '.' . $profileImage->getClientOriginalExtension();
-            $profileImage->storeAs('public/profile_images', $imageName);
-            $new_user->profile_img = 'storage/profile_images/' . $imageName;
+            $profileImage->move(public_path('profile_images'), $imageName);
+            $user->profile_img = 'profile_images/' . $imageName;
         }
 
         $new_user->save();
@@ -189,8 +189,8 @@ class DepartemenController extends Controller
         if ($request->hasFile('profile_img')) {
             $profileImage = $request->file('profile_img');
             $imageName = 'profile_' . time() . '.' . $profileImage->getClientOriginalExtension();
-            $profileImage->storeAs('public/profile_images', $imageName);
-            $user->profile_img = 'storage/profile_images/' . $imageName;
+            $profileImage->move(public_path('profile_images'), $imageName);
+            $user->profile_img = 'profile_images/' . $imageName;
         }
 
         if (!empty($validatedData['password'])) {

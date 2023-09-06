@@ -25,7 +25,7 @@
 @section('content')
 <div class="container-fluid">
     <div class="edit-profile">
-        <form class="card" method="POST" 
+        <form class="card" method="POST" enctype="multipart/form-data"
             @if ($pageContext === 'add')
                 action="{{ route('ormawa.store') }}"
             @elseif ($pageContext === 'edit')
@@ -46,7 +46,7 @@
                     @endif
                 </h4>
                 <div class="row">
-                    <input type="hidden" name="mode" value="{{$mode}} ?? ''">
+                    <input type="hidden" name="mode" value="{{$mode}}">
                     <div class="col-xl-4">
                         <div class="mb-3">
                             <h6 class="form-label">Tahun Periode</h6>

@@ -25,7 +25,7 @@
 @section('content')
 <div class="container-fluid">
     <div class="edit-profile">
-        <form class="card" method="POST" 
+        <form class="card" method="POST" enctype="multipart/form-data"
             @if ($pageContext === 'add')
                 action="{{ route('departemen.store') }}"
             @elseif ($pageContext === 'edit')
@@ -68,7 +68,7 @@
                         </select>
                     </div>
                     @endif
-                    <input type="hidden" name="mode" value="{{$mode}} ?? ''">
+                    <input type="hidden" name="mode" value="{{$mode}}">
                     <div class="mb-3">
                         <label class="form-label">Email-Address</label>
                         <input class="form-control" placeholder="your-email@domain.com" name="email" value="{{ old('email', isset($departemen) ? $departemen->user->email : '') }}">

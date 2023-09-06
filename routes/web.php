@@ -34,7 +34,7 @@ Route::middleware(['auth','login'])->group(function () {
     Route::resource('dashboard', DashboardController::class);
 
     Route::middleware(['role:superadmin,ormawa'])->group(function () {
-        Route::put('ormawa/{ormawa}', [DepartemenController::class, 'update'])->name('ormawa.update');
+        Route::put('ormawa/{ormawa}', [OrmawaController::class, 'update'])->name('ormawa.update');
     });
 
     Route::middleware(['role:departemen'])->group(function () {
@@ -42,10 +42,10 @@ Route::middleware(['auth','login'])->group(function () {
     });
 
     Route::middleware(['role:superadmin'])->group(function () {
-        Route::get('ormawa', [DepartemenController::class, 'index'])->name('ormawa.index');
-        Route::get('ormawa', [DepartemenController::class, 'create'])->name('ormawa.create');
-        Route::post('ormawa', [DepartemenController::class, 'store'])->name('ormawa.store');
-        Route::delete('ormawa/{ormawa}', [DepartemenController::class, 'delete'])->name('ormawa.delete');
+        Route::get('ormawa', [OrmawaController::class, 'index'])->name('ormawa.index');
+        Route::get('ormawa/create', [OrmawaController::class, 'create'])->name('ormawa.create');
+        Route::post('ormawa', [OrmawaController::class, 'store'])->name('ormawa.store');
+        Route::delete('ormawa/{ormawa}', [OrmawaController::class, 'delete'])->name('ormawa.delete');
     });
 
     Route::middleware(['role:superadmin,ormawa'])->group(function () {
