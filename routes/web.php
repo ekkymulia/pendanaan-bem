@@ -6,7 +6,9 @@ use App\Http\Controllers\DepartemenController;
 use App\Http\Controllers\KalendarController;
 use App\Http\Controllers\LandingController;
 use App\Http\Controllers\OrmawaController;
+use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\ProkerController;
+use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\UserController;
 use App\Models\Ormawa;
 use Illuminate\Support\Facades\Route;
@@ -47,6 +49,9 @@ Route::middleware(['auth','login'])->group(function () {
         Route::get('ormawa/create', [OrmawaController::class, 'create'])->name('ormawa.create');
         Route::post('ormawa', [OrmawaController::class, 'store'])->name('ormawa.store');
         Route::delete('ormawa/{ormawa}', [OrmawaController::class, 'delete'])->name('ormawa.delete');
+
+        Route::resource('produk', ProdukController::class);
+        Route::resource('supplier', SupplierController::class);
     });
 
     Route::middleware(['role:superadmin,ormawa'])->group(function () {

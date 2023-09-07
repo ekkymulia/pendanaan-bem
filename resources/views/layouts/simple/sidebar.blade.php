@@ -79,6 +79,20 @@
                         </a>
                     </li>
                     @endif
+                    @if (session('u_data')->user_role == '1')
+                    <li class="sidebar-list"><i class="fa fa-thumb-tack"></i>
+                        <a class="sidebar-link sidebar-title link-nav" href="{{ route('produk.index') }}">
+                        <i data-feather="users"></i><span>Produk</span>
+                        </a>
+                    </li>
+                    @endif
+                    @if (session('u_data')->user_role == '1')
+                    <li class="sidebar-list"><i class="fa fa-thumb-tack"></i>
+                        <a class="sidebar-link sidebar-title link-nav" href="{{ route('supplier.index') }}">
+                        <i data-feather="users"></i><span>Supplier</span>
+                        </a>
+                    </li>
+                    @endif
                     <li class="sidebar-main-title">
                         <div>
                             <h6 class="">Pengaturan Akun</h6>

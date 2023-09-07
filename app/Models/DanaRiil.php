@@ -11,11 +11,16 @@ class DanaRiil extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'nama', 'proker_id', 'harga_satuan', 'quantity', 'total_harga', 'tempat_pembelian', 'bukti', 'status_id'
+        'supplier_id', 'proker_id', 'harga_satuan', 'quantity', 'total_harga', 'bukti', 'status_id'
     ];
 
     public function proker()
     {
         return $this->belongsTo(Proker::class);
+    }
+
+    public function supplier()
+    {
+        return $this->belongsTo(Supplier::class, 'supplier_id');
     }
 }

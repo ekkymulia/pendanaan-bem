@@ -13,12 +13,11 @@ return new class extends Migration
     {
         Schema::create('dana_riils', function (Blueprint $table) {
             $table->id();
-            $table->string('nama');
+            $table->string('supplier_id');
             $table->unsignedBigInteger('proker_id');
             $table->unsignedBigInteger('harga_satuan');
             $table->unsignedBigInteger('quantity');
             $table->unsignedBigInteger('total_harga');
-            $table->string('tempat_pembelian');
             $table->string('bukti');
             $table->unsignedBigInteger('status_id')->default('3');
             $table->softDeletes(); 

@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\DanaRab;
 use App\Models\DanaRiil;
+use App\Models\Produk;
 use App\Models\Proker;
+use App\Models\Supplier;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
@@ -143,12 +145,21 @@ class ProkerController extends Controller
     {
         $proker = Proker::findOrFail($id);
         $danaRab = DanaRab::where('proker_id', $proker->id)->get();
-        $danaRiil = DanaRiil::where('proker_id', $proker->id)->get();
+        $danaRiil = DanaRiil::where('proker_id', $proker->id)->with('supplier', 'supplier.produk')->get();
+        // foreach($danaRill as $dr){
+        //     $meanProduk = DanaRill::mean($dr->supplier_id);
+
+        //     if ($dr->hargasatuan > $meanProduk){
+        //         $dr->warning = true;
+        //     }
+        // }
+        $supplier = Supplier::with('produk')->get();
         return view('proker.proker', with([
             'pageContext'   => 'edit',
             'proker'        => $proker,
             'danaRabs'      => $danaRab,
             'danaRiils'     => $danaRiil,
+            'suppliers'        => $supplier,
             'sisaDanaRiils' => DanaRiil::where('proker_id', $id)->sum('total_harga'),
         ]));
     }
@@ -185,10 +196,12 @@ class ProkerController extends Controller
             ]);
 
             if ($updateProker) {
-                foreach ($request->id_riil as $key => $riilId) {
-                    DanaRiil::where('id', $riilId)->update([
-                        'status_id' => $request->status_riil[$key]
-                    ]);
+                if($request->id_riil){
+                    foreach ($request->id_riil as $key => $riilId) {
+                        DanaRiil::where('id', $riilId)->update([
+                            'status_id' => $request->status_riil[$key]
+                        ]);
+                    }
                 }
                 return redirect()->back()->with('success', 'Data Proker Berhasil Diperbarui');
             }
@@ -252,11 +265,10 @@ class ProkerController extends Controller
 
                     $riil = new DanaRiil([
                         'proker_id' => $getProker->id,
-                        'nama' => $nama,
+                        'supplier_id' => $nama,
                         'harga_satuan' => $request['riil_hargasatuan'][$key],
                         'quantity' => $request['riil_qty'][$key],
                         'total_harga' => $request['total_harga'][$key],
-                        'tempat_pembelian' => $request['riil_tmptbeli'][$key],
                         'status_id' => $request['status_riil'][$key] ?? 3,
                     ]);
 

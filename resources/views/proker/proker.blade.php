@@ -331,7 +331,7 @@
                                                                 <td data-number="{{ $loop->iteration; }}">{{ $loop->iteration; }}</td>
                                                                 <td>
                                                                     <input type="hidden" name="id_riil[]" value="{{ $danaRiil->id }}">
-                                                                    <input class="form-control" id="" type="text" required="" placeholder="Nama" autocomplete="off" name="riil_nama[]" value="{{ $danaRiil->nama }}" {{ session('u_data')->user_role != '3' ? 'disabled' : '' }}>
+                                                                    <input class="form-control" id="" type="text" required="" placeholder="Nama" autocomplete="off" name="riil_nama[]" value="{{ $danaRiil->supplier->produk->nama_produk }}" {{ session('u_data')->user_role != '3' ? 'disabled' : '' }}>
                                                                 </td>
                                                                 <td>
                                                                     <input class="form-control" id="hargaSatuan" type="text" required="" placeholder="Harga Satuan" autocomplete="off" name="riil_hargasatuan[]" value="{{ $danaRiil->harga_satuan }}" {{ session('u_data')->user_role != '3' ? 'disabled' : '' }}>
@@ -343,7 +343,7 @@
                                                                     <input class="form-control" id="calcTotal" type="number" required="" placeholder="Otomatis Terhitung" disabled autocomplete="off" name="total_harga[]" value="{{ $danaRiil->total_harga }}">
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-control" id="" type="text" required="" placeholder="Tempat Pembelian" autocomplete="off" name="riil_tmptbeli[]" value="{{ $danaRiil->tempat_pembelian }}" {{ session('u_data')->user_role != '3' ? 'disabled' : '' }}>
+                                                                    <input class="form-control" id="" type="text" required="" placeholder="Tempat Pembelian" autocomplete="off" name="riil_tmptbeli[]" value="{{ $danaRiil->supplier->nama_supplier }}" {{ session('u_data')->user_role != '3' ? 'disabled' : '' }}>
                                                                 </td>
                                                                 <td>
                                                                     <input type="hidden" name="riil_bukti[]" value="{{ $danaRiil->bukti }}">
@@ -384,8 +384,14 @@
                                                             <tr>
                                                                 <td data-number="1">1</td>
                                                                 <td>
-                                                                    <input class="form-control" id="" type="text" required="" placeholder="Nama" autocomplete="off" name="riil_nama[]" {{ session('u_data')->user_role != '3' ? 'disabled' : '' }}>
+                                                                    <select class="form-control" required name="riil_nama[]" {{ session('u_data')->user_role != '3' ? 'disabled' : '' }}>
+                                                                        <option value="">Pilih Nama</option>
+                                                                        @foreach ($suppliers as $supplier)
+                                                                            <option value="{{ $supplier->id }}">{{ $supplier->nama_supplier }} - {{ $supplier->produk->nama_produk }}</option>
+                                                                        @endforeach
+                                                                    </select>
                                                                 </td>
+
                                                                 <td>
                                                                     <input class="form-control" id="hargaSatuan" type="text" required="" placeholder="Harga Satuan" autocomplete="off" name="riil_hargasatuan[]" {{ session('u_data')->user_role != '3' ? 'disabled' : '' }}>
                                                                 </td>
@@ -394,9 +400,6 @@
                                                                 </td>
                                                                 <td>
                                                                     <input class="form-control" id="calcTotal" type="number" required="" placeholder="Otomatis Terhitung" disabled autocomplete="off" name="total_harga[]">
-                                                                </td>
-                                                                <td>
-                                                                    <input class="form-control" id="" type="text" required="" placeholder="Tempat Pembelian" autocomplete="off" name="riil_tmptbeli[]" {{ session('u_data')->user_role != '3' ? 'disabled' : '' }}>
                                                                 </td>
                                                                 <td>
                                                                     <input class="form-control" id="" type="file" required="" accept=".png, .jpg, .jpeg" name="riil_bukti_changes[]" {{ session('u_data')->user_role != '3' ? 'disabled' : '' }}>
