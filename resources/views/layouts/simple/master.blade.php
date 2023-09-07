@@ -84,7 +84,7 @@
     <script lang="javascript">
         Swal.fire({
             icon: 'success',
-            title: 'Yeah...',
+            title: 'Yeay...',
             text: '{{ session('success') }}',
         });
     </script>

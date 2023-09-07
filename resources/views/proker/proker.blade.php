@@ -192,7 +192,7 @@
                                             <label for="file-lpj">Upload LPJ</label>
                                         </div>
                                         <div class="col-6">
-                                            <input class="form-control" id="file-lpj" type="file" name="file_lpj" accept=".pdf, .doc, .docx" {{ (session('u_data')->user_role != '3') || ($proker->status_id != '1') ? 'disabled' : '' }}>
+                                            <input class="form-control" id="file-lpj" type="file" name="file_lpj" accept=".pdf, .doc, .docx" {{ (session('u_data')->user_role != '3') ? 'disabled' : '' }}>
                                             @if ($proker)
                                                 <a href="/storage/{{ $proker->file_lpj }}" class="text-decoration-underline mt-2 d-inline-block {{ !$proker->file_lpj ? 'disabled' : '' }}" target="_blank">
                                                     File LPJ Sebelumnya
@@ -347,7 +347,7 @@
                                                                 </td>
                                                                 <td>
                                                                     <input type="hidden" name="riil_bukti[]" value="{{ $danaRiil->bukti }}">
-                                                                    <input class="form-control" id="" type="file" required="" accept=".png, .jpg, .jpeg" name="riil_bukti[]" {{ session('u_data')->user_role != '3' ? 'disabled' : '' }}>
+                                                                    <input class="form-control" id="" type="file" required="" accept=".png, .jpg, .jpeg" name="riil_bukti_changes[{{$loop->iteration}}]" {{ session('u_data')->user_role != '3' ? 'disabled' : '' }}>
                                                                     <a href="/storage/{{ $danaRiil->bukti }}" class="text-decoration-underline mt-2 d-inline-block" target="_blank">
                                                                         <small>Bukti <i class="fa fa-external-link"></i></small>
                                                                     </a>
@@ -399,7 +399,7 @@
                                                                     <input class="form-control" id="" type="text" required="" placeholder="Tempat Pembelian" autocomplete="off" name="riil_tmptbeli[]" {{ session('u_data')->user_role != '3' ? 'disabled' : '' }}>
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-control" id="" type="file" required="" accept=".png, .jpg, .jpeg" name="riil_bukti[]" {{ session('u_data')->user_role != '3' ? 'disabled' : '' }}>
+                                                                    <input class="form-control" id="" type="file" required="" accept=".png, .jpg, .jpeg" name="riil_bukti_changes[]" {{ session('u_data')->user_role != '3' ? 'disabled' : '' }}>
                                                                 </td>
                                                                 <td>
                                                                     @if (session('u_data')->user_role == '1')

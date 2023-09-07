@@ -23,8 +23,6 @@
                <h4>Daftar Data Proker</h4>
                @if (session('u_data')->user_role == '3')
                <a href="{{route('proker.create')}}"><button class="btn btn-primary pull-right" type="button">Tambah Data Proker</button></a>
-               @else
-               <a href="{{route('proker.create')}}"><button class="btn btn-primary pull-right disabled" type="button">Tambah Data Proker</button></a>
                @endif
             </div>
             <div class="card-body">
@@ -47,8 +45,8 @@
                               <td>{{ $loop->iteration }}</td>
                               <td><a href="{{ route('proker.show', $proker->id) }}"><u>{{ $proker->nama }}</u></a></td>
                               <td>{{ $proker->ketua }}</td>
-                              <td>{{ $proker->departemen->ormawa->nama_ormw }}</td>
-                              <td>{{ $proker->departemen->nama_departemen }}</td>
+                              <td>{{ $proker->ormawa_name }}</td>
+                              <td>{{ $proker->departemen_name }}</td>
                               <td>Rp {{ $proker->dana }}</td>
                               <td>
                                  <ul class="action align-items-center">

@@ -4,12 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\DanaRab;
 use App\Models\DanaRiil;
-use App\Models\Departemen;
-use App\Models\Ormawa;
 use App\Models\Proker;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
@@ -23,23 +21,33 @@ class ProkerController extends Controller
     public function index()
     {
         $user = session('u_data');
+
         $prokers = [];
+        $prokersQuery = Proker::select('prokers.*', 'ormawa.name as ormawa_name', 'departemen.name as departemen_name')
+            ->join('departemens', 'prokers.departemen_id', '=', 'departemens.id')
+            ->join('ormawas', 'departemens.ormawa_id', '=', 'ormawas.id')
+            ->join('users as ormawa', 'ormawas.user_id', '=', 'ormawa.id')
+            ->join('users as departemen', 'departemens.user_id', '=', 'departemen.id');
+
+        // Kasus 1: user_id 1
         if ($user->user_role == '1') {
-            $prokers = Proker::with('departemen.ormawa')->get();
-        } elseif ($user->user_role == '2') {
-            $prokers = Proker::with([
-                'departemen.ormawa:id,nama_ormw'
-            ])->whereHas('departemen', function ($query) use ($user) {
-                $query->where('ormawa_id', $user->ormawa_id);
-            })->get();
-        } else {
-            $prokers = Proker::with([
-                'departemen:id,nama_departemen,ormawa_id',
-                'departemen.ormawa:id,nama_ormw'
-            ])->where('departemen_id', $user->departemen_id)->get();
+            $prokers = $prokersQuery->get();
         }
 
-        // return response()->json($prokers);
+        // Kasus 2: user_id 2
+        if ($user->user_role == '2') {
+            $prokers = $prokersQuery
+                ->where('ormawas.id', $user->ormawa_id)
+                ->get();
+        }
+
+        // Kasus 3: user_id 3
+        if ($user->user_role == '3') {
+            $prokers = $prokersQuery
+                ->where('departemens.id', $user->departemen_id)
+                ->get();
+        }
+
         return view('proker.data-proker', compact('prokers'));
     }
 
@@ -161,9 +169,15 @@ class ProkerController extends Controller
     {
         $user = session('u_data');
         $getProker = Proker::findOrFail($id);
+        // return response()->json([
+        //     // "proker" => $getProker->id,
+        //     // "rab" => DanaRab::where('proker_id', $getProker->id)->get(),
+        //     // "riil" => DanaRiil::where('proker_id', $getProker->id)->get(),
+        //     'request' => $request->all(),
+        // ]);
         if ($user->user_role == '1') {
-            $dataOnly = $request->only(['tipe_dana', 'status_proker', 'dana', 'id_riil', 'status_riil']);
-            return response()->json($dataOnly);
+            // $dataOnly = $request->only(['tipe_dana', 'status_proker', 'dana', 'id_riil', 'status_riil']);
+            // return response()->json($dataOnly);
             $updateProker = Proker::where('id', $getProker->id)->update([
                 'tipe_dana_id' => $request->tipe_dana,
                 'status_id'    => $request->status_proker,
@@ -181,10 +195,9 @@ class ProkerController extends Controller
                 'file_lpj' => [
                     File::types(['pdf', 'doc', 'docx'])
                 ],
-                'riil_bukti.*' => [
-                    'sometimes',
-                    File::types(['png', 'jpg', 'jpeg'])
-                ],
+                // 'riil_bukti.*' => [
+                //     File::types(['png', 'jpg', 'jpeg'])
+                // ],
             ]);
 
             $getProker->nama = $request->nama_proker;
@@ -195,22 +208,22 @@ class ProkerController extends Controller
             if ($request->hasFile('file_proposal') && $request->file('file_proposal')->isValid()) {
                 Storage::disk('public')->delete($getProker->file_proposal);
                 $fileProposal = $request->file('file_proposal');
-                $proposalPath = $fileProposal->store('file_proposal', 'public');
+                $proposalPath = $fileProposal->storePubliclyAs('file_proposal', $this->renameFileToRandom($fileProposal), 'public');
                 $getProker->file_proposal = $proposalPath;
             }
 
             if ($request->hasFile('file_lpj') && $request->file('file_lpj')->isValid()) {
                 Storage::disk('public')->delete($getProker->file_lpj);
                 $fileLpj = $request->file('file_lpj');
-                $lpjPath = $fileLpj->store('file_lpj', 'public');
+                $lpjPath = $fileLpj->storePubliclyAs('file_proposal', $this->renameFileToRandom($fileLpj), 'public');
                 $getProker->file_lpj = $lpjPath;
             }
 
             if ($getProker->save()) {
-                DanaRab::where('proker_id', $id)->delete();
+                DanaRab::where('proker_id', $getProker->id)->forceDelete();
                 foreach ($request['rab_nama'] as $key => $nama) {
                     DanaRab::create([
-                        'proker_id' => $id,
+                        'proker_id' => $getProker->id,
                         'nama' => $nama,
                         'harga_satuan' => $request['rab_hargasatuan'][$key],
                         'quantity' => $request['rab_qty'][$key],
@@ -218,14 +231,21 @@ class ProkerController extends Controller
                     ]);
                 }
 
-                DanaRiil::where('proker_id', $id)->delete();
+                DanaRiil::where('proker_id', $getProker->id)->forceDelete();
                 foreach ($request['riil_nama'] as $key => $nama) {
-                    $riil = DanaRiil::find($id);
-                    if (!$riil) {
-                        continue;
+                    if (
+                        isset($_FILES['riil_bukti_changes']['tmp_name'][$key]) &&
+                        is_uploaded_file($_FILES['riil_bukti_changes']['tmp_name'][$key])
+                    ) {
+                        Validator::validate($request->all(), [
+                            'riil_bukti_changes.' . $key => [
+                                File::types(['png', 'jpg', 'jpeg'])
+                            ],
+                        ]);
                     }
+
                     $riil = new DanaRiil([
-                        'proker_id' => $id,
+                        'proker_id' => $getProker->id,
                         'nama' => $nama,
                         'harga_satuan' => $request['riil_hargasatuan'][$key],
                         'quantity' => $request['riil_qty'][$key],
@@ -234,14 +254,19 @@ class ProkerController extends Controller
                         'status_id' => $request['status_riil'][$key] ?? 3,
                     ]);
 
-                    if ($request->hasFile('riil_bukti') && $request->file('riil_bukti')[$key]->isValid()) {
-                        $file = $request->file('riil_bukti')[$key];
+                    if (
+                        $request->hasFile('riil_bukti_changes') &&
+                        isset($request->file('riil_bukti_changes')[$key]) &&
+                        $request->file('riil_bukti_changes')[$key]->isValid()
+                    ) {
+                        $file = $request->file('riil_bukti_changes')[$key];
                         $randomName = $this->renameFileToRandom($file);
                         $path = $file->storePubliclyAs('file_bukti_riil', $randomName, 'public');
                         $riil->bukti = $path;
-                        $oldRiil = DanaRiil::find($id);
-                        if ($oldRiil) {
-                            Storage::disk('public')->delete($oldRiil->bukti);
+
+                        if (isset($request['riil_bukti'][$key])) {
+                            $oldPath = $request['riil_bukti'][$key];
+                            Storage::disk('public')->delete($oldPath);
                         }
                     } else {
                         $riil->bukti = $request['riil_bukti'][$key];
