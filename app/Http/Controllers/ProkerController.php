@@ -176,7 +176,7 @@ class ProkerController extends Controller
         //     'request' => $request->all(),
         // ]);
         if ($user->user_role == '1') {
-            // $dataOnly = $request->only(['tipe_dana', 'status_proker', 'dana', 'id_riil', 'status_riil']);
+            $dataOnly = $request->only(['tipe_dana', 'status_proker', 'dana', 'id_riil', 'status_riil']);
             // return response()->json($dataOnly);
             $updateProker = Proker::where('id', $getProker->id)->update([
                 'tipe_dana_id' => $request->tipe_dana,
@@ -185,6 +185,11 @@ class ProkerController extends Controller
             ]);
 
             if ($updateProker) {
+                foreach ($request->id_riil as $key => $riilId) {
+                    DanaRiil::where('id', $riilId)->update([
+                        'status_id' => $request->status_riil[$key]
+                    ]);
+                }
                 return redirect()->back()->with('success', 'Data Proker Berhasil Diperbarui');
             }
         } elseif ($user->user_role == '3') {
@@ -195,9 +200,6 @@ class ProkerController extends Controller
                 'file_lpj' => [
                     File::types(['pdf', 'doc', 'docx'])
                 ],
-                // 'riil_bukti.*' => [
-                //     File::types(['png', 'jpg', 'jpeg'])
-                // ],
             ]);
 
             $getProker->nama = $request->nama_proker;
@@ -206,16 +208,20 @@ class ProkerController extends Controller
             $getProker->keterangan = $request->keterangan;
 
             if ($request->hasFile('file_proposal') && $request->file('file_proposal')->isValid()) {
-                Storage::disk('public')->delete($getProker->file_proposal);
+                if ($getProker->file_proposal) {
+                    Storage::disk('public')->delete($getProker->file_proposal);
+                }
                 $fileProposal = $request->file('file_proposal');
                 $proposalPath = $fileProposal->storePubliclyAs('file_proposal', $this->renameFileToRandom($fileProposal), 'public');
                 $getProker->file_proposal = $proposalPath;
             }
 
             if ($request->hasFile('file_lpj') && $request->file('file_lpj')->isValid()) {
-                Storage::disk('public')->delete($getProker->file_lpj);
+                if ($getProker->file_lpj) {
+                    Storage::disk('public')->delete($getProker->file_lpj);
+                }
                 $fileLpj = $request->file('file_lpj');
-                $lpjPath = $fileLpj->storePubliclyAs('file_proposal', $this->renameFileToRandom($fileLpj), 'public');
+                $lpjPath = $fileLpj->storePubliclyAs('file_lpj', $this->renameFileToRandom($fileLpj), 'public');
                 $getProker->file_lpj = $lpjPath;
             }
 
@@ -274,10 +280,11 @@ class ProkerController extends Controller
 
                     $riil->save();
                 }
+                return redirect()->back()->with('success', 'Data Proker Berhasil Diperbarui');
             }
         }
 
-        return redirect()->back()->with('success', 'Proker berhasil diperbarui');
+        return redirect()->back()->with('failed', 'Telah terjadi kesalahan');
     }
 
     /**

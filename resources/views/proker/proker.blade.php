@@ -347,7 +347,7 @@
                                                                 </td>
                                                                 <td>
                                                                     <input type="hidden" name="riil_bukti[]" value="{{ $danaRiil->bukti }}">
-                                                                    <input class="form-control" id="" type="file" required="" accept=".png, .jpg, .jpeg" name="riil_bukti_changes[{{$loop->iteration}}]" {{ session('u_data')->user_role != '3' ? 'disabled' : '' }}>
+                                                                    <input class="form-control" id="" type="file" required="" accept=".png, .jpg, .jpeg" name="riil_bukti_changes[{{$loop->iteration-1}}]" {{ session('u_data')->user_role != '3' ? 'disabled' : '' }}>
                                                                     <a href="/storage/{{ $danaRiil->bukti }}" class="text-decoration-underline mt-2 d-inline-block" target="_blank">
                                                                         <small>Bukti <i class="fa fa-external-link"></i></small>
                                                                     </a>
