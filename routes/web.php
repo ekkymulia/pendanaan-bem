@@ -7,6 +7,7 @@ use App\Http\Controllers\KalendarController;
 use App\Http\Controllers\LandingController;
 use App\Http\Controllers\OrmawaController;
 use App\Http\Controllers\ProkerController;
+use App\Http\Controllers\UserController;
 use App\Models\Ormawa;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
@@ -55,6 +56,11 @@ Route::middleware(['auth','login'])->group(function () {
     Route::middleware(['role:superadmin,departemen,ormawa'])->group(function () {
         Route::resource('proker', ProkerController::class);
     });    
+
+    Route::middleware(['role:superadmin'])->group(function () {
+        Route::put('user/{user}', [UserController::class, 'update'])->name('user.update');
+    });
+
 
     Route::resource('kalender', KalendarController::class);
 
