@@ -228,6 +228,8 @@ class DepartemenController extends Controller
         $user->push();
 
         if($request->input('mode') == 'profile'){
+            session('u_data')->user_name = $user->name;
+            session('u_data')->user_profile_img = $user->profile_img;
             return redirect()->route('profile');
         }
     

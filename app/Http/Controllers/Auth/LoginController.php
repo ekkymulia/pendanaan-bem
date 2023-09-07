@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Departemen;
 use App\Models\Ormawa;
 use App\Models\Role;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -78,6 +79,20 @@ class LoginController extends Controller
     public function profile(){
 
         $user = session('u_data');
+
+        if($user->user_role == 1){
+            $user_data = User::where('id', $user->user_id)->first();
+
+            if (!$user_data) {
+                return redirect()->route('ormawa.index')->with('error', 'Ormawa not found.');
+            }
+    
+            return view('superadmin.superadmin', [
+                'pageContext' => 'edit',
+                'mode'=> 'profile',
+                'user' => $user_data, 
+            ]);
+        }
 
         if($user->user_role == 2){
             $ormawa = Ormawa::with('user')->where('user_id', $user->user_id)->first();
