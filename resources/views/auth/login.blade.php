@@ -10,7 +10,7 @@
 @section('content')
 <div class="container-fluid">
    <div class="row">
-      <div class="col-xl-5"><img class="bg-img-cover bg-center" src="{{asset('assets/images/login/3.jpg')}}" alt="looginpage"></div>
+      <div class="col-xl-5"><img class="bg-img-cover bg-center" src="{{asset('assets/images/login/login_side.png')}}" alt="looginpage"></div>
       <div class="col-xl-7 p-0">
          <div class="login-card">
             <div>
@@ -26,9 +26,9 @@
                      </div>
                      <div class="form-group">
                         <label class="col-form-label">Password</label>
-                        <input class="form-control" type="password" name="password" required="" placeholder="*********">
+                        <input class="form-control" id="inputPw" type="password" name="password" required="" placeholder="*********">
                         <div class="invalid-tooltip">Please enter password.</div>
-                        <!-- <div class="show-hide"><span class="show"></span></div> -->
+                        <div class="show-hide" id="show-pw"><span class="show"></span></div>
                      </div>
                      <div class="form-group mb-0">
                         <div class="checkbox p-0">
@@ -39,21 +39,32 @@
                      </div>
                      <script>
                         (function() {
-                        'use strict';
-                        window.addEventListener('load', function() {
-                        // Fetch all the forms we want to apply custom Bootstrap validation styles to
-                        var forms = document.getElementsByClassName('needs-validation');
-                        // Loop over them and prevent submission
-                        var validation = Array.prototype.filter.call(forms, function(form) {
-                        form.addEventListener('submit', function(event) {
-                        if (form.checkValidity() === false) {
-                        event.preventDefault();
-                        event.stopPropagation();
-                        }
-                        form.classList.add('was-validated');
-                        }, false);
-                        });
-                        }, false);
+                           'use strict';
+                           window.addEventListener('load', function() {
+                           // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                           var forms = document.getElementsByClassName('needs-validation');
+                           // Loop over them and prevent submission
+                           var validation = Array.prototype.filter.call(forms, function(form) {
+                              form.addEventListener('submit', function(event) {
+                              if (form.checkValidity() === false) {
+                                 event.preventDefault();
+                                 event.stopPropagation();
+                              }
+                              form.classList.add('was-validated');
+                              }, false);
+                           });
+                           
+                           const passwordInput = document.getElementById('inputPw');
+                           const showHideButton = document.getElementById('show-pw');
+                           const showIcon = showHideButton.querySelector('.show');
+                           showHideButton.addEventListener('click', function () {
+                              if (passwordInput.type === 'password') {
+                                    passwordInput.type = 'text';
+                              } else {
+                                    passwordInput.type = 'password';
+                              }
+                           });
+                           }, false);
                         })();
                         
                      </script>

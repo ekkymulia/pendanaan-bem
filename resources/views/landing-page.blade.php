@@ -79,9 +79,9 @@
             <header>                       
               <nav class="navbar navbar-b navbar-dark p-0 d-flex justify-content-between navbar-trans navbar-expand-xl fixed-top p-0 nav-padding" id="sidebar-menu">
                 <a class="navbar-brand p-3 bg-white" href="#">
-                  <img class="logo" height="50" src="{{ asset('assets/images/landing/logoipb-baru.png') }}" alt="">
-                  <img class="logo" height="50" src="{{ asset('assets/images/landing/logo-kpkbaru.png') }}" alt="">
-                  <img class="logo" height="50" src="{{ asset('assets/images/landing/logo-cifest.png') }}" alt="">
+                  <img class="logo" height="30" src="{{ asset('assets/images/logo/ipb-full.png') }}" alt="">
+                  <img class="logo" height="30" src="{{ asset('assets/images/logo/kpk.png') }}" alt="">
+                  <img class="logo" height="30" src="{{ asset('assets/images/logo/akabeko.png') }}" alt="">
 
                 </a>
                 <div class="d-flex px-1 py-1 gap-5">
@@ -103,8 +103,8 @@
               <div class="content text-center">
                 <div>
                   <h6 class="content-title"><img class="arrow-decore" src="{{ asset('assets/images/landing/decore/arrow.svg') }}" alt=""><span class="sub-title">Selamat Datang</span></h6>
-                  <h1 class="wow fadeIn">Bergabunglah dengan <span>ORMAWA</span> Kami untuk Kegiatan Seru</h1>
-                  <p class="mt-3 wow fadeIn">Temukan peluang, ikuti acara menarik, dan berkontribusi bersama kami di Organisasi Mahasiswa Universitas SV-IPB.</p>
+                  <h1 class="wow fadeIn"><span>FORM-IMoD</span> Integrity Monitoring Database</h1>
+                  <p class="mt-3 wow fadeIn">merupakan website examines dalam upaya pemberantasan mahasiswa SV IPB dengan prinsip 3L (Lihat, Lawan, Laporkan).</p>
                   <div class="btn-grp mt-4">
                     <a class="wow pulse" href="{{ route('index')}}" target="_blank" data-bs-placement="top" title="Jelajahi">Jelajahi Lebih Lanjut</a>
                   </div>
@@ -121,11 +121,11 @@
       <section class="section-space premium-wrap">
         <div class="container">
           <div class="row justify-content-center">
-            <div class="col-sm-12"> 
+            <div class="col-12 col-sm-10"> 
               <div class="landing-title">
-                <h5 class="sub-title">Mendorong Mahasiswa melalui</h5>
-                <h2> <span class="gradient-1">Inisiatif </span>Inovatif</h2>
-                <p>Organisasi Mahasiswa (ORMAWA) kami berkomitmen untuk mewujudkan kehidupan kampus yang bersemangat dan memberikan peluang unik bagi pertumbuhan pribadi dan profesional.</p>
+                <h5 class="sub-title">Mendorong Mahasiswa dalam</h5>
+                <h2>Memberantas penggelembungan dana ormawa <span class="gradient-1">SV IPB</span></h2>
+                <p>Berkomitmen untuk memberantas penggelembungan dana ormawa di SV IPB dalam menjunjung tinggi Integritas dan akuntabilitas bagi mahasiswa SV IPB.</p>
               </div>
               {{-- <div class="vector-image"> <img src="{{ asset('assets/images/landing/vectors/1.svg') }}" alt=""></div> --}}
             </div>
@@ -188,8 +188,8 @@
           <div class="row"> 
             <div class="col-sm-12 wow pulse"> 
               <div class="landing-title text-start">
-                <h2>Potensi Diri dan Pengalaman Kampus Lebih Berarti dengan <span class="gradient-6">Kegiatan ORMWA yang Menarik dan Bermakna.</span></h2><img class="title-img d-sm-block d-none" src="{{ asset('assets/images/landing/decore/arrow-4.svg') }}" alt="">
-                <h4 class="d-sm-block d-none sub-title rotate-title mb-0">Tingkatkan Perjalanan Kampus Anda Bersama Kami.</h4>
+                <h2>Efesiensi dan efektifitas pendanaan ormawa <span class="gradient-6">SV IPB untuk memberikan kepercayaan bagi pemberi dana.</span></h2><img class="title-img d-sm-block d-none" src="{{ asset('assets/images/landing/decore/arrow-4.svg') }}" alt="">
+                <h4 class="d-sm-block d-none sub-title rotate-title mb-0">Tingkatan Integritas akuntabilitas ormawa bersama FORM-IMoD.</h4>
               </div>
             </div>
           </div>
@@ -199,7 +199,7 @@
             </div>
             <div class="col-md-6"> 
               <div class="build-content text-end"> 
-                <p class="f-light mb-0">Bergabunglah dengan ORMWA kami untuk ikut serta dalam beragam acara menarik, workshop, dan proyek komunitas. Berkolaborasi dengan teman sejawat yang memiliki semangat yang sama dan berikan dampak positif pada kehidupan kampus. Temukan passion dan potensi kepemimpinan Anda bersama kami!</p>
+                <p class="f-light mb-0">Bergabunglah dengan FORM-IMoD kami untuk mewujudkan ormawa integritas dan akuntabilitas. Berkolaborasi bersama korupsi pemberantasan korupsi (KPK) sehingga dapat memberikan dampak positif bagi SV IPB dalam mewujudkan motto IPB “Inspring Inovation with Integrity”</p>
               </div>
             </div>
           </div>
@@ -536,71 +536,81 @@
                 <div class="accordion" id="faqaccordion">
                   <div class="accordion-item">
                     <h2 class="accordion-header" id="faq1">
-                      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faqOne" aria-expanded="true" aria-controls="faqOne">Bagaimana cara ikut serta dalam kegiatan ORMWA?</button>
+                      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faqOne" aria-expanded="true" aria-controls="faqOne">Bagaimana Cara apabila lupa password?</button>
                     </h2>
                     <div class="accordion-collapse collapse show" id="faqOne" aria-labelledby="faq1" data-bs-parent="#faqaccordion">
                       <div class="accordion-body f-light">
-                        Kami mengundang semua mahasiswa untuk berpartisipasi dalam kegiatan ORMWA. Anda dapat bergabung dengan menghadiri acara, workshop, dan pertemuan, atau menjadi anggota dari departemen tertentu yang menarik bagi Anda.
+                        Jika Anda lupa password, Anda dapat menghubungi superadmin, karena dia yang mengelola akun ormawa dan departemen. Superadmin akan membantu Anda untuk mengatur ulang password Anda.
                       </div>
                     </div>
                   </div>
                   <div class="accordion-item">
                     <h2 class="accordion-header" id="faq2">
-                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqTwo" aria-expanded="false" aria-controls="faqTwo">Berapa lama waktu yang diperlukan untuk merencanakan dan mengorganisir suatu acara?</button>
+                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqTwo" aria-expanded="false" aria-controls="faqTwo">Apa itu Ormawa dan departemen?</button>
                     </h2>
                     <div class="accordion-collapse collapse" id="faqTwo" aria-labelledby="faq2" data-bs-parent="#faqaccordion">
                       <div class="accordion-body f-light">
-                        Waktu yang dibutuhkan untuk merencanakan dan mengorganisir acara bervariasi tergantung pada skala dan sifat acaranya. Acara sederhana mungkin memerlukan beberapa minggu, sedangkan acara besar bisa memakan waktu beberapa bulan persiapan.
+                        Ormawa adalah singkatan dari Organisasi Mahasiswa yang merupakan organisasi di kampus yang terdiri dari berbagai departemen yang bertanggung jawab untuk mengelola kegiatan dan proyek yang berkaitan dengan bidang mereka masing-masing.
                       </div>
                     </div>
                   </div>
                   <div class="accordion-item">
                     <h2 class="accordion-header" id="faq3">
-                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqThree" aria-expanded="false" aria-controls="faqThree">Apakah ada biaya keanggotaan untuk bergabung dengan departemen?</button>
+                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqThree" aria-expanded="false" aria-controls="faqThree">Bagaimana Cara penggunaan Website?</button>
                     </h2>
                     <div class="accordion-collapse collapse" id="faqThree" aria-labelledby="faq3" data-bs-parent="#faqaccordion">
                       <div class="accordion-body f-light">
-                        Ya, mungkin ada biaya keanggotaan yang terkait dengan bergabung dengan beberapa departemen untuk menutupi biaya operasional dan kegiatan. Namun, kami berusaha menjaga agar biaya ini terjangkau bagi semua mahasiswa.
+                        Cara penggunaan website dapat dilihat dalam panduan yang disediakan oleh admin. Anda juga dapat menghubungi admin jika Anda memiliki pertanyaan atau kesulitan dalam penggunaan website.
                       </div>
                     </div>
                   </div>
                   <div class="accordion-item">
                     <h2 class="accordion-header" id="faq4">
-                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqFour" aria-expanded="false" aria-controls="faqFour">Bagaimana cara mengusulkan inisiatif baru di dalam departemen?</button>
+                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqFour" aria-expanded="false" aria-controls="faqFour">Siapa yang akan mengisi RAB?</button>
                     </h2>
                     <div class="accordion-collapse collapse" id="faqFour" aria-labelledby="faq4" data-bs-parent="#faqaccordion">
                       <div class="accordion-body f-light">
-                        Jika Anda memiliki ide untuk inisiatif baru, Anda dapat mendiskusikannya dengan koordinator departemen atau tim eksekutif. Mereka dapat membimbing Anda melalui proses mengusulkan dan melaksanakan ide Anda.
+                        RAB (Rencana Anggaran Biaya) biasanya diisi oleh departemen yang mengajukan proyek atau kegiatan tertentu. Departemen tersebut akan mengatur anggaran yang diperlukan untuk proyek mereka.
                       </div>
                     </div>
                   </div>
                   <div class="accordion-item">
                     <h2 class="accordion-header" id="faq5">
-                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqFive" aria-expanded="false" aria-controls="faqFive">Apakah saya bisa berkolaborasi dengan departemen lain untuk acara?</button>
+                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqFive" aria-expanded="false" aria-controls="faqFive">Apakah KPK turut Mengawasi?</button>
                     </h2>
                     <div class="accordion-collapse collapse" id="faqFive" aria-labelledby="faq5" data-bs-parent="#faqaccordion">
                       <div class="accordion-body f-light">
-                        Tentu! Kami mendorong kolaborasi lintas departemen untuk menciptakan acara yang beragam dan menarik. Jika Anda memiliki ide untuk acara bersama, Anda dapat menghubungi departemen terkait untuk berkoordinasi.
+                        Tidak, KPK (Komisi Pemberantasan Korupsi) tidak turut mengawasi pengelolaan dana di ormawa atau departemen kampus. Pengawasan biasanya dilakukan oleh pihak internal kampus atau pihak yang ditunjuk oleh ormawa tersebut.
                       </div>
                     </div>
                   </div>
                   <div class="accordion-item">
                     <h2 class="accordion-header" id="faq6">
-                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqSix" aria-expanded="false" aria-controls="faqSix">Bagaimana saya bisa menjadi bagian dari tim eksekutif ORMWA?</button>
+                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqSix" aria-expanded="false" aria-controls="faqSix">Siapa yang akan melakukan Pengecekan?</button>
                     </h2>
                     <div class="accordion-collapse collapse" id="faqSix" aria-labelledby="faq6" data-bs-parent="#faqaccordion">
                       <div class="accordion-body f-light">
-                        Jika Anda tertarik untuk menjadi bagian dari tim eksekutif ORMWA, biasanya kami mengadakan pemilihan setiap tahun. Anda dapat memantau pengumuman pemilihan dan mengikuti proses yang ditentukan untuk mendaftar sebagai calon anggota tim eksekutif.
+                        Pengecekan anggaran dan penggunaan dana biasanya dilakukan oleh pihak internal kampus atau pihak yang ditunjuk oleh ormawa atau departemen tersebut.
                       </div>
                     </div>
                   </div>
                   <div class="accordion-item">
                     <h2 class="accordion-header" id="faq7">
-                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqSeven" aria-expanded="false" aria-controls="faqSeven">Apakah ada kesempatan magang di departemen tertentu?</button>
+                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqSeven" aria-expanded="false" aria-controls="faqSeven">Berapa Jumlah Oramawa Yang terdaftar?</button>
                     </h2>
                     <div class="accordion-collapse collapse" id="faqSeven" aria-labelledby="faq7" data-bs-parent="#faqaccordion">
                       <div class="accordion-body f-light">
-                        Ya, beberapa departemen menawarkan kesempatan magang bagi mahasiswa yang ingin mendapatkan pengalaman praktis dalam bidang yang relevan. Anda dapat mencari informasi lebih lanjut tentang kesempatan magang di departemen yang Anda minati.
+                        Terdapat 17 ormawa yang terdaftar di kampus ini.
+                      </div>
+                    </div>
+                  </div>
+                  <div class="accordion-item">
+                    <h2 class="accordion-header" id="faq7">
+                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqSeven" aria-expanded="false" aria-controls="faqSeven">Siapa yang Mengisi deskripsi?</button>
+                    </h2>
+                    <div class="accordion-collapse collapse" id="faqSeven" aria-labelledby="faq7" data-bs-parent="#faqaccordion">
+                      <div class="accordion-body f-light">
+                        Deskripsi proyek atau kegiatan biasanya diisi oleh departemen yang mengajukan proyek tersebut. Deskripsi tersebut harus mencakup informasi lengkap tentang proyek atau kegiatan yang akan dilakukan.
                       </div>
                     </div>
                   </div>
