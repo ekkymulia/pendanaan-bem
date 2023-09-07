@@ -71,6 +71,7 @@ class DepartemenController extends Controller
             'bendahara' => 'string|nullable',
             'sekretaris' => 'string|nullable',
             'deskripsi_departemen' => 'string|nullable',
+            'profile_img' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', 
         ]);
 
         $new_user = new User([
@@ -79,7 +80,13 @@ class DepartemenController extends Controller
             'password' => Hash::make($validatedData['password']),
             'role_id' => 3
         ]);
-        
+
+        if ($request->hasFile('profile_img')) {
+            $profileImage = $request->file('profile_img');
+            $imageName = 'profile_' . time() . '.' . $profileImage->getClientOriginalExtension();
+            $profileImage->move(public_path('profile_images'), $imageName);
+            $user->profile_img = 'profile_images/' . $imageName;
+        }
 
         $new_user->save();
 
@@ -139,6 +146,7 @@ class DepartemenController extends Controller
 
         return view('departemen.departemen', [
             'pageContext' => 'edit',
+            'mode' => '',
             'departemen' => $departemen, 
         ]);
     }
@@ -177,7 +185,14 @@ class DepartemenController extends Controller
         $user = $departemen->user;
         $user->email = $validatedData['email'];
         $user->name = $validatedData['nama_departemen'];
-    
+        
+        if ($request->hasFile('profile_img')) {
+            $profileImage = $request->file('profile_img');
+            $imageName = 'profile_' . time() . '.' . $profileImage->getClientOriginalExtension();
+            $profileImage->move(public_path('profile_images'), $imageName);
+            $user->profile_img = 'profile_images/' . $imageName;
+        }
+
         if (!empty($validatedData['password'])) {
             $user->password = Hash::make($validatedData['password']);
         }
@@ -211,6 +226,10 @@ class DepartemenController extends Controller
 
         $departemen->push(); 
         $user->push();
+
+        if($request->input('mode') == 'profile'){
+            return redirect()->route('profile');
+        }
     
         return redirect()->route('departemen.index')->with('success', 'Departemen updated successfully.');
     }

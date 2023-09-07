@@ -9,7 +9,7 @@
     <meta name="author" content="pixelstrap">
     <link rel="icon" href="{{ asset('assets/images/favicon.png') }}" type="image/x-icon">
     <link rel="shortcut icon" href="{{ asset('assets/images/favicon.png') }}" type="image/x-icon">
-    <title>Cuba - Premium Admin Template</title>
+    <title>FORM IMOD - Akabeko Cifest KPK</title>
     <!-- Google font-->
     <link href="https://fonts.googleapis.com/css?family=Rubik:400,400i,500,500i,700,700i&amp;display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,700i,900&amp;display=swap" rel="stylesheet">
@@ -27,6 +27,44 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css') }}">
     <!-- Responsive css-->
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/responsive.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/vendors/calendar.css') }}">
+    <!-- Calendar JS -->
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js'></script>
+    <script>
+      var kalender = @json($kalenders);
+    </script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');
+        var events = []; 
+
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+          initialView: 'dayGridMonth',
+          events: function(info, successCallback, failureCallback) {
+            $(kalender).each(function () {
+              var event = {
+                title: $(this).attr('event_name'),
+                start: $(this).attr('event_start_date'),
+                end: $(this).attr('event_end_date'),
+                id: $(this).attr('id'),
+                description: $(this).attr('event_description')
+              };
+
+              events.push(event);
+            });
+
+            if (successCallback) {
+              successCallback(events);
+            }
+          }
+        });
+
+        calendar.render(); 
+      });
+
+
+
+    </script>
   </head>
   <body class="landing-page">
     <!-- tap on top starts-->
@@ -39,16 +77,24 @@
         <div class="container-fluid h-100">
           <div class="sticky-header">
             <header>                       
-              <nav class="navbar navbar-b navbar-dark navbar-trans navbar-expand-xl fixed-top nav-padding" id="sidebar-menu"><a class="navbar-brand p-0" href="#"><img class="logo" height="60" src="{{ asset('assets/images/landing/yourlogo.png') }}" alt=""></a>
-                <button class="navbar-toggler navabr_btn-set custom_nav" type="button" data-bs-toggle="collapse" data-bs-target="#navbarDefault" aria-controls="navbarDefault" aria-expanded="false" aria-label="Toggle navigation"><span></span><span></span><span></span></button>
-                <div class="navbar-collapse justify-content-center collapse hidenav" id="navbarDefault">
-                  <ul class="navbar-nav navbar_nav_modify" id="scroll-spy">
-                    <li class="nav-item"><a class="nav-link" href="#">Struktur</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Faq</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Panduan</a></li>
-                  </ul>
+              <nav class="navbar navbar-b navbar-dark p-0 d-flex justify-content-between navbar-trans navbar-expand-xl fixed-top p-0 nav-padding" id="sidebar-menu">
+                <a class="navbar-brand p-3 bg-white" href="#">
+                  <img class="logo" height="50" src="{{ asset('assets/images/landing/logoipb-baru.png') }}" alt="">
+                  <img class="logo" height="50" src="{{ asset('assets/images/landing/logo-kpkbaru.png') }}" alt="">
+                  <img class="logo" height="50" src="{{ asset('assets/images/landing/logo-cifest.png') }}" alt="">
+
+                </a>
+                <div class="d-flex px-1 py-1 gap-5">
+                  <button class="navbar-toggler navabr_btn-set custom_nav" type="button" data-bs-toggle="collapse" data-bs-target="#navbarDefault" aria-controls="navbarDefault" aria-expanded="false" aria-label="Toggle navigation"><span></span><span></span><span></span></button>
+                  <div class="navbar-collapse justify-content-center collapse hidenav" id="navbarDefault">
+                    <ul class="navbar-nav navbar_nav_modify" id="scroll-spy">
+                      <li class="nav-item"><a class="nav-link" href="#">Struktur</a></li>
+                      <li class="nav-item"><a class="nav-link" href="#">Faq</a></li>
+                      <li class="nav-item"><a class="nav-link" href="#">Panduan</a></li>
+                    </ul>
+                  </div>
+                  <div class="buy-btn rounded-pill"><a class="nav-link js-scroll" href="{{ route('login') }}">Login</a></div>
                 </div>
-                <div class="buy-btn rounded-pill"><a class="nav-link js-scroll" href="{{ route('login') }}">Login</a></div>
               </nav>
             </header>
           </div>
@@ -85,7 +131,7 @@
             </div>
             <div class="col-xxl-8">
               <div class="row g-lg-5 g-3">
-                <div class="col-md-3 col-6">
+                <div class="col-md-4 col-6">
                   <div class="benefit-box pink">
                     <h2 class="mb-0 d-flex flex-column align-items-center gap-3">
                       <i class="fa fa-users fs-1"></i>
@@ -94,7 +140,7 @@
                     <h6 class="mb-0">Ormawa</h6>
                   </div>
                 </div>
-                <div class="col-md-3 col-6">
+                <div class="col-md-4 col-6">
                   <div class="benefit-box purple">
                     <h2 class="mb-0 d-flex flex-column align-items-center gap-3">
                       <i class="fa fa-users fs-1"></i>
@@ -103,7 +149,7 @@
                     <h6 class="mb-0">Departemen</h6>
                   </div>
                 </div>
-                <div class="col-md-3 col-6">
+                <div class="col-md-4 col-6">
                   <div class="benefit-box red">
                     <h2 class="mb-0 d-flex flex-column align-items-center gap-3">
                       <i class="fa fa-users fs-1"></i>
@@ -112,15 +158,18 @@
                     <h6 class="mb-0">Proker</h6>
                   </div>
                 </div>
-                <div class="col-md-3 col-6">
-                  <div class="benefit-box warning">
-                    <h2 class="mb-0 d-flex flex-column align-items-center gap-3">
-                      <i class="fa fa-users fs-1"></i>
-                      344
-                    </h2>
-                    <h6 class="mb-0">Mahasiswa</h6>
-                  </div>
-                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="section-space premium-wrap">
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-sm-12"> 
+              <h1>Calendar</h1>
+              <div class="calendar-default" id="calendar-container">
+                  <div id="calendar"></div>
               </div>
             </div>
           </div>
@@ -605,5 +654,6 @@
     <script src="{{ asset('assets/js/slick/slick.js') }}"></script>
     <script src="{{ asset('assets/js/landing-slick.js') }}"></script>
     <!-- Plugins JS Ends-->
+
   </body>
 </html>

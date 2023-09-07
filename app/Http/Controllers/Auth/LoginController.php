@@ -51,6 +51,7 @@ class LoginController extends Controller
                 'user_id' => $user->id,
                 'user_name' => $user->name,
                 'user_role' => $user->role_id,
+                'user_profile_img' => $user->profile_img,
                 'role_name' => $role->name,
                 'ormawa_id' => $ormawaId,
                 'departemen_id' => $departemenId,
@@ -87,6 +88,7 @@ class LoginController extends Controller
     
             return view('ormawa.ormawa', [
                 'pageContext' => 'edit',
+                'mode'=> 'profile',
                 'ormawa' => $ormawa, 
             ]);
         }
@@ -100,6 +102,7 @@ class LoginController extends Controller
     
             return view('departemen.departemen', [
                 'pageContext' => 'edit',
+                'mode'=> 'profile',
                 'departemen' => $departemen, 
             ]);
         }

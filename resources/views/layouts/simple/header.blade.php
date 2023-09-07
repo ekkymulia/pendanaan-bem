@@ -71,7 +71,7 @@
           </div>
         </li>
         <li class="profile-nav pe-0 py-0">
-          <div class="media profile-media"><img class="b-r-10" src="{{ asset('assets/images/dashboard/profile.png') }}" alt="">
+          <div class="media profile-media"><img class="b-r-10" width="45" src="{{ session('u_data')->user_profile_img ? asset(session('u_data')->user_profile_img) : asset('assets/images/dashboard/profile.png') }}" alt="">
             <div class="media-body"><span>{{ session('u_data')->user_name }}</span>
               <p class="mb-0 font-roboto">{{ ucfirst(session('u_data')->role_name) }}</p>
             </div>
