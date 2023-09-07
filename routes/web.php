@@ -33,7 +33,7 @@ Route::get('lang/{locale}', function ($locale) {
 // Route::prefix('dashboard')->group(function () {
 Route::view('index', 'dashboard.index')->name('index');
 // });
-Route::middleware(['auth','login'])->group(function () {
+Route::middleware(['auth', 'login'])->group(function () {
     Route::resource('dashboard', DashboardController::class);
 
     Route::middleware(['role:superadmin,ormawa'])->group(function () {
@@ -60,7 +60,9 @@ Route::middleware(['auth','login'])->group(function () {
 
     Route::middleware(['role:superadmin,departemen,ormawa'])->group(function () {
         Route::resource('proker', ProkerController::class);
-    });    
+        Route::get('proker/destroy-dana-riil/{id}', [ProkerController::class, 'destroyDanaRiil'])->name('proker.destroyDanaRiil');
+        Route::get('proker/destroy-dana-rab/{id}', [ProkerController::class, 'destroyDanaRab'])->name('proker.destroyDanaRab');
+    });
 
     Route::middleware(['role:superadmin'])->group(function () {
         Route::put('user/{user}', [UserController::class, 'update'])->name('user.update');
@@ -74,8 +76,6 @@ Route::middleware(['auth','login'])->group(function () {
         Route::view('edit-profile', 'apps.edit-profile')->name('edit-profile');
         Route::view('user-cards', 'apps.user-cards')->name('user-cards');
     });
-    
-
 });
 
 

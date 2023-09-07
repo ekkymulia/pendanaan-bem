@@ -4,6 +4,12 @@
 @endsection
 @section('style')
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/vendors/datatables.css') }}">
+<style>
+    table#info-dana {
+      width: auto;
+      table-layout: auto;
+    }
+  </style>
 @endsection
 @section('breadcrumb-title')
 <!-- <h3>Sample Page</h3> -->
@@ -223,7 +229,56 @@
                                         <div class="col-12">
                                             <div class="row">
                                                 <h6 class="my-3">Tabel Dana RAB</h6>
-                                                <h6 class="mb-3">Dana yang diterima: <span class="badge badge-primary">Rp {{ $pageContext == 'add' ? '0' : $proker->dana }}</span></h6>
+                                                @if (($pageContext == 'edit') && ($proker->dana > '0'))
+                                                <div class="table-responsive mb-3">
+                                                    <table class="table" id="info-dana">
+                                                      <tbody>
+                                                        <tr>
+                                                            <td>Dana yang diterima</td>
+                                                            <td>:</td>
+                                                            <td><span class="badge badge-primary">Rp <span>{{ $proker->dana ?? 0 }}</span></span></td>
+                                                        </tr>
+                                                        @if (intval($proker->dana ?? 0) > intval($danaDipakaiRab))
+                                                        <tr>
+                                                            <td>Dana Rencana Pakai</td>
+                                                            <td>:</td>
+                                                            <td>
+                                                                <div class="d-flex align-items-center gap-2">
+                                                                    <span class="badge badge-success">Rp <span>{{ $danaDipakaiRab }}</span></span>
+                                                                    <i class="fa fa-check"></i>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Status Dana</td>
+                                                            <td>:</td>
+                                                            <td>
+                                                                <span class="badge badge-success">Aman</span>
+                                                            </td>
+                                                        </tr>
+                                                        @else
+                                                        <tr>
+                                                            <td>Dana Rencana Pakai</td>
+                                                            <td>:</td>
+                                                            <td>
+                                                                <div class="d-flex align-items-center gap-2">
+                                                                    <span class="badge badge-danger">Rp <span>{{ $danaDipakaiRab }}</span></span>
+                                                                    <i class="fa fa-exclamation-triangle"></i>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Status Dana</td>
+                                                            <td>:</td>
+                                                            <td>
+                                                                <span class="badge badge-danger">Kurangi dana rab</span>
+                                                            </td>
+                                                        </tr>
+                                                        @endif
+                                                      </tbody>
+                                                    </table>
+                                                </div>
+                                                @endif
                                                 <div class="table-responsive">
                                                     <table class="display tbl-rab calc-price" id="basic-1">
                                                         <thead>
@@ -256,9 +311,9 @@
                                                                 <td>
                                                                     <ul class="action align-items-center">
                                                                         <li class="delete">
-                                                                            <button type="button" class="btn btn-link {{ session('u_data')->user_role != '3' ? 'disabled' : '' }}">
-                                                                            <i class="icon-trash"></i>
-                                                                            </button>
+                                                                            <a href="{{route('proker.destroyDanaRab', $danaRab->id)}}" class="{{ session('u_data')->user_role != '3' ? 'disabled' : '' }}">
+                                                                                <i class="icon-trash"></i>
+                                                                            </a>
                                                                         </li>
                                                                     </ul>
                                                                 </td>
@@ -308,8 +363,29 @@
                                         <div class="col-12">
                                             <div class="row">
                                                 <h6 class="my-3">Tabel Dana Riil</h6>
-                                                <h6 class="mb-3">Dana yang diterima: <span class="badge badge-primary">Rp <span>{{ $proker->dana }}</span></span></h6>
-                                                <h6 class="mb-3">Dana dipakai: <span class="badge badge-primary">Rp <span>{{ $sisaDanaRiils }}</span></span></h6>
+                                                @if (($pageContext == 'edit') && ($proker->dana > '0'))
+                                                <div class="table-responsive mb-3">
+                                                    <table class="table" id="info-dana">
+                                                      <tbody>
+                                                        <tr>
+                                                            <td>Dana yang diterima</td>
+                                                            <td>:</td>
+                                                            <td><span class="badge badge-primary">Rp <span>{{ $proker->dana }}</span></span></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Dana dipakai</p></td>
+                                                            <td>:</td>
+                                                            <td><span class="badge badge-primary">Rp <span>{{ $danaDipakaiRiil }}</span></span></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Sisa Dana</p></td>
+                                                            <td>:</td>
+                                                            <td><span class="badge badge-primary">Rp <span>{{ $sisaDanaRiil }}</span></span></td>
+                                                        </tr>
+                                                      </tbody>
+                                                    </table>
+                                                </div>
+                                                @endif
                                                 <div class="table-responsive">
                                                     <table class="display tbl-riil calc-price" id="basic-1-2">
                                                         <thead>
@@ -319,7 +395,6 @@
                                                                 <th class="">Harga Satuan</th>
                                                                 <th class="">Qty</th>
                                                                 <th class="">Total Harga</th>
-                                                                <th class="">Tempat Beli</th>
                                                                 <th class="">Bukti</th>
                                                                 <th class="">Status</th>
                                                                 <th class="">Aksi</th>
@@ -330,8 +405,16 @@
                                                             <tr>
                                                                 <td data-number="{{ $loop->iteration; }}">{{ $loop->iteration; }}</td>
                                                                 <td>
-                                                                    <input type="hidden" name="id_riil[]" value="{{ $danaRiil->id }}">
-                                                                    <input class="form-control" id="" type="text" required="" placeholder="Nama" autocomplete="off" name="riil_nama[]" value="{{ $danaRiil->supplier->produk->nama_produk }}" {{ session('u_data')->user_role != '3' ? 'disabled' : '' }}>
+                                                                    <input type="hidden" name="riil_id[]" value="{{ $danaRiil->id }}">
+                                                                    <select class="form-control" required name="riil_nama[]" {{ session('u_data')->user_role != '3' ? 'disabled' : '' }}>
+                                                                        <option value="">Pilih Nama</option>
+                                                                        @foreach ($suppliers as $supplier)
+                                                                            <option 
+                                                                                value="{{ $supplier->id }}" 
+                                                                                {{$danaRiil->supplier_id == $supplier->id ? 'selected' : ''}}
+                                                                            >{{ $supplier->nama_supplier }} - {{ $supplier->produk->nama_produk }}</option>
+                                                                        @endforeach
+                                                                    </select>
                                                                 </td>
                                                                 <td>
                                                                     <input class="form-control" id="hargaSatuan" type="text" required="" placeholder="Harga Satuan" autocomplete="off" name="riil_hargasatuan[]" value="{{ $danaRiil->harga_satuan }}" {{ session('u_data')->user_role != '3' ? 'disabled' : '' }}>
@@ -341,9 +424,6 @@
                                                                 </td>
                                                                 <td>
                                                                     <input class="form-control" id="calcTotal" type="number" required="" placeholder="Otomatis Terhitung" disabled autocomplete="off" name="total_harga[]" value="{{ $danaRiil->total_harga }}">
-                                                                </td>
-                                                                <td>
-                                                                    <input class="form-control" id="" type="text" required="" placeholder="Tempat Pembelian" autocomplete="off" name="riil_tmptbeli[]" value="{{ $danaRiil->supplier->nama_supplier }}" {{ session('u_data')->user_role != '3' ? 'disabled' : '' }}>
                                                                 </td>
                                                                 <td>
                                                                     <input type="hidden" name="riil_bukti[]" value="{{ $danaRiil->bukti }}">
@@ -373,9 +453,9 @@
                                                                 <td>
                                                                     <ul class="action align-items-center">
                                                                         <li class="delete">
-                                                                            <button type="button" class="btn btn-link">
-                                                                            <i class="icon-trash"></i>
-                                                                            </button>
+                                                                            <a href="{{route('proker.destroyDanaRiil', $danaRiil->id)}}" class="{{ session('u_data')->user_role != '3' ? 'disabled' : '' }}">
+                                                                                <i class="icon-trash"></i>
+                                                                            </a>
                                                                         </li>
                                                                     </ul>
                                                                 </td>
@@ -391,7 +471,6 @@
                                                                         @endforeach
                                                                     </select>
                                                                 </td>
-
                                                                 <td>
                                                                     <input class="form-control" id="hargaSatuan" type="text" required="" placeholder="Harga Satuan" autocomplete="off" name="riil_hargasatuan[]" {{ session('u_data')->user_role != '3' ? 'disabled' : '' }}>
                                                                 </td>
@@ -402,11 +481,11 @@
                                                                     <input class="form-control" id="calcTotal" type="number" required="" placeholder="Otomatis Terhitung" disabled autocomplete="off" name="total_harga[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-control" id="" type="file" required="" accept=".png, .jpg, .jpeg" name="riil_bukti_changes[]" {{ session('u_data')->user_role != '3' ? 'disabled' : '' }}>
+                                                                    <input class="form-control" id="" type="file" required="" accept=".png, .jpg, .jpeg" name="riil_bukti_changes[0]" {{ session('u_data')->user_role != '3' ? 'disabled' : '' }}>
                                                                 </td>
                                                                 <td>
                                                                     @if (session('u_data')->user_role == '1')
-                                                                    <select class="form-select" aria-label="Default select example" name="status_riil[]" required>
+                                                                    <select class="form-select" aria-label="Default select example" name="status_riil[]" required {{ session('u_data')->user_role != '3' ? 'disabled' : '' }}>
                                                                         <option disabled selected>Pilih Status</option>
                                                                         <option value="1">Setujui</option>
                                                                         <option value="2">Tolak</option>
@@ -485,6 +564,17 @@
                         input.value = "";
                     }
                 });
+
+                if( targetTbl == 'tbl-riil' ){
+                    const lastIndex = parseInt(lastRow.querySelector("input[name^='riil_bukti_changes']").name.match(/\d+/)[0]);
+                    const nextIndex = lastIndex + 1;
+    
+                    inputs.forEach(input => {
+                        if (input.name.startsWith("riil_bukti_changes[")) {
+                            input.name = input.name.replace(/\[\d+\]/, `[${nextIndex}]`);
+                        }
+                    });
+                }
 
                 const lastNumber = parseInt(lastRow.querySelector("td:first-child").getAttribute("data-number"));
                 const newNumber = lastNumber + 1;
