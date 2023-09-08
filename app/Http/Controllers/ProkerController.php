@@ -358,7 +358,41 @@ class ProkerController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try {
+            DB::beginTransaction();
+
+            $getProker = Proker::findOrFail($id);
+
+            if ($getProker) {
+                if ($getProker->file_proposal) {
+                    Storage::disk('public')->delete($getProker->file_proposal);
+                }
+                if ($getProker->file_lpj) {
+                    Storage::disk('public')->delete($getProker->file_lpj);
+                }
+
+                $danaRiils = DanaRiil::where('proker_id', $getProker->id)->get();
+                foreach ($danaRiils as $danaRiil) {
+                    if ($danaRiil->bukti) {
+                        Storage::disk('public')->delete($danaRiil->bukti);
+                    }
+                    $danaRiil->delete();
+                }
+
+                DanaRab::where('proker_id', $getProker->id)->delete();
+
+                $getProker->delete();
+
+                DB::commit();
+                return redirect()->back()->with('success', 'Data berhasil dihapus');
+            } else {
+                DB::rollBack();
+                return redirect()->back()->with('failed', 'Data tidak ditemukan');
+            }
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->with('failed', 'Telah terjadi kesalahan');
+        }
     }
 
     public function destroyDanaRiil(string $id)

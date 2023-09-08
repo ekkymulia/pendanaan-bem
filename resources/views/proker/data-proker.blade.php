@@ -78,22 +78,26 @@
 <script src="{{ asset('assets/js/datatable/datatables/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('assets/js/datatable/datatables/datatable.custom.js') }}"></script>
 <script>
-   document.getElementById('form-del-proker').addEventListener('submit', function (e) {
-      e.preventDefault();
+   const formDelProker = document.querySelectorAll('#form-del-proker');
+   formDelProker.forEach(elm => {
+      elm.addEventListener('submit', function (e) {
+         e.preventDefault();
 
-      Swal.fire({
-         title: 'Apakah kamu yakin?',
-         text: "Anda tidak akan dapat mengembalikan ini!",
-         icon: 'warning',
-         showCancelButton: true,
-         confirmButtonColor: '#3085d6',
-         cancelButtonColor: '#d33',
-         confirmButtonText: 'Ya, hapus saja!'
-      }).then((result) => {
-         if (result.isConfirmed) {
-            e.target.submit();
-         }
+         Swal.fire({
+            title: 'Apakah kamu yakin?',
+            text: "Anda tidak akan dapat mengembalikan ini!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya, hapus saja!'
+         }).then((result) => {
+            if (result.isConfirmed) {
+               e.target.submit();
+            }
+         });
       });
-      });
+   });
+   document.getElementById('')
 </script>
 @endsection
