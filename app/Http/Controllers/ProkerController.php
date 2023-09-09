@@ -285,8 +285,8 @@ class ProkerController extends Controller
                         $riil->supplier_id = $request->riil_nama[$key];
                         $riil->harga_satuan = $request->riil_hargasatuan[$key];
                         $riil->quantity = $request->riil_qty[$key];
-                        $riil->total_harga = $request->total_harga[$key];
-                        $riil->status_id = $request->status_riil[$key];
+                        $riil->total_harga = $request->riil_total_harga[$key];
+                        $riil->status_id = $request->status_riil[$key] ?? 3;
 
                         if (
                             $request->hasFile('riil_bukti_changes') &&
@@ -326,7 +326,7 @@ class ProkerController extends Controller
                             'supplier_id' => $nama,
                             'harga_satuan' => $request->riil_hargasatuan[$key],
                             'quantity' => $request->riil_qty[$key],
-                            'total_harga' => $request->total_harga[$key],
+                            'total_harga' => $request->riil_total_harga[$key],
                             'status_id' => $request->status_riil[$key] ?? 3,
                         ]);
 

@@ -1,21 +1,30 @@
 <div class="sidebar-wrapper" sidebar-layout="stroke-svg">
     <div>
-        <div class="logo-wrapper"><a href="{{ route('index') }}"><img class="img-fluid for-light"
-                    src="{{ asset('assets/images/logo/logo.png') }}" alt=""><img class="img-fluid for-dark"
-                    src="{{ asset('assets/images/logo/logo_dark.png') }}" alt=""></a>
+        <div class="logo-wrapper">
+            <a href="{{ route('landing-page') }}" class="d-block">
+                <img class="for-light logo-custom" src="{{ asset('assets/images/logo/akabeko.png') }}" alt="logo">
+                <img class="for-dark logo-custom" src="{{ asset('assets/images/logo/akabeko.png') }}" alt="logo">
+            </a>
             <div class="back-btn"><i class="fa fa-angle-left"></i></div>
             <div class="toggle-sidebar"><i class="status_toggle middle sidebar-toggle" data-feather="grid"> </i></div>
         </div>
-        <div class="logo-icon-wrapper"><a href="{{ route('index') }}"><img class="img-fluid"
-                    src="{{ asset('assets/images/logo/logo-icon.png') }}" alt=""></a></div>
+        <div class="logo-icon-wrapper">
+            <a href="{{ route('landing-page') }}" class="d-block">
+                <img class="logo-custom" src="{{ asset('assets/images/logo/akabeko.png') }}" alt="">
+            </a>
+        </div>
         <nav class="sidebar-main">
             <div class="left-arrow" id="left-arrow"><i data-feather="arrow-left"></i></div>
             <div id="sidebar-menu">
                 <ul class="sidebar-links" id="simple-bar">
-                    <li class="back-btn"><a href="{{ route('index') }}"><img class="img-fluid"
-                                src="{{ asset('assets/images/logo/logo-icon.png') }}" alt=""></a>
-                        <div class="mobile-back text-end"><span>Back</span><i class="fa fa-angle-right ps-2"
-                                aria-hidden="true"></i></div>
+                    <li class="back-btn">
+                        <a href="{{ route('landing-page') }}">
+                            <img class="logo-custom" src="{{ asset('assets/images/logo/akabeko.png') }}" alt="logo">
+                        </a>
+                        <div class="mobile-back text-end">
+                            <span>Back</span>
+                            <i class="fa fa-angle-right ps-2" aria-hidden="true"></i>
+                        </div>
                     </li>
                     <li class="pin-title sidebar-main-title">
                         <div>
@@ -56,13 +65,13 @@
                     @if (session('u_data')->user_role == '1')
                     <li class="sidebar-list"><i class="fa fa-thumb-tack"></i>
                         <a class="sidebar-link sidebar-title link-nav" href="{{ route('kalender.index') }}">
-                        <i data-feather="users"></i><span>Kalender</span>
+                        <i data-feather="calendar"></i><span>Kalender</span>
                         </a>
                     </li>
                     @endif
                     <li class="sidebar-list"><i class="fa fa-thumb-tack"></i>
                         <a class="sidebar-link sidebar-title link-nav" href="{{ route('proker.index') }}">
-                        <i data-feather="users"></i><span>Proker</span>
+                        <i data-feather="clipboard"></i><span>Proker</span>
                         </a>
                     </li>
                     @if (session('u_data')->user_role == '1')
@@ -82,14 +91,14 @@
                     @if (session('u_data')->user_role == '1')
                     <li class="sidebar-list"><i class="fa fa-thumb-tack"></i>
                         <a class="sidebar-link sidebar-title link-nav" href="{{ route('produk.index') }}">
-                        <i data-feather="users"></i><span>Produk</span>
+                        <i data-feather="shopping-bag"></i><span>Produk</span>
                         </a>
                     </li>
                     @endif
                     @if (session('u_data')->user_role == '1')
                     <li class="sidebar-list"><i class="fa fa-thumb-tack"></i>
                         <a class="sidebar-link sidebar-title link-nav" href="{{ route('supplier.index') }}">
-                        <i data-feather="users"></i><span>Supplier</span>
+                        <i data-feather="box"></i><span>Supplier</span>
                         </a>
                     </li>
                     @endif
