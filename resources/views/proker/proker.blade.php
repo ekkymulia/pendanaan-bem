@@ -416,8 +416,13 @@
                                                                         @endforeach
                                                                     </select>
                                                                 </td>
-                                                                <td>
-                                                                    <input class="form-control" id="hargaSatuan" type="text" required="" placeholder="Harga Satuan" autocomplete="off" name="riil_hargasatuan[]" value="{{ $danaRiil->harga_satuan }}" {{ session('u_data')->user_role != '3' ? 'disabled' : '' }}>
+                                                                <td class="d-flex align-items-center gap-2 flex-column">
+                                                                    <input class="form-control col-12" id="hargaSatuan" type="text" required="" placeholder="Harga Satuan" autocomplete="off" name="riil_hargasatuan[]" value="{{ $danaRiil->harga_satuan }}" {{ session('u_data')->user_role != '3' ? 'disabled' : '' }}>
+                                                                    @if($danaRiil->warning && session('u_data')->user_role == 1)
+                                                                    <div class="col-12 d-flex align-items-center gap-2">
+                                                                        <i class="fa fa-warning text-warning "></i> over mean (mean: {{ $danaRiil->mean_price ?? '-' }})
+                                                                    </div>
+                                                                    @endif
                                                                 </td>
                                                                 <td>
                                                                     <input class="form-control no-arrow" id="quantity" type="number" required="" placeholder="Qty" autocomplete="off" min="0" name="riil_qty[]" value="{{ $danaRiil->quantity }}" {{ session('u_data')->user_role != '3' ? 'disabled' : '' }}>

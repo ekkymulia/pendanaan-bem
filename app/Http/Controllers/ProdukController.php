@@ -46,7 +46,7 @@ class ProdukController extends Controller
     public function show(string $id)
     {
         $produk = Produk::findOrFail($id);
-        return view('produk.show', compact('produk'));
+        return view('produk/produk', compact('produk'));
     }
 
     /**
@@ -54,9 +54,9 @@ class ProdukController extends Controller
      */
     public function edit(string $id)
     {
-        $produk = Produk::with('supplier')->findOrFail($id);
+        $produk = Produk::findOrFail($id);
         $pageContext = 'edit';
-        return view('produk.edit', compact('produk', 'pageContext'));
+        return view('produk/produk', compact('produk', 'pageContext'));
     }
 
     /**

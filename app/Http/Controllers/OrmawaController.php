@@ -31,6 +31,7 @@ class OrmawaController extends Controller
     public function create()
     {
         return view('ormawa.ormawa', with([
+            'mode' => '',
             'pageContext' => 'add'
         ]));
     }

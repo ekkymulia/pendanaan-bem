@@ -270,7 +270,7 @@
 	  <div class="col-xxl-8 col-lg-12 box-col-12">
 		<div class="card">
 		  <div class="card-header card-no-border"> 
-			<h5>Pemakaian Dana</h5>
+			<h5>@if ($role == '1' || $role == '3') Pemakaian Dana - {{ $chartDatas->currentYear }} @endif @if ($role == '2') Pengelolaan Proker - {{ $chartDatas->currentYear }} @endif </h5>
 		  </div>
 		  <div class="card-body pt-0">
 			<div class="row m-0 overall-card">
@@ -279,12 +279,19 @@
 				  <div class="row">
 					<div class="col-xl-12">
 					  <div class="card-body p-0">
-						<ul class="balance-data"> 
-						  <li><span class="circle bg-warning"> </span><span class="f-light ms-1">Earning</span></li>
-						  <li><span class="circle bg-primary"> </span><span class="f-light ms-1">Expense</span></li>
-						</ul>
+						<!-- <ul class="balance-data"> 
+						  <li><span class="circle bg-warning"> </span><span class="f-light ms-1" id="data-name-1-label"></span></li>
+						  <li><span class="circle bg-primary"> </span><span class="f-light ms-1" id="data-name-2-label"></span></li>
+						</ul> -->
 						<div class="current-sale-container">
-						  <div id="chart-currently"></div>
+						<div id="chart-currently"
+							data-name-1="{{ $chartDatas->chartName1 }}"
+							data-name-2="{{ $chartDatas->chartName2 }}"
+							data-chart-data='@json($chartDatas->chartDataVal)'
+							data-chart-data-2="@json($chartDatas->chartDataVal2 )"
+							data-categories='@json($chartDatas->chartCategories)'
+							data-chart-color="#7064F5">
+						</div>
 						</div>
 					  </div>
 					</div>
@@ -301,13 +308,18 @@
 						</svg>
 					  </div>
 						@if ($role == '3')
-						<div> <span class="f-light">Total Dana</span>
-							<h6 class="mt-1 mb-0">Rp 8.000.000</h6>
+						<div> <span class="f-light">Total Proker</span>
+							<h6 class="mt-1 mb-0">{{ $chartDatas->wc1 }}</h6>
 						</div>
 						@endif
 						@if ($role == '2')
-						<div> <span class="f-light">Total Dana</span>
-							<h6 class="mt-1 mb-0">Rp 8.000.000</h6>
+						<div> <span class="f-light">Total Departemen</span>
+							<h6 class="mt-1 mb-0">{{ $chartDatas->wc1 }}</h6>
+						</div>
+						@endif
+						@if ($role == '1')
+						<div> <span class="f-light">Total Dana Yang Belum diberikan</span>
+							<h6 class="mt-1 mb-0">{{ $chartDatas->wc1 }}</h6>
 						</div>
 						@endif
 					  
@@ -327,13 +339,13 @@
 						</svg>
 					  </div>
 					  	@if ($role == '3')
-						<div> <span class="f-light">Total RAB</span>
-							<h6 class="mt-1 mb-0">Rp 4.000.000</h6>
+						<div> <span class="f-light">Total Dana Diminta</span>
+							<h6 class="mt-1 mb-0">Rp {{ $chartDatas->wc2 }}</h6>
 						</div>
 						@endif
 						@if ($role == '2')
-						<div> <span class="f-light">Total RAB</span>
-							<h6 class="mt-1 mb-0">Rp 8.000.000</h6>
+						<div> <span class="f-light">Proker Terlaksana</span>
+							<h6 class="mt-1 mb-0">{{ $chartDatas->wc2 }}</h6>
 						</div>
 						@endif
 					</div>
@@ -346,13 +358,13 @@
 						</svg>
 					  </div>
 					  	@if ($role == '3')
-						<div> <span class="f-light">Pemakaian Riil</span>
-							<h6 class="mt-1 mb-0">Rp 2.000.000</h6>
+						<div> <span class="f-light">Total Dana Sudah Diterima</span>
+							<h6 class="mt-1 mb-0">Rp {{ $chartDatas->wc3 }}</h6>
 						</div>
 						@endif
 						@if ($role == '2')
-						<div> <span class="f-light">Penyerapan Riil</span>
-							<h6 class="mt-1 mb-0">Rp 2.000.000</h6>
+						<div> <span class="f-light">Proker Mendatang</span>
+							<h6 class="mt-1 mb-0">{{ $chartDatas->wc3 }}</h6>
 						</div>
 						@endif
 					</div>
@@ -380,7 +392,7 @@
 			<div class="row recent-wrapper">
 			  <div class="col-xl-6">
 				<div class="recent-chart"> 
-				  <div id="recentchart"></div>
+				  <div id="recentchart" data-series="{{$chartDatas->cd2}}"></div>
 				</div>
 			  </div>
 			  <div class="col-xl-6"> 
@@ -639,6 +651,354 @@
 @section('script')
 <script src="{{ asset('assets/js/clock.js') }}"></script>
 <script src="{{ asset('assets/js/chart/apex-chart/moment.min.js') }}"></script>
+<script lang="javascript">
+	document.addEventListener("DOMContentLoaded", function () {
+  // currently sale
+  var chartName2 = document.getElementById('chart-currently').getAttribute("data-name-1");
+  var chartName1 = document.getElementById('chart-currently').getAttribute("data-name-2");
+  var chartData2 = JSON.parse(document.getElementById('chart-currently').getAttribute("data-chart-data"));
+  var chartData = JSON.parse(document.getElementById('chart-currently').getAttribute("data-chart-data-2"));
+  var chartCategories = JSON.parse(document.getElementById('chart-currently').getAttribute('data-categories'));
+  console.log(chartData);
+  var options = {
+      series: [
+        {
+          name: chartName1,
+          data: chartData
+        },
+        {
+          name: chartName2,
+          data: chartData2
+        }
+      ],
+      chart:{
+        type:'bar',
+        height:300,
+		stacked: false,
+  		stackType: "100%",
+        toolbar:{
+          show:false,
+        },
+        dropShadow: {
+          enabled: true,
+          top: 8,
+          left: 0,
+          blur: 10,
+          color: '#7064F5',
+          opacity: 0.1
+        }
+      }, 
+      plotOptions: {
+        bar:{       
+          horizontal: false,
+          columnWidth: '25px',
+          borderRadius: 0,
+        },
+      }, 
+      grid: {
+        show:true,   
+        borderColor: 'var(--chart-border)',               
+      },
+      dataLabels:{
+        enabled: false,
+      },
+      stroke: {
+        width: 2,
+        dashArray: 0,
+        lineCap: 'butt',
+        colors: "#fff",     
+      },
+      fill: {
+        opacity: 1
+      },
+      legend: {
+        show:false
+      },    
+      states: {          
+        hover: {
+          filter: {
+            type: 'darken',
+            value: 1,
+          }
+        }           
+      },
+      colors:[CubaAdminConfig.primary,'#AAAFCB'],
+      yaxis: {
+        tickAmount: 3,   
+        labels: {
+          show: true,
+          style: {
+            fontFamily: 'Rubik, sans-serif',
+          },
+        },  
+        axisBorder:{
+        show:false,
+      },
+        axisTicks:{
+          show: false,
+        },
+      },
+      xaxis:{     
+        categories: chartCategories,
+        labels: {
+          style: {
+            fontFamily: 'Rubik, sans-serif',
+          },
+        },
+        axisBorder:{
+        show:false,
+      },
+      axisTicks:{
+          show: false,
+        },
+      },
+      states: {          
+        hover: {
+          filter: {
+            type: 'darken',
+            value: 1,
+          }
+        }           
+      },    
+      responsive: [
+          {
+            breakpoint: 1661,
+            options:{
+              chart: {
+                  height: 290,
+              }
+            }
+          },
+          {
+            breakpoint: 767,
+            options:{
+              plotOptions: {
+                bar:{       
+                  columnWidth: '35px',
+                },
+              }, 
+              yaxis: {
+                    labels: {
+                      show: false,
+                    }
+                  }
+            }
+          },
+          {
+            breakpoint: 481,
+            options:{
+              chart: {
+                  height: 200,
+              }
+            }
+          },
+          {
+            breakpoint: 420,
+            options:{
+              chart: {
+                  height: 170,
+              },
+              plotOptions: {
+                bar:{       
+                  columnWidth: '40px',
+                },
+              }, 
+            }
+          },
+        ]    
+    };
+
+  var chart = new ApexCharts(document.querySelector("#chart-currently"), options);
+  chart.render();
+
+  document.querySelector("#data-name-1-label").textContent = chartName1;
+  document.querySelector("#data-name-2-label").textContent = chartName2;
+});
+</script>
+<script lang="javascript">
+	document.addEventListener("DOMContentLoaded", function () {
+
+		var seriesValue = document.getElementById('recentchart').getAttribute("data-series");
+		// recent chart
+		var recentoptions = {
+			series: [parseInt(seriesValue)],
+			chart: {
+			height: 290,
+			type: 'radialBar',
+			toolbar: {
+			show: false
+			}
+		},
+		plotOptions: {
+			radialBar: {
+				hollow: {
+				margin: 0,
+				size: '60%',
+				background: 'var(--recent-chart-bg)',
+				image: undefined,
+				imageOffsetX: 0,
+				imageOffsetY: 0,
+				position: 'front',
+				dropShadow: {
+				enabled: true,
+				top: 3,
+				left: 0,
+				blur: 4,
+				opacity: 0.05
+				}
+			},
+			track: {
+				background: '#F4F4F4',
+				strokeWidth: '67%',
+				margin: 0,
+				dropShadow: {
+				enabled: true,
+				top: 0,
+				left: 0,
+				blur: 10,
+				color: '#ddd',
+				opacity: 1
+				}
+			},
+		
+			dataLabels: {
+				show: true,
+				name: {
+				offsetY: 30,
+				show: true,
+				color: '#888',
+				fontSize: '17px',
+				fontWeight: '500',
+				fontFamily: 'Rubik, sans-serif',
+				},
+				value: {
+				formatter: function(val) {
+					return parseInt(val);
+				},
+				offsetY: -8,
+				color: '#111',
+				fontSize: '36px',
+				show: true,
+				}
+			}
+			}
+		},
+		fill: {
+			type: 'gradient',
+			gradient: {
+			shade: 'dark',
+			type: 'horizontal',
+			shadeIntensity: 0.5,
+			opacityFrom: 1,
+			opacityTo: 1,
+			colorStops: [
+				{
+				offset: 0,
+				color: "#7366FF",
+				opacity: 1
+				},
+				{
+				offset: 20,
+				color: "#3EA4F1",
+				opacity: 1
+				},
+				{
+				offset: 100,
+				color: "#FFFFFF",
+				opacity: 1
+				},
+			]
+			}
+		},
+		stroke: {
+			lineCap: 'round'
+		},
+		labels: ['Persen disetujui'],
+		responsive: [
+				{
+				breakpoint: 1840,
+				options:{
+					chart: {
+						height: 260,
+					}
+				}
+				},
+				{
+				breakpoint: 1700,
+				options:{
+					chart: {
+						height: 250,
+					}
+				}
+				},
+				{
+				breakpoint: 1660,
+				options:{
+					chart: {
+						height: 230,
+						dataLabels: {
+						name: {
+							fontSize: '15px',
+						}
+						}
+					},
+				},
+				},
+				{
+				breakpoint: 1561,
+				options:{
+					chart: {
+						height: 275,
+					},
+				},
+				},
+				{
+				breakpoint: 1400,
+				options:{
+					chart: {
+						height: 360,
+					},
+				},
+				},
+				{
+				breakpoint: 1361,
+				options:{
+					chart: {
+						height: 300,
+					},
+				},
+				},
+				{
+				breakpoint: 1200,
+				options:{
+					chart: {
+						height: 230,
+					},
+				},
+				},
+				{
+				breakpoint: 1007,
+				options:{
+					chart: {
+						height: 240,
+					},
+				},
+				},
+				{
+				breakpoint: 600,
+				options:{
+					chart: {
+						height: 230,
+					},
+				},
+				},
+			]  
+		};
+
+		var recentchart = new ApexCharts(document.querySelector("#recentchart"), recentoptions);
+		recentchart.render();
+	});
+</script>
 <script src="{{ asset('assets/js/notify/bootstrap-notify.min.js') }}"></script>
 <script src="{{ asset('assets/js/dashboard/default.js') }}"></script>
 <script src="{{ asset('assets/js/notify/index.js') }}"></script>

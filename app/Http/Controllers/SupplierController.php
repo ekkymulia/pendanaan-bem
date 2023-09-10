@@ -48,7 +48,7 @@ class SupplierController extends Controller
     public function show(string $id)
     {
         $supplier = Supplier::findOrFail($id);
-        return view('supplier.show', compact('supplier'));
+        return view('supplier/supplier', compact('supplier'));
     }
 
     /**
@@ -59,7 +59,7 @@ class SupplierController extends Controller
         $supplier = Supplier::with('produk')->findOrFail($id);
         $pageContext = 'edit';
         $produks = Produk::all();
-        return view('supplier.edit', compact('supplier', 'pageContext', 'produks'));
+        return view('supplier/supplier', compact('supplier', 'pageContext', 'produks'));
     }
 
     /**

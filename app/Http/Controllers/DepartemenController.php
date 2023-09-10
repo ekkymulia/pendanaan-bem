@@ -44,6 +44,7 @@ class DepartemenController extends Controller
 
         return view('departemen.departemen', with([
             'pageContext' => 'add',
+            'mode' => '',
             'ormawa' => $ormawa
         ]));
     }
