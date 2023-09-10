@@ -261,9 +261,9 @@ class DashboardController extends Controller
                 // Handle the case where there are no Proker to avoid division by zero
                 $chartData->cd2 = 0;
             }
+
         }
         $departemens = Departemen::with('user')->get();
-
 
         return view('dashboard.index', with(['departemens'=> $departemens, 'user' => $user, 'role' => $user->user_role, 'dari_ormawa' => $dari_ormawa, 'widget_val' => $widget_value, 'chartDatas' => $chartData]));
     }

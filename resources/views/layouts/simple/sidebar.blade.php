@@ -4,6 +4,7 @@
             <a href="{{ route('landing-page') }}" class="d-block">
                 <img class="for-light logo-custom" src="{{ asset('assets/images/logo/akabeko.png') }}" alt="logo">
                 <img class="for-dark logo-custom" src="{{ asset('assets/images/logo/akabeko.png') }}" alt="logo">
+                <span class="text-bold text-black" style="color:black !important; font-size:1rem !important;">Akabeko IMOD</span>
             </a>
             <div class="back-btn"><i class="fa fa-angle-left"></i></div>
             <div class="toggle-sidebar"><i class="status_toggle middle sidebar-toggle" data-feather="grid"> </i></div>
@@ -11,6 +12,7 @@
         <div class="logo-icon-wrapper">
             <a href="{{ route('landing-page') }}" class="d-block">
                 <img class="logo-custom" src="{{ asset('assets/images/logo/akabeko.png') }}" alt="">
+                
             </a>
         </div>
         <nav class="sidebar-main">

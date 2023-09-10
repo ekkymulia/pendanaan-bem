@@ -288,7 +288,7 @@
 							data-name-1="{{ $chartDatas->chartName1 }}"
 							data-name-2="{{ $chartDatas->chartName2 }}"
 							data-chart-data='@json($chartDatas->chartDataVal)'
-							data-chart-data-2="@json($chartDatas->chartDataVal2 )"
+							data-chart-data-2='@json($chartDatas->chartDataVal2)'
 							data-categories='@json($chartDatas->chartCategories)'
 							data-chart-color="#7064F5">
 						</div>
