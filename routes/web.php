@@ -14,6 +14,7 @@ use App\Models\Ormawa;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Session;
+use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 Route::get('/', function () {
     return redirect()->route('landing-page');
@@ -34,6 +35,7 @@ Route::get('lang/{locale}', function ($locale) {
 Route::view('index', 'dashboard.index')->name('index');
 // });
 Route::middleware(['auth', 'login'])->group(function () {
+    Route::get('dashboard/print', [DashboardController::class, 'print'])->name('dashboard.print');
     Route::resource('dashboard', DashboardController::class);
 
     Route::middleware(['role:superadmin,ormawa'])->group(function () {

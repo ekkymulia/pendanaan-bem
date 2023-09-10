@@ -4,6 +4,7 @@
 @endsection
 @section('style')
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/vendors/datatables.css') }}">
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <style>
     table#info-dana {
       width: auto;
@@ -406,7 +407,7 @@
                                                                 <td data-number="{{ $loop->iteration; }}">{{ $loop->iteration; }}</td>
                                                                 <td>
                                                                     <input type="hidden" name="riil_id[]" value="{{ $danaRiil->id }}">
-                                                                    <select class="form-control" name="riil_nama[]" {{ session('u_data')->user_role != '3' ? 'disabled' : '' }}>
+                                                                    <select class="form-control js-example-basic-single" name="riil_nama[]" style="width: 10% !important" {{ session('u_data')->user_role != '3' ? 'disabled' : '' }} >
                                                                         <option value="">Pilih Nama</option>
                                                                         @foreach ($suppliers as $supplier)
                                                                             <option 
@@ -417,7 +418,7 @@
                                                                     </select>
                                                                 </td>
                                                                 <td class="d-flex align-items-center gap-2 flex-column">
-                                                                    <input class="form-control" id="hargaSatuan" type="text" required="" placeholder="Harga Satuan" autocomplete="off" name="riil_hargasatuan[]" value="{{ $danaRiil->harga_satuan }}" {{ session('u_data')->user_role != '3' ? 'disabled' : '' }}>
+                                                                    <input class="form-control mt-2" style="margin-top: 13px !important;" id="hargaSatuan" type="text" required="" placeholder="Harga Satuan" autocomplete="off" name="riil_hargasatuan[]" value="{{ $danaRiil->harga_satuan }}" {{ session('u_data')->user_role != '3' ? 'disabled' : '' }}>
                                                                     @if($danaRiil->warning && session('u_data')->user_role == 1)
                                                                     <div class="col-12 d-flex align-items-center gap-2">
                                                                         <i class="fa fa-warning text-warning "></i> over mean (mean: {{ $danaRiil->mean_price ?? '-' }})
@@ -425,10 +426,10 @@
                                                                     @endif
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-control no-arrow" id="quantity" type="number" placeholder="Qty" autocomplete="off" min="0" name="riil_qty[]" value="{{ $danaRiil->quantity }}" {{ session('u_data')->user_role != '3' ? 'disabled' : '' }}>
+                                                                    <input class="form-control no-arrow d-flex align-items-center" required id="quantity" type="number" placeholder="Qty" autocomplete="off" min="0" name="riil_qty[]" value="{{ $danaRiil->quantity }}" {{ session('u_data')->user_role != '3' ? 'disabled' : '' }}>
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-control" id="calcTotal" type="number" placeholder="Otomatis Terhitung" disabled autocomplete="off" name="riil_total_harga[]" value="{{ $danaRiil->total_harga }}">
+                                                                    <input class="form-control d-flex align-items-center" id="calcTotal" type="number" placeholder="Otomatis Terhitung" disabled autocomplete="off" name="riil_total_harga[]" value="{{ $danaRiil->total_harga }}">
                                                                 </td>
                                                                 <td>
                                                                     <input type="hidden" name="riil_bukti[]" value="{{ $danaRiil->bukti }}">
@@ -469,10 +470,12 @@
                                                             <tr>
                                                                 <td data-number="1">1</td>
                                                                 <td>
-                                                                    <select class="form-control" name="riil_nama[]" {{ session('u_data')->user_role != '3' ? 'disabled' : '' }}>
+                                                                    <select class="form-control js-example-basic-single" name="riil_nama[]" style="width: 10% !important" {{ session('u_data')->user_role != '3' ? 'disabled' : '' }} >
                                                                         <option value="">Pilih Nama</option>
                                                                         @foreach ($suppliers as $supplier)
-                                                                            <option value="{{ $supplier->id }}">{{ $supplier->nama_supplier }} - {{ $supplier->produk->nama_produk }}</option>
+                                                                            <option 
+                                                                                value="{{ $supplier->id }}" 
+                                                                            >{{ $supplier->nama_supplier }} - {{ $supplier->produk->nama_produk }}</option>
                                                                         @endforeach
                                                                     </select>
                                                                 </td>
@@ -550,7 +553,17 @@
 </div>
 @endsection
 @section('script')
+<script
+  src="https://code.jquery.com/jquery-3.7.1.min.js"
+  integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+  crossorigin="anonymous"></script>
 <script lang="javascript">
+    $(document).ready(function() {
+        $('.js-example-basic-single').select2({
+            placeholder: "Pilih Nama"
+        });
+    });
+
     const btnAddRowTable = document.querySelectorAll("button#add-row-table");
 
     btnAddRowTable.forEach(elm => {
@@ -573,6 +586,7 @@
                 inputs.forEach(input => {
                     if (input.type !== "radio" && input.type !== "checkbox") {
                         input.value = "";
+                        $(input).val('');
                     }
                 });
 
@@ -658,4 +672,5 @@
 </script>
 <script src="{{ asset('assets/js/datatable/datatables/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('assets/js/datatable/datatables/datatable.custom.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 @endsection
