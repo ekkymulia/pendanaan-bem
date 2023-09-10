@@ -28,7 +28,6 @@
                         <label class="col-form-label">Password</label>
                         <input class="form-control" id="inputPw" type="password" name="password" required="" placeholder="*********">
                         <div class="invalid-tooltip">Please enter password.</div>
-                        <div class="show-hide" id="show-pw"><span class="show"></span></div>
                      </div>
                      <div class="form-group mb-0">
                         <div class="checkbox p-0">
