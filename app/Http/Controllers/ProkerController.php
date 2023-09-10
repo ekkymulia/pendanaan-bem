@@ -113,7 +113,8 @@ class ProkerController extends Controller
                         'proker_id' => $prokerStore->id,
                         'harga_satuan' => $request->rab_hargasatuan[$i],
                         'quantity' => $request->rab_qty[$i],
-                        'total_harga' => $request->rab_totalharga[$i],
+                        // 'total_harga' => $request->rab_totalharga[$i], //broken
+                        'total_harga' => $request->rab_hargasatuan[$i] * $request->rab_qty[$i], 
                     ];
                 }
                 DanaRab::insert($rabData);
@@ -130,12 +131,33 @@ class ProkerController extends Controller
      */
     public function show(string $id)
     {
-        // return view('proker.proker', with([
-        //     'pageContext' => 'detail'
-        // ]));
-
         $proker = Proker::findOrFail($id);
-        return redirect()->route('proker.edit', $proker->id);
+        $danaRab = DanaRab::where('proker_id', $proker->id)->get();
+        $danaRiil = DanaRiil::where('proker_id', $proker->id)->with('supplier', 'supplier.produk')->get();
+        $sumTotalHargaRab = DanaRab::where('proker_id', $id)->sum('total_harga');
+        $sumTotalHargaRiil = DanaRiil::where('proker_id', $id)->sum('total_harga');
+        
+        foreach($danaRiil as $dr){
+            $meanProduk = DanaRiil::where('supplier_id', $dr->supplier_id) ->where('status_id', 1)->avg('harga_satuan');
+            
+            if ($dr->harga_satuan > $meanProduk){
+                $dr->warning = true;
+                $dr->mean_price = round($meanProduk, 0);
+            }else{
+                $dr->warning = false;
+                $dr->mean_price = null;
+            }
+        }
+        return view('proker.proker-print', with([
+            'pageContext' => 'detail',
+            'proker' => $proker,
+            'danaRabs' => $danaRab,
+            'danaRiils' => $danaRiil,
+            'suppliers' => Supplier::with('produk')->get(),
+            'danaDipakaiRab' => $sumTotalHargaRab,
+            'danaDipakaiRiil' => $sumTotalHargaRiil,
+            'sisaDanaRiil' => $proker->dana - $sumTotalHargaRiil,
+        ]));
     }
 
     /**
@@ -257,7 +279,7 @@ class ProkerController extends Controller
                             'nama' => $request->rab_nama[$key],
                             'harga_satuan' => $request->rab_hargasatuan[$key],
                             'quantity' => $request->rab_qty[$key],
-                            'total_harga' => $request->rab_totalharga[$key],
+                            'total_harga' => $request->rab_hargasatuan[$key] * $request->rab_qty[$key],
                         ]);
                     }
                 } else {
@@ -267,7 +289,7 @@ class ProkerController extends Controller
                             'nama' => $nama,
                             'harga_satuan' => $request->rab_hargasatuan[$key],
                             'quantity' => $request->rab_qty[$key],
-                            'total_harga' => $request->rab_totalharga[$key],
+                            'total_harga' => $request->rab_hargasatuan[$key] * $request->rab_qty[$key],
                         ]);
                     }
                 }
@@ -291,7 +313,7 @@ class ProkerController extends Controller
                         $riil->supplier_id = $request->riil_nama[$key];
                         $riil->harga_satuan = $request->riil_hargasatuan[$key];
                         $riil->quantity = $request->riil_qty[$key];
-                        $riil->total_harga = $request->riil_total_harga[$key];
+                        $riil->total_harga = $request->rab_hargasatuan[$key] * $request->rab_qty[$key];
                         $riil->status_id = $request->status_riil[$key] ?? 3;
 
                         if (
@@ -391,7 +413,7 @@ class ProkerController extends Controller
                             'supplier_id' => $nama,
                             'harga_satuan' => $request->riil_hargasatuan[$key],
                             'quantity' => $request->riil_qty[$key],
-                            'total_harga' => $request->riil_total_harga[$key],
+                            'total_harga' => $request->rab_hargasatuan[$key] * $request->rab_qty[$key],
                             'status_id' => $request->status_riil[$key] ?? 3,
                         ]);
 

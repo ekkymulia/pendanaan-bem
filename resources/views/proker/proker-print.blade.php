@@ -5,9 +5,27 @@
 @section('style')
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/vendors/datatables.css') }}">
 <style>
+    .sidebar-wrapper, .header-wrapper{
+        display: none;
+    }
+    .page-body{
+        margin:0 !important;
+    }
+    .page-body.container-fluid{
+        display: none !important;
+    }
+    /* .page-title{
+        display: none !important;
+    } */
+    .footer{
+        display: none;
+    }
     table#info-dana {
       width: auto;
       table-layout: auto;
+    }
+    * {
+        font-size: 0.85rem;
     }
   </style>
 @endsection
@@ -15,23 +33,15 @@
 <!-- <h3>Sample Page</h3> -->
 @endsection
 @section('breadcrumb-items')
-<li class="breadcrumb-item">Proker</li>
-<li class="breadcrumb-item active">
-    @if ($pageContext === 'add')
-        Tambah
-    @elseif ($pageContext === 'edit')
-        Edit
-    @elseif ($pageContext === 'detail')
-        Detail
-    @endif
-    Data Proker</li>
-
+<li class="breadcrumb-item">
+    Print Settings:  Show RAB:  <button id="rabToggle" class="btn btn-success btn-sm">Ya (klik toggle)</button> Show Riil:  <button id="rillToggle" class="btn btn-success btn-sm">Ya (klik toggle)</button> Print:  <button id="printToggle" class="btn btn-primary btn-sm">Print</button>
+</li>
 @endsection
 @section('content')
 <div class="container-fluid">
    <div class="row">
       <div class="col-sm-12 mt-3">
-         <div class="card">
+         <div class="card shadow-none  m-0 p-0">
             <div class="card-header pb-0 card-no-border">
                <h4>
                     @if ($pageContext === 'add')
@@ -76,22 +86,22 @@
                                         @if (session('u_data')->user_role == '1')
                                         <div class="col-6">
                                             <select class="form-select" aria-label="Default select example" name="status_proker">
-                                                <option value="1" {{$proker->status_id == '1' ? 'selected' : ''}}>Setujui</option>
-                                                <option value="2" {{$proker->status_id == '2' ? 'selected' : ''}}>Tolak</option>
-                                                <option value="3" {{$proker->status_id == '3' ? 'selected' : ''}}>Menunggu</option>
+                                                <option value="1" {{$proker->status_id == '1' ? 'selected' : ''}}>: Setujui</option>
+                                                <option value="2" {{$proker->status_id == '2' ? 'selected' : ''}}>: Tolak</option>
+                                                <option value="3" {{$proker->status_id == '3' ? 'selected' : ''}}>: Menunggu</option>
                                             </select>
                                         </div>
                                         @else
                                         <div class="col-6">
                                             @if ($pageContext === 'add')
                                             <h6 class="badge badge-primary">Proker Baru</h6>
-                                            @elseif ($pageContext === 'edit')
+                                            @elseif ($pageContext === 'edit' || $pageContext === 'detail')
                                                 @if ($proker->status_id == '1')
-                                                <h6 class="badge badge-success">Proker Disetujui</h6><a href="{{ route('proker.show', $proker->id) }}" class="btn-sm btn-link " style="cursor:pointer;">Klik untuk Print Laporan</a>
+                                                <h6 class="">: Proker Disetujui</h6>
                                                 @elseif($proker->status_id == '2')
-                                                <h6 class="badge badge-danger">Proker Ditolak</h6><a href="{{ route('proker.show', $proker->id) }}" class="btn-sm btn-link " style="cursor:pointer;">Klik untuk Print Laporan</a>
+                                                <h6 class="">: Proker Ditolak</h6>
                                                 @else
-                                                <h6 class="badge badge-warning">Proker Menunggu</h6><a href="{{ route('proker.show', $proker->id) }}" class="btn-sm btn-link " style="cursor:pointer;">Klik untuk Print Laporan</a>
+                                                <h6 class="">: Proker Menunggu</h6>
                                                 @endif
                                             @endif
                                         </div>
@@ -105,25 +115,27 @@
                                         </div>
                                         @if (session('u_data')->user_role == '1')
                                         <div class="col-6">
-                                            <select class="form-select" aria-label="Default select example" name="tipe_dana" required>
-                                                <option disabled {{ !$proker->tipe_dana_id || ($proker->tipe_dana_id == null) ? 'selected' : '' }}>Pilih Tipe Dana</option>
-                                                <option value="1" {{ $proker->tipe_dana_id && ($proker->tipe_dana_id == '1') ? 'selected' : '' }}>RKAT</option>
-                                                <option value="2" {{ $proker->tipe_dana_id && ($proker->tipe_dana_id == '2') ? 'selected' : '' }}>BPPTN</option>
-                                            </select>
+                                        @if (!$proker->tipe_dana_id || $proker->tipe_dana_id == null)
+                                            <h6>: Pilih Tipe Dana</h6>
+                                        @elseif ($proker->tipe_dana_id == '1')
+                                            <h6>: RKAT</h6>
+                                        @elseif ($proker->tipe_dana_id == '2')
+                                            <h6>: BPPTN</h6>
+                                        @endif
                                         </div>
                                         @else
                                         <div class="col-6">
                                             @if ($pageContext === 'add')
                                             <h6 class="badge badge-primary">—</h6>
-                                            @elseif ($pageContext === 'edit')
+                                            @elseif ($pageContext === 'edit' || $pageContext === 'detail')
                                                 @if ($proker->tipe_dana_id)
                                                     @if ($proker->tipe_dana_id == '1')
-                                                    <h6 class="badge badge-success">RKAT</h6>
+                                                    <h6 class="">: RKAT</h6>
                                                     @else
-                                                    <h6 class="badge badge-success">BPPTN</h6>
+                                                    <h6 class="">: BPPTN</h6>
                                                     @endif
                                                 @else
-                                                <h6 class="badge badge-warning">Menunggu</h6>
+                                                <h6 class="">: Menunggu</h6>
                                                 @endif
                                             @endif
                                         </div>
@@ -136,10 +148,11 @@
                                             <label for="proker-jenis-bptn">{{ session('u_data')->user_role == '1' ? 'Berikan dana' : 'Dana yang diterima' }} (Rp)</label>
                                         </div>
                                         <div class="col-6">
-                                            <input class="form-control no-arrow" type="number" name="dana" id="proker-jenis-bptn" 
+                                            <h6>: Rp {{ $proker->dana ?? old('bendahara_proker') }}</h6>
+                                            <!-- <input class="form-control no-arrow" type="number" name="dana" id="proker-jenis-bptn" 
                                                 placeholder="{{ session('u_data')->user_role == '1' ? 'Berikan dana' : 'Dana yang diterima' }} (Rp)" min="0" 
                                                 value="{{ $proker->dana ?? old('bendahara_proker') }}" 
-                                                {{ session('u_data')->user_role != '1' ? 'disabled' : '' }}>
+                                                {{ session('u_data')->user_role != '1' ? 'disabled' : '' }}> -->
                                         </div>
                                     </div>
                                 </div>
@@ -149,7 +162,8 @@
                                             <label for="proker-nama">Nama Proker</label>
                                         </div>
                                         <div class="col-6">
-                                            <input class="form-control" id="proker-nama" name="nama_proker" type="text" required placeholder="Nama Proker" autocomplete="off" value="{{ $proker->nama ?? old('nama_proker') }}" {{ session('u_data')->user_role != '3' ? 'disabled' : '' }}>
+                                            <h6>: {{ $proker->nama ?? old('nama_proker') }}</h6>
+                                            <!-- <input class="form-control" id="proker-nama" name="nama_proker" type="text" required placeholder="Nama Proker" autocomplete="off" value="{{ $proker->nama ?? old('nama_proker') }}" {{ session('u_data')->user_role != '3' ? 'disabled' : '' }}> -->
                                             <div class="invalid-feedback">
                                                 Please choose a username.
                                               </div>
@@ -163,7 +177,8 @@
 
                                         </div>
                                         <div class="col-6">
-                                            <input class="form-control" id="proker-ketua" name="ketua_proker" type="text" required placeholder="Ketua Proker" autocomplete="off" value="{{ $proker->ketua ?? old('ketua_proker') }}" {{ session('u_data')->user_role != '3' ? 'disabled' : '' }}>
+                                            <h6>: {{ $proker->ketua ?? old('ketua_proker') }}</h6>
+                                            <!-- <input class="form-control" id="proker-ketua" name="ketua_proker" type="text" required placeholder="Ketua Proker" autocomplete="off" value="{{ $proker->ketua ?? old('ketua_proker') }}" {{ session('u_data')->user_role != '3' ? 'disabled' : '' }}> -->
                                         </div>
                                     </div>
                                 </div>
@@ -173,7 +188,8 @@
                                             <label for="proker-bendahara">Bendahara Proker</label>
                                         </div>
                                         <div class="col-6">
-                                            <input class="form-control" id="proker-bendahara" name="bendahara_proker" type="text" required placeholder="Bendahara Proker" autocomplete="off" value="{{ $proker->bendahara ?? old('bendahara_proker') }}" {{ session('u_data')->user_role != '3' ? 'disabled' : '' }}>
+                                            <h6>: {{ $proker->bendahara ?? old('bendahara_proker') }}</h6>
+                                            <!-- <input class="form-control" id="proker-bendahara" name="bendahara_proker" type="text" required placeholder="Bendahara Proker" autocomplete="off" value="{{ $proker->bendahara ?? old('bendahara_proker') }}" {{ session('u_data')->user_role != '3' ? 'disabled' : '' }}> -->
                                         </div>
                                     </div>
                                 </div>
@@ -183,10 +199,10 @@
                                             <label for="file-proposal">Upload Proposal</label>
                                         </div>
                                         <div class="col-6">
-                                            <input class="form-control" id="file-proposal" type="file" name="file_proposal" accept=".pdf, .doc, .docx" {{ session('u_data')->user_role != '3' ? 'disabled' : '' }}>
+                                            <!-- <input class="form-control" id="file-proposal" type="file" name="file_proposal" accept=".pdf, .doc, .docx" {{ session('u_data')->user_role != '3' ? 'disabled' : '' }}> -->
                                             @if ($proker)
                                                 <a href="/storage/{{ $proker->file_proposal }}" class="text-decoration-underline mt-2 d-inline-block {{ !$proker->file_proposal ? 'disabled' : '' }}" target="_blank">
-                                                    File proposal yang diunggah
+                                                : File proposal yang diunggah:  {{ $proker->file_proposal ?url('/storage/' . $proker->file_proposal ) : 'Belum upload Proposal' }}
                                                 </a>
                                             @endif
                                         </div>
@@ -198,10 +214,10 @@
                                             <label for="file-lpj">Upload LPJ</label>
                                         </div>
                                         <div class="col-6">
-                                            <input class="form-control" id="file-lpj" type="file" name="file_lpj" accept=".pdf, .doc, .docx" {{ (session('u_data')->user_role != '3') ? 'disabled' : '' }}>
+                                            <!-- <input class="form-control" id="file-lpj" type="file" name="file_lpj" accept=".pdf, .doc, .docx" {{ (session('u_data')->user_role != '3') ? 'disabled' : '' }}> -->
                                             @if ($proker)
-                                                <a href="/storage/{{ $proker->file_lpj }}" class="text-decoration-underline mt-2 d-inline-block {{ !$proker->file_lpj ? 'disabled' : '' }}" target="_blank">
-                                                    File LPJ yang diunggah
+                                                <a href="/storage/{{ $proker->file_lpj }}" class="text-decoration-underline mt-2 d-inline-block {{ !$proker->file_proposal ? 'disabled' : '' }}" target="_blank">
+                                                : File LPJ yang diunggah:  {{ $proker->file_lpj ? url('/storage/' .  $proker->file_lpj) : 'Belum upload LPJ'  }}
                                                 </a>
                                             @endif
                                         </div>
@@ -213,20 +229,22 @@
                                             <label for="proker-ket">Keterangan</label>
                                         </div>
                                         <div class="col-6">
-                                            <textarea id="proker-ket" class="form-control" name="keterangan" id="con-inhouse-keterangan" placeholder="Keterangan" rows="6" {{ session('u_data')->user_role != '3' ? 'disabled' : '' }}>{{ $proker->keterangan ?? old('keterangan') }}</textarea>    
+                                            <p>
+                                            : {{ $proker->keterangan ?? '-' }}
+                                            </p>
+                                            <!-- <textarea id="proker-ket" class="form-control" name="keterangan" id="con-inhouse-keterangan" placeholder="Keterangan" rows="6" {{ session('u_data')->user_role != '3' ? 'disabled' : '' }}>{{ $proker->keterangan ?? old('keterangan') }}</textarea>     -->
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <h6 class="my-3">Tabel Budgeting</h6>
                             <div class="tab-tbl-budget">
-                                <ul class="nav nav-tabs nav-primary" id="pills-warningtab" role="tablist">
-                                    <li class="nav-item"><a class="nav-link active" id="pills-rab-tab" data-bs-toggle="pill" href="#pills-rab" role="tab" aria-controls="pills-rab" aria-selected="true" data-bs-original-title="" title="">Dana RAB</a></li>
-                                    <li class="nav-item"><a class="nav-link {{ (($pageContext != 'add') && ($proker->status_id == '1')) ? '' : 'disabled'; }}" id="pills-rill-tab" data-bs-toggle="pill" href="#pills-rill" role="tab" aria-controls="pills-rill" aria-selected="false" data-bs-original-title="" title="">Dana Riil</a></li>
-                                </ul>
+                                <!-- <h6 class="nav nav-tabs nav-primary" id="pills-warningtab1" role="tablist">
+                                <li class="nav-item">Dana RAB</li>
+                                </h6> -->
                                 <div class="tab-content" id="pills-warningtabContent">
                                     <div class="tab-pane fade active show" id="pills-rab" role="tabpanel" aria-labelledby="pills-rab-tab">
-                                        <div class="col-12">
+                                        <div class="col-12" id="pills-warningtab1c">
                                             <div class="row">
                                                 <h6 class="my-3">Tabel Dana RAB</h6>
                                                 @if (($pageContext == 'edit') && ($proker->dana > '0'))
@@ -244,7 +262,7 @@
                                                             <td>:</td>
                                                             <td>
                                                                 <div class="d-flex align-items-center gap-2">
-                                                                    <span class="badge badge-success">Rp <span>{{ $danaDipakaiRab }}</span></span>
+                                                                    <span class="">Rp <span>{{ $danaDipakaiRab }}</span></span>
                                                                     <i class="fa fa-check"></i>
                                                                 </div>
                                                             </td>
@@ -288,7 +306,6 @@
                                                                 <th class="">Harga Satuan</th>
                                                                 <th class="">Qty</th>
                                                                 <th class="">Total Harga</th>
-                                                                <th class="">Aksi</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
@@ -297,25 +314,20 @@
                                                                 <td data-number="{{ $loop->iteration; }}">{{ $loop->iteration; }}</td>
                                                                 <td>
                                                                     <input type="hidden" name="id_rab[]" value="{{ $danaRab->id }}">
-                                                                    <input class="form-control" id="" type="text" placeholder="Nama" autocomplete="off" name="rab_nama[]" value="{{ $danaRab->nama }}" {{ session('u_data')->user_role != '3' ? 'disabled' : '' }}>
+                                                                    {{ $danaRab->nama }}
+                                                                    <!-- <input class="form-control" id="" type="text" placeholder="Nama" autocomplete="off" name="rab_nama[]" value="{{ $danaRab->nama }}" {{ session('u_data')->user_role != '3' ? 'disabled' : '' }}> -->
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-control no-arrow" id="hargaSatuan" type="number" placeholder="Harga Satuan" autocomplete="off" name="rab_hargasatuan[]" onchange="calcPrice()"  value="{{ $danaRab->harga_satuan }}" {{ session('u_data')->user_role != '3' ? 'disabled' : '' }}>
+                                                                Rp {{ $danaRab->harga_satuan }}
+                                                                    <!-- <input class="form-control no-arrow" id="hargaSatuan" type="number" placeholder="Harga Satuan" autocomplete="off" name="rab_hargasatuan[]" onchange="calcPrice()"  value="{{ $danaRab->harga_satuan }}" {{ session('u_data')->user_role != '3' ? 'disabled' : '' }}> -->
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-control no-arrow" id="quantity" type="number" placeholder="Qty" autocomplete="off" min="0" name="rab_qty[]"  onchange="calcPrice()"  value="{{ $danaRab->quantity }}" {{ session('u_data')->user_role != '3' ? 'disabled' : '' }}>
+                                                                {{ $danaRab->quantity }}
+                                                                    <!-- <input class="form-control no-arrow" id="quantity" type="number" placeholder="Qty" autocomplete="off" min="0" name="rab_qty[]"  onchange="calcPrice()"  value="{{ $danaRab->quantity }}" {{ session('u_data')->user_role != '3' ? 'disabled' : '' }}> -->
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-control" id="calcTotal" type="number" placeholder="Otomatis Terhitung" autocomplete="off" name="rab_totalharga[]" disabled value="{{ $danaRab->total_harga }}" {{ session('u_data')->user_role != '3' ? 'disabled' : '' }}>
-                                                                </td>
-                                                                <td>
-                                                                    <ul class="action align-items-center">
-                                                                        <li class="delete">
-                                                                            <a href="{{route('proker.destroyDanaRab', $danaRab->id)}}" class="{{ session('u_data')->user_role != '3' ? 'disabled' : '' }}">
-                                                                                <i class="icon-trash"></i>
-                                                                            </a>
-                                                                        </li>
-                                                                    </ul>
+                                                                Rp {{ $danaRab->total_harga }}
+                                                                    <!-- <input class="form-control" id="calcTotal" type="number" placeholder="Otomatis Terhitung" autocomplete="off" name="rab_totalharga[]" disabled value="{{ $danaRab->total_harga }}" {{ session('u_data')->user_role != '3' ? 'disabled' : '' }}> -->
                                                                 </td>
                                                             </tr>
                                                             @empty
@@ -333,34 +345,18 @@
                                                                 <td>
                                                                     <input class="form-control" id="calcTotal" type="number" placeholder="Otomatis Terhitung" autocomplete="off" name="rab_totalharga[]" disabled>
                                                                 </td>
-                                                                <td>
-                                                                    <ul class="action align-items-center">
-                                                                        <li class="delete">
-                                                                            <a href="" class="{{ session('u_data')->user_role != '3' ? 'disabled' : '' }}">
-                                                                                <i class="icon-trash"></i>
-                                                                            </a>
-                                                                        </li>
-                                                                    </ul>
-                                                                </td>
                                                             </tr>
                                                             @endforelse
                                                         </tbody>
                                                     </table>
                                                 </div>
-                                                <div class="row g-2 justify-content-end">
-                                                    <div class="col-auto">
-                                                        <button class="btn btn-success {{ session('u_data')->user_role != '3' ? 'disabled' : '' }}" type="button" id="add-row-table" data-target-table="tbl-rab">
-                                                            <i class="icon-plus"></i>
-                                                            Tambahkan Baris Lagi
-                                                        </button>
-                                                    </div>
-                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    @if ($pageContext != 'add')
-                                    <div class="tab-pane fade" id="pills-rill" role="tabpanel" aria-labelledby="pills-rill-tab">
-                                        <div class="col-12">
+
+                                        <!-- <ul class="mt-5 nav nav-tabs nav-primary" id="pills-warningtab2" role="tablist">
+                                            <li class="nav-item">Dana Riil</li>
+                                        </ul> -->
+                                        <div class="col-12" id="pills-warningtab2c">
                                             <div class="row">
                                                 <h6 class="my-3">Tabel Dana Riil</h6>
                                                 @if (($pageContext == 'edit') && ($proker->dana > '0'))
@@ -387,7 +383,7 @@
                                                 </div>
                                                 @endif
                                                 <div class="table-responsive">
-                                                    <table class="display tbl-riil calc-price" id="basic-1-2">
+                                                    <table class="display tbl-riil calc-price" id="basic-1-2"  style="overflow: hidden;">
                                                         <thead>
                                                             <tr>
                                                                 <th class="">No.</th>
@@ -397,7 +393,6 @@
                                                                 <th class="">Total Harga</th>
                                                                 <th class="">Bukti</th>
                                                                 <th class="">Status</th>
-                                                                <th class="">Aksi</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
@@ -405,7 +400,7 @@
                                                             <tr>
                                                                 <td data-number="{{ $loop->iteration; }}">{{ $loop->iteration; }}</td>
                                                                 <td>
-                                                                    <input type="hidden" name="riil_id[]" value="{{ $danaRiil->id }}">
+                                                                    <!-- <input type="hidden" name="riil_id[]" value="{{ $danaRiil->id }}">
                                                                     <select class="form-control" name="riil_nama[]" {{ session('u_data')->user_role != '3' ? 'disabled' : '' }}>
                                                                         <option value="">Pilih Nama</option>
                                                                         @foreach ($suppliers as $supplier)
@@ -414,10 +409,12 @@
                                                                                 {{$danaRiil->supplier_id == $supplier->id ? 'selected' : ''}}
                                                                             >{{ $supplier->nama_supplier }} - {{ $supplier->produk->nama_produk }}</option>
                                                                         @endforeach
-                                                                    </select>
+                                                                    </select> -->
+                                                                    {{ $supplier->nama_supplier }} - {{ $supplier->produk->nama_produk }}
                                                                 </td>
-                                                                <td class="d-flex align-items-center gap-2 flex-column">
-                                                                    <input class="form-control" id="hargaSatuan" type="text" required="" placeholder="Harga Satuan" autocomplete="off" name="riil_hargasatuan[]" value="{{ $danaRiil->harga_satuan }}" {{ session('u_data')->user_role != '3' ? 'disabled' : '' }}>
+                                                                <td class="d-flex align-items-center justify-content-start gap-2 flex-column">
+                                                                    <!-- <input class="form-control" id="hargaSatuan" type="text" required="" placeholder="Harga Satuan" autocomplete="off" name="riil_hargasatuan[]" value="{{ $danaRiil->harga_satuan }}" {{ session('u_data')->user_role != '3' ? 'disabled' : '' }}> -->
+                                                                    Rp {{ $danaRiil->harga_satuan }}
                                                                     @if($danaRiil->warning && session('u_data')->user_role == 1)
                                                                     <div class="col-12 d-flex align-items-center gap-2">
                                                                         <i class="fa fa-warning text-warning "></i> over mean (mean: {{ $danaRiil->mean_price ?? '-' }})
@@ -425,16 +422,17 @@
                                                                     @endif
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-control no-arrow" id="quantity" type="number" placeholder="Qty" autocomplete="off" min="0" name="riil_qty[]" value="{{ $danaRiil->quantity }}" {{ session('u_data')->user_role != '3' ? 'disabled' : '' }}>
+                                                                {{ $danaRiil->quantity }}
+                                                                    <!-- <input class="form-control no-arrow" id="quantity" type="number" placeholder="Qty" autocomplete="off" min="0" name="riil_qty[]" value="{{ $danaRiil->quantity }}" {{ session('u_data')->user_role != '3' ? 'disabled' : '' }}> -->
+                                                                </td>
+                                                                <td>Rp {{ $danaRiil->total_harga }}
+                                                                    <!-- <input class="form-control" id="calcTotal" type="number" placeholder="Otomatis Terhitung" disabled autocomplete="off" name="riil_total_harga[]" value="{{ $danaRiil->total_harga }}"> -->
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-control" id="calcTotal" type="number" placeholder="Otomatis Terhitung" disabled autocomplete="off" name="riil_total_harga[]" value="{{ $danaRiil->total_harga }}">
-                                                                </td>
-                                                                <td>
-                                                                    <input type="hidden" name="riil_bukti[]" value="{{ $danaRiil->bukti }}">
-                                                                    <input class="form-control" id="" type="file" accept=".png, .jpg, .jpeg" name="riil_bukti_changes[{{$loop->iteration-1}}]" {{ session('u_data')->user_role != '3' ? 'disabled' : '' }}>
+                                                                    <!-- <input type="hidden" name="riil_bukti[]" value="{{ $danaRiil->bukti }}"> -->
+                                                                    <!-- <input class="form-control" id="" type="file" accept=".png, .jpg, .jpeg" name="riil_bukti_changes[{{$loop->iteration-1}}]" {{ session('u_data')->user_role != '3' ? 'disabled' : '' }}> -->
                                                                     <a href="/storage/{{ $danaRiil->bukti }}" class="text-decoration-underline mt-2 d-inline-block" target="_blank">
-                                                                        <small>Bukti <i class="fa fa-external-link"></i></small>
+                                                                        <small>Bukti: {{ $danaRiil->bukti != '' ? $danaRiil->bukti : 'Tidak ada file upload' }} </small>
                                                                     </a>
                                                                 </td>
                                                                 <td>
@@ -454,15 +452,6 @@
                                                                         <h6 class="badge badge-warning">Menunggu</h6>
                                                                         @endif
                                                                     @endif
-                                                                </td>
-                                                                <td>
-                                                                    <ul class="action align-items-center">
-                                                                        <li class="delete">
-                                                                            <a href="{{route('proker.destroyDanaRiil', $danaRiil->id)}}" class="{{ session('u_data')->user_role != '3' ? 'disabled' : '' }}">
-                                                                                <i class="icon-trash"></i>
-                                                                            </a>
-                                                                        </li>
-                                                                    </ul>
                                                                 </td>
                                                             </tr>
                                                             @empty
@@ -500,47 +489,36 @@
                                                                     <h6 class="badge badge-warning">Menunggu</h6>
                                                                     @endif
                                                                 </td>
-                                                                <td>
-                                                                    <ul class="action align-items-center">
-                                                                        <li class="delete">
-                                                                            <a href="" class="{{ session('u_data')->user_role != '3' ? 'disabled' : '' }}">
-                                                                                <i class="icon-trash"></i>
-                                                                            </a>
-                                                                        </li>
-                                                                    </ul>
-                                                                </td>
                                                             </tr>
                                                             @endforelse
                                                         </tbody>
                                                     </table>
                                                 </div>
-                                                <div class="row g-2 justify-content-end">
-                                                    <div class="col-auto">
-                                                        <button class="btn btn-success {{ session('u_data')->user_role != '3' ? 'disabled' : '' }}" type="button" id="add-row-table" data-target-table="tbl-riil">
-                                                            <i class="icon-plus"></i>
-                                                            Tambahkan Baris Lagi
-                                                        </button>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12 mt-4" id="pills-warningtab3c" style="overflow-x: hidden;">
+                                            <div class="row">
+                                                <h6 class="my-3">Lampiran</h6>
+                                                <div class="col-12 gap-2 col-rows">
+                                                <div class="row">
+                                                    @foreach ($danaRiils as $danaRiil)
+                                                    <div class="col-4">
+                                                        <div class="d-flex flex-column align-items-center">
+                                                            <img src='{{url("/storage/".$danaRiil->bukti) ?? ""}}' alt="">
+                                                            <span>{{$danaRiil->bukti ?? ''}}</span>
+                                                        </div>
                                                     </div>
+                                                    @endforeach
                                                 </div>
+                                            </div>
                                             </div>
                                         </div>
                                     </div>
-                                    @endif
+
                                 </div>
                             </div>
                         </div>
-                        @if (session('u_data')->user_role != '2')
-                        <div class="row g-2 justify-content-end">
-                            <div class="col-auto">
-                                <a href="{{route('proker.index')}}" class="d-inline-block">
-                                    <button class="btn btn-primary" type="button">Cancel</button>
-                                </a>
-                            </div>
-                            <div class="col-auto">
-                                <button class="btn btn-secondary" type="submit">Save</button>
-                            </div>
-                        </div>
-                        @endif
                     </div>
                 </form>
             </div>
@@ -551,6 +529,87 @@
 @endsection
 @section('script')
 <script lang="javascript">
+    // // Function to trigger the print dialog
+    // function printPage() {
+    //     window.print();
+    // }
+
+    // // Use window.onload to ensure the function is called after content is loaded
+    // window.onload = function() {
+    //     // Call the printPage function when the content is loaded
+    //     printPage();
+    // };
+
+    
+        const rabToggle = document.getElementById('rabToggle');
+        const riilToggle = document.getElementById('rillToggle');
+        // const eto1 = document.getElementById('pills-warningtab1');
+        const eto2 = document.getElementById('pills-warningtab1c');
+        // const eto3 = document.getElementById('pills-warningtab2');
+        const eto4 = document.getElementById('pills-warningtab2c');
+        const eto5 = document.getElementById('pills-warningtab3c');
+
+        const printToggle = document.getElementById('printToggle');
+        const pageTitleElement = document.querySelector('.page-title');
+
+        function togglePageTitleVisibility() {
+            pageTitleElement.style.display = pageTitleElement.style.display === 'none' ? 'block' : 'none';
+        }
+        printToggle.addEventListener('click', () => {
+            togglePageTitleVisibility();
+
+            window.print();
+
+            window.onafterprint = () => {
+                togglePageTitleVisibility();
+            };
+        });
+
+        // Add a click event listener to the button
+        rabToggle.addEventListener('click', () => {
+            // Toggle the visibility of the element
+            if (eto2.style.display === 'none') {
+                // eto1.style.display = 'block';
+                eto2.style.display = 'block'; // Show the element
+            } else {
+                // eto1.style.display = 'none';
+                eto2.style.display = 'none'; // Hide the element
+            }
+            
+            if (rabToggle.innerText === 'Ya (klik toggle)') {
+                rabToggle.innerText = 'Tidak';
+                rabToggle.classList.remove('btn-success');
+                rabToggle.classList.add('btn-danger');
+            } else {
+                rabToggle.innerText = 'Ya (klik toggle)';
+                rabToggle.classList.remove('btn-danger');
+                rabToggle.classList.add('btn-success');
+            }
+        });
+
+        riilToggle.addEventListener('click', () => {
+            // Toggle the display of the element
+            if (eto4.style.display === 'none') {
+                // eto3.style.display = 'block';
+                eto4.style.display = 'block'; // Show the element
+                eto5.style.display = 'block'
+            } else {
+                // eto3.style.display = 'none';
+                eto4.style.display = 'none'; // Hide the element
+                eto5.style.display = 'none';
+            }
+
+            if (riilToggle.innerText === 'Ya (klik toggle)') {
+                riilToggle.innerText = 'Tidak';
+                riilToggle.classList.remove('btn-success');
+                riilToggle.classList.add('btn-danger');
+            } else {
+                riilToggle.innerText = 'Ya (klik toggle)';
+                riilToggle.classList.remove('btn-danger');
+                riilToggle.classList.add('btn-success');
+            }
+        });
+
     const btnAddRowTable = document.querySelectorAll("button#add-row-table");
 
     btnAddRowTable.forEach(elm => {
