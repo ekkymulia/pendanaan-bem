@@ -275,16 +275,38 @@ class ProkerController extends Controller
                 // DanaRiil::where('proker_id', $getProker->id)->forceDelete();
                 if (isset($request->riil_id)) {
                     foreach ($request->riil_id as $key => $idRiil) {
-                        if (isset($request->riil_id[$key])) {
-                            if (
-                                isset($_FILES['riil_bukti_changes']['tmp_name'][$key]) &&
-                                is_uploaded_file($_FILES['riil_bukti_changes']['tmp_name'][$key])
-                            ) {
-                                Validator::validate($request->all(), [
-                                    'riil_bukti_changes.' . $key => [
-                                        File::types(['png', 'jpg', 'jpeg'])
-                                    ],
-                                ]);
+                        if (
+                            isset($_FILES['riil_bukti_changes']['tmp_name'][$key]) &&
+                            is_uploaded_file($_FILES['riil_bukti_changes']['tmp_name'][$key])
+                        ) {
+                            Validator::validate($request->all(), [
+                                'riil_bukti_changes.' . $key => [
+                                    File::types(['png', 'jpg', 'jpeg'])
+                                ],
+                            ]);
+                        }
+                        $riil = DanaRiil::find($idRiil);
+                        // return response()->json([$idRiil, $riil]);
+                        $riil->proker_id = $getProker->id;
+                        $riil->supplier_id = $request->riil_nama[$key];
+                        $riil->harga_satuan = $request->riil_hargasatuan[$key];
+                        $riil->quantity = $request->riil_qty[$key];
+                        $riil->total_harga = $request->riil_total_harga[$key];
+                        $riil->status_id = $request->status_riil[$key] ?? 3;
+
+                        if (
+                            $request->hasFile('riil_bukti_changes') &&
+                            isset($request->file('riil_bukti_changes')[$key]) &&
+                            $request->file('riil_bukti_changes')[$key]->isValid()
+                        ) {
+                            $file = $request->file('riil_bukti_changes')[$key];
+                            $randomName = $this->renameFileToRandom($file);
+                            $path = $file->storePubliclyAs('file_bukti_riil', $randomName, 'public');
+                            $riil->bukti = $path;
+
+                            if (isset($request->riil_bukti[$key])) {
+                                $oldPath = $request->riil_bukti[$key];
+                                Storage::disk('public')->delete($oldPath);
                             }
                             $riil = DanaRiil::find($idRiil);
                             // return response()->json([$idRiil, $riil]);
@@ -369,7 +391,7 @@ class ProkerController extends Controller
                             'supplier_id' => $nama,
                             'harga_satuan' => $request->riil_hargasatuan[$key],
                             'quantity' => $request->riil_qty[$key],
-                            'total_harga' => $request->total_harga[$key],
+                            'total_harga' => $request->riil_total_harga[$key],
                             'status_id' => $request->status_riil[$key] ?? 3,
                         ]);
 

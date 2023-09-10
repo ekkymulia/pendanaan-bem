@@ -45,7 +45,7 @@
             </svg>
           </div>
         </li>
-        <li class="onhover-dropdown">
+        {{-- <li class="onhover-dropdown">
           <div class="notification-box">
             <svg>
               <use href="{{ asset('assets/svg/icon-sprite.svg#notification') }}"></use>
@@ -69,7 +69,7 @@
               <li><a class="f-w-700" href="#">Check all</a></li>
             </ul>
           </div>
-        </li>
+        </li> --}}
         <li class="profile-nav pe-0 py-0">
           <div class="media profile-media"><img class="b-r-10" width="45" src="{{ session('u_data')->user_profile_img ? asset(session('u_data')->user_profile_img) : asset('assets/images/dashboard/profile.png') }}" alt="">
             <div class="media-body"><span>{{ session('u_data')->user_name }}</span>

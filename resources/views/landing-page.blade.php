@@ -135,7 +135,7 @@
                   <div class="benefit-box pink">
                     <h2 class="mb-0 d-flex flex-column align-items-center gap-3">
                       <i class="fa fa-users fs-1"></i>
-                      15
+                      {{ $countOrmawa }}
                     </h2>
                     <h6 class="mb-0">Ormawa</h6>
                   </div>
@@ -144,7 +144,7 @@
                   <div class="benefit-box purple">
                     <h2 class="mb-0 d-flex flex-column align-items-center gap-3">
                       <i class="fa fa-users fs-1"></i>
-                      55
+                      {{ $countDpt }}
                     </h2>
                     <h6 class="mb-0">Departemen</h6>
                   </div>
@@ -153,7 +153,7 @@
                   <div class="benefit-box red">
                     <h2 class="mb-0 d-flex flex-column align-items-center gap-3">
                       <i class="fa fa-users fs-1"></i>
-                      128
+                      {{ $countProker }}
                     </h2>
                     <h6 class="mb-0">Proker</h6>
                   </div>
@@ -225,297 +225,29 @@
             </div>
             <div class="col-sm-12"> 
               <ul class="nav nav-tabs frame-tab" id="myTab" role="tablist">
+                @foreach ($omwsAndDpts as $omwAndDpt)
                 <li class="nav-item" role="presentation">
-                  <button class="nav-link active" id="" data-bs-toggle="tab" data-bs-target="#om1" type="button" role="tab" aria-controls="html" aria-selected="true"><img src="" alt=""><span>Ormawa 1</span></button>
+                  <button class="nav-link active" id="" data-bs-toggle="tab" data-bs-target="#orwDpt{{$loop->iteration}}" type="button" role="tab" aria-controls="html" aria-selected="true"><img src="" alt=""><span>{{$omwAndDpt['nama']}}</span></button>
                 </li>
-                <li class="nav-item" role="presentation">
-                  <button class="nav-link" id="" data-bs-toggle="tab" data-bs-target="#om2" type="button" role="tab" aria-controls="react" aria-selected="false"><img src="" alt=""><span>Ormawa 2</span></button>
-                </li>
-                <li class="nav-item" role="presentation">
-                  <button class="nav-link" id="" data-bs-toggle="tab" data-bs-target="#om3" type="button" role="tab" aria-controls="angular" aria-selected="false"><img src="" alt=""><span>Ormawa 3</span></button>
-                </li>
-                <li class="nav-item" role="presentation">
-                  <button class="nav-link" id="" data-bs-toggle="tab" data-bs-target="#om4" type="button" role="tab" aria-controls="vue" aria-selected="false"><img src="" alt=""><span>Ormawa 4</span></button>
-                </li>
-                <li class="nav-item" role="presentation">
-                  <button class="nav-link" id="" data-bs-toggle="tab" data-bs-target="#om5" type="button" role="tab" aria-controls="laravel" aria-selected="false"><img src="" alt=""><span>Ormawa 5</span></button>
-                </li>
+                @endforeach
               </ul>
               <div class="tab-content" id="myTabContent">
-                <div class="tab-pane fade show active" id="om1" role="tabpanel" aria-labelledby="om1-tab">
+                @foreach ($omwsAndDpts as $omwAndDpt)
+                <div class="tab-pane fade show active" id="orwDpt{{ $loop->iteration }}" role="tabpanel" aria-labelledby="om1-tab">
                   <div class="row g-xxl-5 g-4">
+                    @foreach ($omwAndDpt['departemens'] as $dpt)
                     <div class="col-xxl-4 col-md-6"> 
                       <div class="framework-box">
                         <div class="frame-details">
-                          <h5>Departemen</h5>
-                          <p class="f-light">
-                            The superset CSS makes it simple to develop and usefulness 
-                            with variables, selectors, and nesting.
-                          </p>
+                          <h5>{{ $dpt['nama'] }}</h5>
+                          <p class="f-light">{{ $dpt['deskripsi'] }}</p>
                         </div>
                       </div>
                     </div>
-                    <div class="col-xxl-4 col-md-6"> 
-                      <div class="framework-box">
-                        <div class="frame-details">
-                          <h5>Departemen</h5>
-                          <p class="f-light">
-                            It is designed to generate responsive front-end web development that is mobile-friendly.</p>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-xxl-4 col-md-6"> 
-                      <div class="framework-box">
-                        <div class="frame-details">
-                          <h5>Departemen</h5>
-                          <p class="f-light">
-                            Pug.js enables generating dynamic data and developing adaptable HTML code.The overall productivity increases.</p>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-xxl-4 col-md-6"> 
-                      <div class="framework-box">
-                        <div class="frame-details">
-                          <h5>Departemen</h5>
-                          <p class="f-light">Node.js source code or a pre-built installer for your platform, and start developing today</p>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-xxl-4 col-md-6"> 
-                      <div class="framework-box">
-                        <div class="frame-details">
-                          <h5>Departemen</h5>
-                          <p class="f-light">It is a very useful tool that makes code compilation simple, especially when creating back-end programmes.</p>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-xxl-4 col-md-6"> 
-                      <div class="framework-box">
-                        <div class="frame-details">
-                          <h5>Departemen</h5>
-                          <p class="f-light">
-                            To facilitate form access and modification, the fields and field labels are 
-                            logically arranged.
-                          </p>
-                        </div>
-                      </div>
-                    </div>
+                    @endforeach
                   </div>
                 </div>
-                <div class="tab-pane fade" id="om2" role="tabpanel" aria-labelledby="om2-tab">
-                  <div class="row g-xxl-5 g-4">
-                    <div class="col-xxl-4 col-md-6"> 
-                      <div class="framework-box">
-                        <div class="frame-details">
-                          <h5>Departemen</h5>
-                          <p class="f-light">A component has many different phases of its life, react hook helps us to run some functionality at a particular phase.</p>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-xxl-4 col-md-6"> 
-                      <div class="framework-box">
-                        <div class="frame-details">
-                          <h5>Departemen</h5>
-                          <p class="f-light">Designing will pure css is a hassle, React Strap reduces this inconvenience and speeds up the designing process.</p>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-xxl-4 col-md-6"> 
-                      <div class="framework-box">
-                        <div class="frame-details">
-                          <h5>Departemen</h5>
-                          <p class="f-light">JQuery interferes with javascript of react sometimes.we made sure that it does'nt do that.</p>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-xxl-4 col-md-6"> 
-                      <div class="framework-box">
-                        <div class="frame-details">
-                          <h5>Departemen</h5>
-                          <p class="f-light">Used for state management. Helps with defining global variables and manipulating them.</p>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-xxl-4 col-md-6"> 
-                      <div class="framework-box">
-                        <div class="frame-details">
-                          <h5>Departemen</h5>
-                          <p class="f-light">Online database of Firebase has been used for authentication, making authentication reliable and more secure.</p>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-xxl-4 col-md-6"> 
-                      <div class="framework-box">
-                        <div class="frame-details">
-                          <h5>Departemen</h5>
-                          <p class="f-light">Crud has been explained using a simple to-do application and has been integrated with firebase/firestore.</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="tab-pane fade" id="om3" role="tabpanel" aria-labelledby="om3-tab">
-                  <div class="row g-xxl-5 g-4">
-                    <div class="col-xxl-4 col-md-6"> 
-                      <div class="framework-box">
-                        <div class="frame-details">
-                          <h5>Departemen</h5>
-                          <p class="f-light">To make it easier of designers to style our website. It allows us to use things like variables , inline imports and many other things.</p>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-xxl-4 col-md-6"> 
-                      <div class="framework-box">
-                        <div class="frame-details">
-                          <h5>Departemen</h5>
-                          <p class="f-light">Allowing us to write pre-made classes to style our theme and also add some functionalities as well.</p>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-xxl-4 col-md-6"> 
-                      <div class="framework-box">
-                        <div class="frame-details">
-                          <h5>Departemen</h5>
-                          <p class="f-light">Router attaches components to some paths, through this paths , components can now be viewed.</p>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-xxl-4 col-md-6"> 
-                      <div class="framework-box">
-                        <div class="frame-details">
-                          <h5>Departemen</h5>
-                          <p class="f-light">Admin requires many pages with input fields to enter and manage the data. Many forms styles and functionalities related to it has been included.</p>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-xxl-4 col-md-6"> 
-                      <div class="framework-box">
-                        <div class="frame-details">
-                          <h5>Departemen</h5>
-                          <p class="f-light">To visualize data in more attractive manner, we have provided Apex charts. Many different chart options are available in apex chart.</p>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-xxl-4 col-md-6"> 
-                      <div class="framework-box">
-                        <div class="frame-details">
-                          <h5>Departemen</h5>
-                          <p class="f-light">Not happy with just one chart option? We have got more. Chart.js has also been given as an alternative to create beautiful charts.</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="tab-pane fade" id="om4" role="tabpanel" aria-labelledby="om4-tab">
-                  <div class="row g-xxl-5 g-4">
-                    <div class="col-xxl-4 col-md-6"> 
-                      <div class="framework-box">
-                        <div class="frame-details">
-                          <h5>Departemen</h5>
-                          <p class="f-light">An online database , easier to use, easier to maintain, with multiple different uses. We have used it for an example of CRUD.</p>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-xxl-4 col-md-6"> 
-                      <div class="framework-box">
-                        <div class="frame-details">
-                          <h5>Departemen</h5>
-                          <p class="f-light">JQuery interferes with javascript of Vue sometimes.we made sure that it does'nt do that. How? We have not used it in our theme.</p>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-xxl-4 col-md-6"> 
-                      <div class="framework-box">
-                        <div class="frame-details">
-                          <h5>Departemen</h5>
-                          <p class="f-light">Allowing us to write pre-made classes to style our theme and also add some functionalities as well.</p>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-xxl-4 col-md-6"> 
-                      <div class="framework-box">
-                        <div class="frame-details">
-                          <h5>Departemen</h5>
-                          <p class="f-light">Used for state management.Allowing us to access variables stored in vuex anywhere.</p>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-xxl-4 col-md-6"> 
-                      <div class="framework-box">
-                        <div class="frame-details">
-                          <h5>Departemen</h5>
-                          <p class="f-light">A Design of a chat application has been given, so that you can create your own chat app in your theme.</p>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-xxl-4 col-md-6"> 
-                      <div class="framework-box">
-                        <div class="frame-details">
-                          <h5>Departemen</h5>
-                          <p class="f-light">Used for making the site more interactive. more efficiently to display data more less space and in a more visually pleasing way.</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="tab-pane fade" id="om5" role="tabpanel" aria-labelledby="om5-tab">
-                  <div class="row g-xxl-5 g-4">
-                    <div class="col-xxl-4 col-md-6"> 
-                      <div class="framework-box">
-                        <div class="frame-details">
-                          <h5>Departemen</h5>
-                          <p class="f-light">Laravel has been one of the most prevalent PHP frameworks for a long time now</p>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-xxl-4 col-md-6"> 
-                      <div class="framework-box">
-                        <div class="frame-details">
-                          <h5>Departemen</h5>
-                          <p class="f-light">
-                            It is designed to generate responsive front-end web development that is mobile-friendly.</p>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-xxl-4 col-md-6"> 
-                      <div class="framework-box">
-                        <div class="frame-details">
-                          <h5>Departemen</h5>
-                          <p class="f-light">Blade is the simple, yet powerful templating engine that is included with Laravel.</p>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-xxl-4 col-md-6"> 
-                      <div class="framework-box">
-                        <div class="frame-details">
-                          <h5>Departemen</h5>
-                          <p class="f-light">
-                            To facilitate form access and modification, the fields and field labels are 
-                            logically arranged.
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-xxl-4 col-md-6"> 
-                      <div class="framework-box">
-                        <div class="frame-details">
-                          <h5>Departemen</h5>
-                          <p class="f-light">
-                            It also has its own special characteristics that will make the data genuinely interactive.</p>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-xxl-4 col-md-6"> 
-                      <div class="framework-box">
-                        <div class="frame-details">
-                          <h5>Departemen</h5>
-                          <p class="f-light">
-                            It makes data visualisation simple. It offers 8 different chart kinds, all of which are responsive.</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                @endforeach
               </div>
             </div>
           </div>

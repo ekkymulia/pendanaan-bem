@@ -18,7 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('harga_satuan');
             $table->unsignedBigInteger('quantity');
             $table->unsignedBigInteger('total_harga');
-            $table->softDeletes(); 
+            $table->softDeletes();
             $table->timestamps();
 
             $table->foreign('proker_id')->references('id')->on('prokers');
