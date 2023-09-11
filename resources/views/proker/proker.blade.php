@@ -350,7 +350,7 @@
                                                 </div>
                                                 <div class="row g-2 justify-content-end">
                                                     <div class="col-auto">
-                                                        <button class="btn btn-success {{ session('u_data')->user_role != '3' ? 'disabled' : '' }}" type="button" id="add-row-table" data-target-table="tbl-rab">
+                                                        <button class="btn btn-success {{ session('u_data')->user_role != '3' ? 'disabled' : '' }}" type="button" id="add-row-table-rab">
                                                             <i class="icon-plus"></i>
                                                             Tambahkan Baris Lagi
                                                         </button>
@@ -407,7 +407,7 @@
                                                                 <td data-number="{{ $loop->iteration; }}">{{ $loop->iteration; }}</td>
                                                                 <td>
                                                                     <input type="hidden" name="riil_id[]" value="{{ $danaRiil->id }}">
-                                                                    <select class="form-control js-example-basic-single" name="riil_nama[]" style="width: 10% !important" {{ session('u_data')->user_role != '3' ? 'disabled' : '' }} >
+                                                                    <select class="form-control" name="riil_nama[]" {{ session('u_data')->user_role != '3' ? 'disabled' : '' }} >
                                                                         <option value="">Pilih Nama</option>
                                                                         @foreach ($suppliers as $supplier)
                                                                             <option 
@@ -433,7 +433,9 @@
                                                                 </td>
                                                                 <td>
                                                                     <input type="hidden" name="riil_bukti[]" value="{{ $danaRiil->bukti }}">
+                                                                    @if (($danaRiil->bukti == '') || ($danaRiil->bukti == null))
                                                                     <input class="form-control" id="" type="file" accept=".png, .jpg, .jpeg" name="riil_bukti_changes[{{$loop->iteration-1}}]" {{ session('u_data')->user_role != '3' ? 'disabled' : '' }}>
+                                                                    @endif
                                                                     <a href="/storage/{{ $danaRiil->bukti }}" class="text-decoration-underline mt-2 d-inline-block" target="_blank">
                                                                         <small>Bukti <i class="fa fa-external-link"></i></small>
                                                                     </a>
@@ -470,7 +472,7 @@
                                                             <tr>
                                                                 <td data-number="1">1</td>
                                                                 <td>
-                                                                    <select class="form-control js-example-basic-single" name="riil_nama[]" style="width: 10% !important" {{ session('u_data')->user_role != '3' ? 'disabled' : '' }} >
+                                                                    <select class="form-control" name="riil_nama[]" {{ session('u_data')->user_role != '3' ? 'disabled' : '' }} >
                                                                         <option value="">Pilih Nama</option>
                                                                         @foreach ($suppliers as $supplier)
                                                                             <option 
@@ -519,7 +521,7 @@
                                                 </div>
                                                 <div class="row g-2 justify-content-end">
                                                     <div class="col-auto">
-                                                        <button class="btn btn-success {{ session('u_data')->user_role != '3' ? 'disabled' : '' }}" type="button" id="add-row-table" data-target-table="tbl-riil">
+                                                        <button class="btn btn-success {{ session('u_data')->user_role != '3' ? 'disabled' : '' }}" type="button" id="add-row-table-riil">
                                                             <i class="icon-plus"></i>
                                                             Tambahkan Baris Lagi
                                                         </button>
@@ -558,62 +560,114 @@
   integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
   crossorigin="anonymous"></script>
 <script lang="javascript">
-    $(document).ready(function() {
-        $('.js-example-basic-single').select2({
-            placeholder: "Pilih Nama"
+    // $(document).ready(function() {
+    //     $('.js-example-basic-single').select2({
+    //         placeholder: "Pilih Nama"
+    //     });
+    // });
+
+    const addButtonRab = document.getElementById("add-row-table-rab");
+    const tableBodyRab = document.querySelector("table#basic-1 tbody");
+    addButtonRab.addEventListener("click", function () {
+        const rowCountRab = tableBodyRab.rows.length + 1;
+        const newRow = document.createElement("tr");
+        newRow.innerHTML = `
+            <td data-number="${rowCountRab}">${rowCountRab}</td>
+            <td>
+                <input class="form-control" id="" type="text" placeholder="Nama" autocomplete="off" name="rab_nama[]">
+            </td>
+            <td>
+                <input class="form-control no-arrow" id="hargaSatuan" type="number" placeholder="Harga Satuan" autocomplete="off" name="rab_hargasatuan[]" onchange="calcPrice()">
+            </td>
+            <td>
+                <input class="form-control no-arrow" id="quantity" type="number" placeholder="Qty" autocomplete="off" min="0" name="rab_qty[]" onchange="calcPrice()">
+            </td>
+            <td>
+                <input class="form-control" id="calcTotal" type="number" placeholder="Otomatis Terhitung" autocomplete="off" name="rab_totalharga[]" disabled>
+            </td>
+            <td>
+                <ul class="action align-items-center">
+                    <li class="delete">
+                        <a href="#" class="delete-row">
+                            <i class="icon-trash"></i>
+                        </a>
+                    </li>
+                </ul>
+            </td>
+        `;
+
+        tableBodyRab.appendChild(newRow);
+        const deleteButtons = document.querySelectorAll(".delete-row");
+        deleteButtons.forEach(function (button) {
+            button.addEventListener("click", function (e) {
+                e.preventDefault();
+                newRow.remove();
+                calcPrice();
+            });
         });
+        calcPrice();
     });
 
-    const btnAddRowTable = document.querySelectorAll("button#add-row-table");
+    const addButtonRiil = document.getElementById("add-row-table-riil");
+    const tableBodyRiil = document.querySelector("table#basic-1-2 tbody");
+    let rowCountRiil = tableBodyRiil.rows.length + 1;
 
-    btnAddRowTable.forEach(elm => {
-        elm.addEventListener("click", () => {
-            const targetTbl = elm.getAttribute("data-target-table");
-            const tbody = document.querySelector(`table.${targetTbl} tbody`);
-            const lastRow = tbody.querySelector("tr:last-child");
+    addButtonRiil.addEventListener("click", function () {
+        const newRowRiil = document.createElement("tr");
+        newRowRiil.innerHTML = `
+            <td data-number="${rowCountRiil}">${rowCountRiil}</td>
+            <td>
+                <select class="form-control" name="riil_nama[]">
+                    <option value="" selected>Pilih Nama</option>
+                    @foreach ($suppliers as $supplier)
+                        <option 
+                            value="{{ $supplier->id }}"
+                        >{{ $supplier->nama_supplier }} - {{ $supplier->produk->nama_produk }}</option>
+                    @endforeach
+                </select>
+            </td>
+            <td class="d-flex align-items-center gap-2 flex-column">
+                <input class="form-control mt-2" style="margin-top: 13px !important;" id="hargaSatuan" type="text" required="" placeholder="Harga Satuan" autocomplete="off" name="riil_hargasatuan[]">
+            </td>
+            <td>
+                <input class="form-control no-arrow d-flex align-items-center" required id="quantity" type="number" placeholder="Qty" autocomplete="off" min="0" name="riil_qty[]">
+            </td>
+            <td>
+                <input class="form-control d-flex align-items-center" id="calcTotal" type="number" placeholder="Otomatis Terhitung" disabled autocomplete="off" name="riil_total_harga[]">
+            </td>
+            <td>
+                <input class="form-control" id="" type="file" accept=".png, .jpg, .jpeg" name="riil_bukti_changes[${rowCountRiil - 1}]">
+            </td>
+            <td>
+                <h6 class="badge badge-warning">Menunggu</h6>
+            </td>
+            <td>
+                <ul class="action align-items-center">
+                    <li class="delete-row-riil">
+                        <a href="#" class="{{ session('u_data')->user_role != '3' ? 'disabled' : '' }}">
+                            <i class="icon-trash"></i>
+                        </a>
+                    </li>
+                </ul>
+            </td>
+        `;
 
-            if (lastRow) {
-                const newRow = lastRow.cloneNode(true); // Salin elemen terakhir
-                const inputs = newRow.querySelectorAll("input, select, textarea");
-                const btnDelRow = newRow.querySelector('ul li.delete a');
-                btnDelRow.addEventListener('click', (e)=>{
-                    e.preventDefault();
-                    newRow.remove();
-                    calcPrice();
-                });
-                
-                // Reset nilai input pada baris baru
-                inputs.forEach(input => {
-                    if (input.type !== "radio" && input.type !== "checkbox") {
-                        input.value = "";
-                        $(input).val('');
-                    }
-                });
-
-                if( targetTbl == 'tbl-riil' ){
-                    const lastIndex = parseInt(lastRow.querySelector("input[name^='riil_bukti_changes']").name.match(/\d+/)[0]);
-                    const nextIndex = lastIndex + 1;
-    
-                    inputs.forEach(input => {
-                        if (input.name.startsWith("riil_bukti_changes[")) {
-                            input.name = input.name.replace(/\[\d+\]/, `[${nextIndex}]`);
-                        }
-                    });
-                }
-
-                const lastNumber = parseInt(lastRow.querySelector("td:first-child").getAttribute("data-number"));
-                const newNumber = lastNumber + 1;
-                newRow.querySelector("td:first-child").setAttribute("data-number", newNumber);
-                newRow.querySelector("td:first-child").innerHTML = newNumber;
-
-                tbody.appendChild(newRow);
-            }
-            calcPrice();
+        tableBodyRiil.appendChild(newRowRiil);
+        rowCountRiil++;
+        const deleteButtonsRiil = document.querySelectorAll(".delete-row-riil");
+        deleteButtonsRiil.forEach(function (button) {
+            button.addEventListener("click", function (e) {
+                e.preventDefault();
+                newRowRiil.remove();
+                calcPrice();
+            });
         });
+        calcPrice();
     });
+
 
     const btnDelRowFix = document.querySelectorAll('ul li.delete a');
-    btnDelRowFix.forEach(elem => {
+    btnDelRowFix.forEach(elm => {
         elm.addEventListener('click', (e)=>{
             e.preventDefault();
             const goTo = elm.getAttribute('href');
@@ -636,6 +690,7 @@
     function calcPrice(){
         const table = document.querySelectorAll("table.calc-price");
         table.forEach(elm => {
+            console.log(elm)
             const tr = elm.querySelectorAll("tbody tr");
             tr.forEach(row => {
                 const hargaSatuan = row.querySelector("input#hargaSatuan");

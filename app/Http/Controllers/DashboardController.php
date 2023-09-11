@@ -16,16 +16,17 @@ class DashboardController extends Controller
      * Display a listing of the resource.
      */
 
-    public function index_departemen(){
-
+    public function index_departemen()
+    {
     }
 
-    public function index_ormawa(){
-        
+    public function index_ormawa()
+    {
     }
 
 
-    public function print(){
+    public function print()
+    {
         $user = session('u_data');
         $dari_ormawa = null;
         $widget_value = (object) [];
@@ -41,15 +42,15 @@ class DashboardController extends Controller
 
             $chartData->currentYear = $currentYear = date('Y');
             $chartData->chartName1 = 'Total Dana Yang Belum Diberikan';
-            
+
             $chartData->chartName2 = '';
             $chartData->chartDataVal2 = [];
 
 
             $chartCategories = Ormawa::with('departements.prokers')->get();
 
-            foreach($chartCategories as $cc){
-                $chartData->chartCategories[]= $cc->user->name;
+            foreach ($chartCategories as $cc) {
+                $chartData->chartCategories[] = $cc->user->name;
             }
 
             $chartData->wc1 = 0;
@@ -78,8 +79,7 @@ class DashboardController extends Controller
 
             $totalProker = Proker::count();
 
-            $approvedProkerCount = Proker::
-                where('status_id', 1)
+            $approvedProkerCount = Proker::where('status_id', 1)
                 ->count();
 
             // Calculate the percentage
@@ -89,9 +89,8 @@ class DashboardController extends Controller
                 // Handle the case where there are no Proker to avoid division by zero
                 $chartData->cd2 = 0;
             }
-
         }
-    
+
         if ($user->user_role == 2) {
             $ormawa = Ormawa::where('user_id', $user->user_id)->first();
             $widget_value->w1 = Departemen::where('ormawa_id', $ormawa->id)->count();
@@ -118,12 +117,12 @@ class DashboardController extends Controller
 
             $chartData->chartName1 = 'Proker Terlaksana';
             $chartData->chartName2 = 'Proker Belum Terlaksana';
-            
+
             $chartData->chartDataVal = [];
             $chartData->chartDataVal2 = [];
 
-            foreach($chartCategories as $cc){
-                $chartData->chartCategories[]= $cc->user->name;
+            foreach ($chartCategories as $cc) {
+                $chartData->chartCategories[] = $cc->user->name;
             }
 
             $chartData->wc1 = $chartCategories->count();
@@ -133,27 +132,27 @@ class DashboardController extends Controller
             foreach ($chartCategories as $category) {
                 $departemenId = $category->id;
                 $chartDataVal = Proker::where('departemen_id', $category->id)
-                ->where('status_id', 1)
-                ->whereHas('departemen', function ($query) use ($departemenId, $currentYear) {
-                    $query->where('id', $departemenId)
-                          ->where('tahun_periode', $currentYear);
-                })
-                ->count();
-                
+                    ->where('status_id', 1)
+                    ->whereHas('departemen', function ($query) use ($departemenId, $currentYear) {
+                        $query->where('id', $departemenId)
+                            ->where('tahun_periode', $currentYear);
+                    })
+                    ->count();
+
                 // $chartData->wc1 += $chartDataVal;
                 $chartData->wc2 += $chartDataVal;
 
                 $chartDataVal2 = Proker::where('departemen_id', $category->id)
-                ->where('status_id', 3)
-                ->whereHas('departemen', function ($query) use ($departemenId, $currentYear) {
-                    $query->where('id', $departemenId)
-                          ->where('tahun_periode', $currentYear);
-                })
-                ->count();
+                    ->where('status_id', 3)
+                    ->whereHas('departemen', function ($query) use ($departemenId, $currentYear) {
+                        $query->where('id', $departemenId)
+                            ->where('tahun_periode', $currentYear);
+                    })
+                    ->count();
 
                 // $chartData->wc1 += $chartDataVal2;
                 $chartData->wc3 += $chartDataVal2;
-            
+
                 $chartData->chartDataVal[] = $chartDataVal ?? 0;
                 $chartData->chartDataVal2[] = $chartDataVal2 ?? 0;
             }
@@ -171,13 +170,12 @@ class DashboardController extends Controller
             } else {
                 $chartData->cd2 = 0;
             }
-
         }
-    
+
         if ($user->user_role == 3) {
             $departemen = Departemen::where('user_id', $user->user_id)->first();
             $dari_ormawa = Ormawa::find($departemen->ormawa_id)->nama_ormw;
-        
+
             $widget_value->w1 = Proker::where('departemen_id', $departemen->id)->where('tipe_dana_id', 1)->count();
             $widget_value->w2 = Proker::where('departemen_id', $departemen->id)->where('tipe_dana_id', 2)->count();
             $widget_value->w3 = Proker::where('departemen_id', $departemen->id)->where('status_id', 1)->count();
@@ -185,7 +183,7 @@ class DashboardController extends Controller
             // $widget_value->w5 = Proker::where('departemen_id', $departemen->id)->where('status_id', 3)->count();
             $widget_value->w6 = Proker::where('departemen_id', $departemen->id)->where('status_id', 3)->count();
 
-            
+
             $chartData->chartName1 = 'Dana belum diterima';
             $chartData->chartName2 = 'Dana sudah diterima';
 
@@ -193,22 +191,22 @@ class DashboardController extends Controller
             $chartData->currentYear = $currentYear = date('Y');
 
             $chartCategories = Proker::join('departemens', 'prokers.departemen_id', '=', 'departemens.id')
-            ->where('departemens.user_id', $user->user_id)
-            ->where('departemens.tahun_periode', $currentYear)
-            ->pluck('prokers.nama');
+                ->where('departemens.user_id', $user->user_id)
+                ->where('departemens.tahun_periode', $currentYear)
+                ->pluck('prokers.nama');
 
             $chartData->wc1 = $chartCategories->count();
 
-            foreach($chartCategories as $cc){
-                $chartData->chartCategories[]= $cc;
+            foreach ($chartCategories as $cc) {
+                $chartData->chartCategories[] = $cc;
             }
-            
+
             $chartData->chartDataVal = [];
             $chartData->chartDataVal2 = [];
 
             $widget_value->w5 = $chartData->wc2 = 0;
             $chartData->wc3 = 0;
-            
+
             foreach ($chartCategories as $category) {
                 // Find data for chartDataVal
                 $chartDataVal = DanaRab::with(['proker.departemen'])
@@ -223,7 +221,7 @@ class DashboardController extends Controller
 
                 $chartData->wc2 += $chartDataVal;
                 $widget_value->w5 += $chartDataVal;
-            
+
                 // Find data for chartDataVal2
                 $chartDataVal2 = DanaRiil::with(['proker.departemen'])
                     ->selectRaw('dana_riils.proker_id, SUM(dana_riils.total_harga) as total_harga')
@@ -236,7 +234,7 @@ class DashboardController extends Controller
                     ->value('total_harga');
 
                 $chartData->wc3 += $chartDataVal2;
-            
+
                 // If no data found, set the value to 0
                 $chartData->chartDataVal[] = $chartDataVal ?? 0;
                 $chartData->chartDataVal2[] = $chartDataVal2 ?? 0;
@@ -255,11 +253,10 @@ class DashboardController extends Controller
                 // Handle the case where there are no Proker to avoid division by zero
                 $chartData->cd2 = 0;
             }
-
         }
         $departemens = Departemen::with('user')->get();
 
-        return view('dashboard.print', with(['departemens'=> $departemens, 'user' => $user, 'role' => $user->user_role, 'dari_ormawa' => $dari_ormawa, 'widget_val' => $widget_value, 'chartDatas' => $chartData]));
+        return view('dashboard.print', with(['departemens' => $departemens, 'user' => $user, 'role' => $user->user_role, 'dari_ormawa' => $dari_ormawa, 'widget_val' => $widget_value, 'chartDatas' => $chartData]));
     }
 
 
@@ -280,15 +277,15 @@ class DashboardController extends Controller
 
             $chartData->currentYear = $currentYear = date('Y');
             $chartData->chartName1 = 'Total Dana Yang Belum Diberikan';
-            
+
             $chartData->chartName2 = '';
             $chartData->chartDataVal2 = [];
 
 
             $chartCategories = Ormawa::with('departements.prokers')->get();
 
-            foreach($chartCategories as $cc){
-                $chartData->chartCategories[]= $cc->user->name;
+            foreach ($chartCategories as $cc) {
+                $chartData->chartCategories[] = $cc->user->name;
             }
 
             $chartData->wc1 = 0;
@@ -317,8 +314,7 @@ class DashboardController extends Controller
 
             $totalProker = Proker::count();
 
-            $approvedProkerCount = Proker::
-                where('status_id', 1)
+            $approvedProkerCount = Proker::where('status_id', 1)
                 ->count();
 
             // Calculate the percentage
@@ -328,9 +324,8 @@ class DashboardController extends Controller
                 // Handle the case where there are no Proker to avoid division by zero
                 $chartData->cd2 = 0;
             }
-
         }
-    
+
         if ($user->user_role == 2) {
             $ormawa = Ormawa::where('user_id', $user->user_id)->first();
             $widget_value->w1 = Departemen::where('ormawa_id', $ormawa->id)->count();
@@ -357,12 +352,12 @@ class DashboardController extends Controller
 
             $chartData->chartName1 = 'Proker Terlaksana';
             $chartData->chartName2 = 'Proker Belum Terlaksana';
-            
+
             $chartData->chartDataVal = [];
             $chartData->chartDataVal2 = [];
 
-            foreach($chartCategories as $cc){
-                $chartData->chartCategories[]= $cc->user->name;
+            foreach ($chartCategories as $cc) {
+                $chartData->chartCategories[] = $cc->user->name;
             }
 
             $chartData->wc1 = $chartCategories->count();
@@ -372,27 +367,27 @@ class DashboardController extends Controller
             foreach ($chartCategories as $category) {
                 $departemenId = $category->id;
                 $chartDataVal = Proker::where('departemen_id', $category->id)
-                ->where('status_id', 1)
-                ->whereHas('departemen', function ($query) use ($departemenId, $currentYear) {
-                    $query->where('id', $departemenId)
-                          ->where('tahun_periode', $currentYear);
-                })
-                ->count();
-                
+                    ->where('status_id', 1)
+                    ->whereHas('departemen', function ($query) use ($departemenId, $currentYear) {
+                        $query->where('id', $departemenId)
+                            ->where('tahun_periode', $currentYear);
+                    })
+                    ->count();
+
                 // $chartData->wc1 += $chartDataVal;
                 $chartData->wc2 += $chartDataVal;
 
                 $chartDataVal2 = Proker::where('departemen_id', $category->id)
-                ->where('status_id', 3)
-                ->whereHas('departemen', function ($query) use ($departemenId, $currentYear) {
-                    $query->where('id', $departemenId)
-                          ->where('tahun_periode', $currentYear);
-                })
-                ->count();
+                    ->where('status_id', 3)
+                    ->whereHas('departemen', function ($query) use ($departemenId, $currentYear) {
+                        $query->where('id', $departemenId)
+                            ->where('tahun_periode', $currentYear);
+                    })
+                    ->count();
 
                 // $chartData->wc1 += $chartDataVal2;
                 $chartData->wc3 += $chartDataVal2;
-            
+
                 $chartData->chartDataVal[] = $chartDataVal ?? 0;
                 $chartData->chartDataVal2[] = $chartDataVal2 ?? 0;
             }
@@ -410,13 +405,12 @@ class DashboardController extends Controller
             } else {
                 $chartData->cd2 = 0;
             }
-
         }
-    
+
         if ($user->user_role == 3) {
             $departemen = Departemen::where('user_id', $user->user_id)->first();
             $dari_ormawa = Ormawa::find($departemen->ormawa_id)->nama_ormw;
-        
+
             $widget_value->w1 = Proker::where('departemen_id', $departemen->id)->where('tipe_dana_id', 1)->count();
             $widget_value->w2 = Proker::where('departemen_id', $departemen->id)->where('tipe_dana_id', 2)->count();
             $widget_value->w3 = Proker::where('departemen_id', $departemen->id)->where('status_id', 1)->count();
@@ -424,7 +418,7 @@ class DashboardController extends Controller
             // $widget_value->w5 = Proker::where('departemen_id', $departemen->id)->where('status_id', 3)->count();
             $widget_value->w6 = Proker::where('departemen_id', $departemen->id)->where('status_id', 3)->count();
 
-            
+
             $chartData->chartName1 = 'Dana belum diterima';
             $chartData->chartName2 = 'Dana sudah diterima';
 
@@ -432,22 +426,22 @@ class DashboardController extends Controller
             $chartData->currentYear = $currentYear = date('Y');
 
             $chartCategories = Proker::join('departemens', 'prokers.departemen_id', '=', 'departemens.id')
-            ->where('departemens.user_id', $user->user_id)
-            ->where('departemens.tahun_periode', $currentYear)
-            ->pluck('prokers.nama');
+                ->where('departemens.user_id', $user->user_id)
+                ->where('departemens.tahun_periode', $currentYear)
+                ->pluck('prokers.nama');
 
             $chartData->wc1 = $chartCategories->count();
 
-            foreach($chartCategories as $cc){
-                $chartData->chartCategories[]= $cc;
+            foreach ($chartCategories as $cc) {
+                $chartData->chartCategories[] = $cc;
             }
-            
+
             $chartData->chartDataVal = [];
             $chartData->chartDataVal2 = [];
 
             $widget_value->w5 = $chartData->wc2 = 0;
             $chartData->wc3 = 0;
-            
+
             foreach ($chartCategories as $category) {
                 // Find data for chartDataVal
                 $chartDataVal = DanaRab::with(['proker.departemen'])
@@ -462,7 +456,7 @@ class DashboardController extends Controller
 
                 $chartData->wc2 += $chartDataVal;
                 $widget_value->w5 += $chartDataVal;
-            
+
                 // Find data for chartDataVal2
                 $chartDataVal2 = DanaRiil::with(['proker.departemen'])
                     ->selectRaw('dana_riils.proker_id, SUM(dana_riils.total_harga) as total_harga')
@@ -475,7 +469,7 @@ class DashboardController extends Controller
                     ->value('total_harga');
 
                 $chartData->wc3 += $chartDataVal2;
-            
+
                 // If no data found, set the value to 0
                 $chartData->chartDataVal[] = $chartDataVal ?? 0;
                 $chartData->chartDataVal2[] = $chartDataVal2 ?? 0;
@@ -494,11 +488,10 @@ class DashboardController extends Controller
                 // Handle the case where there are no Proker to avoid division by zero
                 $chartData->cd2 = 0;
             }
-
         }
         $departemens = Departemen::with('user')->get();
 
-        return view('dashboard.index', with(['departemens'=> $departemens, 'user' => $user, 'role' => $user->user_role, 'dari_ormawa' => $dari_ormawa, 'widget_val' => $widget_value, 'chartDatas' => $chartData]));
+        return view('dashboard.index', with(['departemens' => $departemens, 'user' => $user, 'role' => $user->user_role, 'dari_ormawa' => $dari_ormawa, 'widget_val' => $widget_value, 'chartDatas' => $chartData]));
     }
 
     /**
@@ -522,7 +515,6 @@ class DashboardController extends Controller
      */
     public function show(string $role)
     {
-
     }
 
     /**

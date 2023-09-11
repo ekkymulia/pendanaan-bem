@@ -114,7 +114,7 @@ class ProkerController extends Controller
                         'harga_satuan' => $request->rab_hargasatuan[$i],
                         'quantity' => $request->rab_qty[$i],
                         // 'total_harga' => $request->rab_totalharga[$i], //broken
-                        'total_harga' => $request->rab_hargasatuan[$i] * $request->rab_qty[$i], 
+                        'total_harga' => $request->rab_hargasatuan[$i] * $request->rab_qty[$i],
                     ];
                 }
                 DanaRab::insert($rabData);
@@ -136,14 +136,14 @@ class ProkerController extends Controller
         $danaRiil = DanaRiil::where('proker_id', $proker->id)->with('supplier', 'supplier.produk')->get();
         $sumTotalHargaRab = DanaRab::where('proker_id', $id)->sum('total_harga');
         $sumTotalHargaRiil = DanaRiil::where('proker_id', $id)->sum('total_harga');
-        
-        foreach($danaRiil as $dr){
-            $meanProduk = DanaRiil::where('supplier_id', $dr->supplier_id) ->where('status_id', 1)->avg('harga_satuan');
-            
-            if ($dr->harga_satuan > $meanProduk){
+
+        foreach ($danaRiil as $dr) {
+            $meanProduk = DanaRiil::where('supplier_id', $dr->supplier_id)->where('status_id', 1)->avg('harga_satuan');
+
+            if ($dr->harga_satuan > $meanProduk) {
                 $dr->warning = true;
                 $dr->mean_price = round($meanProduk, 0);
-            }else{
+            } else {
                 $dr->warning = false;
                 $dr->mean_price = null;
             }
@@ -170,14 +170,14 @@ class ProkerController extends Controller
         $danaRiil = DanaRiil::where('proker_id', $proker->id)->with('supplier', 'supplier.produk')->get();
         $sumTotalHargaRab = DanaRab::where('proker_id', $id)->sum('total_harga');
         $sumTotalHargaRiil = DanaRiil::where('proker_id', $id)->sum('total_harga');
-        
-        foreach($danaRiil as $dr){
-            $meanProduk = DanaRiil::where('supplier_id', $dr->supplier_id) ->where('status_id', 1)->avg('harga_satuan');
-            
-            if ($dr->harga_satuan > $meanProduk){
+
+        foreach ($danaRiil as $dr) {
+            $meanProduk = DanaRiil::where('supplier_id', $dr->supplier_id)->where('status_id', 1)->avg('harga_satuan');
+
+            if ($dr->harga_satuan > $meanProduk) {
                 $dr->warning = true;
                 $dr->mean_price = round($meanProduk, 0);
-            }else{
+            } else {
                 $dr->warning = false;
                 $dr->mean_price = null;
             }
@@ -238,6 +238,7 @@ class ProkerController extends Controller
                 return redirect()->back()->with('success', 'Data Proker Berhasil Diperbarui');
             }
         } elseif ($user->user_role == '3') {
+            // dd($request->all());
             // return response()->json($request->all());
             Validator::validate($request->all(), [
                 'file_proposal' => [
@@ -251,36 +252,36 @@ class ProkerController extends Controller
             $validatedData = $request->validate([
                 'rab_nama' => 'required',
                 'rab_hargasatuan' => 'required',
-                'rab_qty' =>'required',
+                'rab_qty' => 'required',
             ]);
 
-            if($request->rab_qty){
-                foreach($request->rab_qty as $rq){
-                    if($rq == null){
+            if ($request->rab_qty) {
+                foreach ($request->rab_qty as $rq) {
+                    if ($rq == null) {
                         return redirect()->route('proker.index')->with('failed', 'Telah terjadi kesalahan');
                     }
                 }
             }
 
-            if($request->rab_hargasatuan){
-                foreach($request->rab_hargasatuan as $rq){
-                    if($rq == null){
+            if ($request->rab_hargasatuan) {
+                foreach ($request->rab_hargasatuan as $rq) {
+                    if ($rq == null) {
                         return redirect()->route('proker.index')->with('failed', 'Telah terjadi kesalahan');
                     }
                 }
             }
 
-            if($request->riil_qty){
-                foreach($request->riil_qty as $rq){
-                    if($rq == null){
+            if ($request->riil_qty) {
+                foreach ($request->riil_qty as $rq) {
+                    if ($rq == null) {
                         return redirect()->route('proker.index')->with('failed', 'Telah terjadi kesalahan');
                     }
                 }
             }
 
-            if($request->riil_hargasatuan){
-                foreach($request->riil_hargasatuan as $rq){
-                    if($rq == null){
+            if ($request->riil_hargasatuan) {
+                foreach ($request->riil_hargasatuan as $rq) {
+                    if ($rq == null) {
                         return redirect()->route('proker.index')->with('failed', 'Telah terjadi kesalahan');
                     }
                 }
@@ -290,7 +291,7 @@ class ProkerController extends Controller
                 'nama_proker' => 'required',
                 'ketua_proker' => 'required',
                 'bendahara_proker' => 'required',
-                'keterangan' =>'required',
+                'keterangan' => 'required',
             ]);
 
             $getProker->nama = $validatedData2['nama_proker'];
@@ -317,19 +318,16 @@ class ProkerController extends Controller
             }
 
             if ($getProker->save()) {
-                // DanaRab::where('proker_id', $getProker->id)->forceDelete();
-                if (isset($request->id_rab)) {
-                    foreach ($request->id_rab as $key => $idRab) {
-                        DanaRab::where('id', $idRab)->update([
+                foreach ($request->rab_nama as $key => $nama) {
+                    if (isset($request->id_rab[$key])) {
+                        DanaRab::where('id', $request->id_rab[$key])->update([
                             'proker_id' => $getProker->id,
                             'nama' => $validatedData['rab_nama'][$key],
                             'harga_satuan' => $validatedData['rab_hargasatuan'][$key],
                             'quantity' => $validatedData['rab_qty'][$key],
                             'total_harga' => $validatedData['rab_hargasatuan'][$key] * $validatedData['rab_qty'][$key],
                         ]);
-                    }
-                } else {
-                    foreach ($request->rab_nama as $key => $nama) {
+                    } else {
                         DanaRab::create([
                             'proker_id' => $getProker->id,
                             'nama' => $validatedData['rab_nama'][$key],
@@ -341,36 +339,35 @@ class ProkerController extends Controller
                 }
 
                 // DanaRiil::where('proker_id', $getProker->id)->forceDelete();
-                if (isset($request->riil_id)) {
-                    foreach ($request->riil_id as $key => $idRiil) {
-                        if (
-                            isset($_FILES['riil_bukti_changes']['tmp_name'][$key]) &&
-                            is_uploaded_file($_FILES['riil_bukti_changes']['tmp_name'][$key])
-                        ) {
-                            Validator::validate($request->all(), [
-                                'riil_bukti_changes.' . $key => [
-                                    File::types(['png', 'jpg', 'jpeg'])
-                                ],
-                            ]);
-                        }
-
-                        $validatedData = $request->validate([
-                            'riil_nama' => 'required',
-                            'riil_hargasatuan' => 'required',
-                            'riil_qty' =>'required',
-                            'riil_bukti_changes' => 'required'
+                foreach ($request->riil_nama as $key => $riilNama) {
+                    if (
+                        isset($_FILES['riil_bukti_changes']['tmp_name'][$key]) &&
+                        is_uploaded_file($_FILES['riil_bukti_changes']['tmp_name'][$key])
+                    ) {
+                        Validator::validate($request->all(), [
+                            'riil_bukti_changes.' . $key => [
+                                File::types(['png', 'jpg', 'jpeg'])
+                            ],
                         ]);
+                    }
 
-                        $riil = DanaRiil::find($idRiil);
-                        // return response()->json([$idRiil, $riil]);
-                        if($getProker->id){
+                    $validatedData = $request->validate([
+                        'riil_nama' => 'required',
+                        'riil_hargasatuan' => 'required',
+                        'riil_qty' => 'required',
+                        // 'riil_bukti_changes' => 'required'
+                    ]);
+
+                    if (isset($request->riil_id[$key])) {
+                        $riil = DanaRiil::find($request->riil_id[$key]);
+                        if ($getProker->id) {
                             $riil->proker_id = $getProker->id;
                             $riil->supplier_id =  $validatedData['riil_nama'][$key];
                             $riil->harga_satuan = $validatedData['riil_hargasatuan'][$key];
                             $riil->quantity = $validatedData['riil_qty'][$key];
                             $riil->total_harga = $validatedData['riil_hargasatuan'][$key] *  $validatedData['riil_qty'][$key];
                             $riil->status_id = $request->status_riil[$key] ?? 3;
-    
+
                             if (
                                 $request->hasFile('riil_bukti_changes') &&
                                 isset($request->file('riil_bukti_changes')[$key]) &&
@@ -380,70 +377,29 @@ class ProkerController extends Controller
                                 $randomName = $this->renameFileToRandom($file);
                                 $path = $file->storePubliclyAs('file_bukti_riil', $randomName, 'public');
                                 $riil->bukti = $path;
-    
+
                                 if (isset($request->riil_bukti[$key])) {
                                     $oldPath = $request->riil_bukti[$key];
                                     Storage::disk('public')->delete($oldPath);
                                 }
-                                $riil = DanaRiil::find($idRiil);
-                                // return response()->json([$idRiil, $riil]);
-                                $riil->proker_id = $getProker->id;
-                                $riil->supplier_id = $validatedData['riil_nama'][$key];
-                                $riil->harga_satuan = $validatedData['riil_hargasatuan'][$key];
-                                $riil->quantity = $validatedData['riil_qty'][$key];
-                                $riil->total_harga = $validatedData['riil_hargasatuan'][$key] *  $validatedData['riil_qty'][$key];
-                                $riil->status_id = $request->status_riil[$key];
-    
-                                if (
-                                    $request->hasFile('riil_bukti_changes') &&
-                                    isset($request->file('riil_bukti_changes')[$key]) &&
-                                    $request->file('riil_bukti_changes')[$key]->isValid()
-                                ) {
-                                    $file = $request->file('riil_bukti_changes')[$key];
-                                    $randomName = $this->renameFileToRandom($file);
-                                    $path = $file->storePubliclyAs('file_bukti_riil', $randomName, 'public');
-                                    $riil->bukti = $path;
-    
-                                    if (isset($request->riil_bukti[$key])) {
-                                        $oldPath = $request->riil_bukti[$key];
-                                        Storage::disk('public')->delete($oldPath);
-                                    }
-                                } else {
-                                    $riil->bukti = $request->riil_bukti[$key];
-                                }
-    
-                            $riil->save();
-                        }else{
-                            return redirect()->route('proker.index');
-                        }
-                        
-                        }else{
-                            if (
-                                isset($_FILES['riil_bukti_changes']['tmp_name'][$key]) &&
-                                is_uploaded_file($_FILES['riil_bukti_changes']['tmp_name'][$key])
-                            ) {
-                                Validator::validate($request->all(), [
-                                    'riil_bukti_changes.' . $key => [
-                                        File::types(['png', 'jpg', 'jpeg'])
-                                    ],
-                                ]);
-                            }
 
-                            $validatedData = $request->validate([
-                                'riil_nama' => 'required',
-                                'riil_hargasatuan' => 'required',
-                                'riil_qty' =>'required',
-                            ]);
-    
-                            $riil = new DanaRiil([
-                                'proker_id' => $getProker->id,
-                                'supplier_id' =>  $validatedData['riil_nama'][$key],
-                                'harga_satuan' => $validatedData['riil_hargasatuan'][$key],
-                                'quantity' => $validatedData['riil_qty'][$key],
-                                'total_harga' => $validatedData['riil_hargasatuan'][$key] *  $validatedData['riil_qty'][$key],
-                                'status_id' => $request->status_riil[$key] ?? 3,
-                            ]);
-    
+                                if ($riil->save()) {
+                                    redirect()->back()->with('success', 'Data Proker Berhasil Diperbarui');
+                                }
+                            } else {
+                                redirect()->back()->with('failed', 'Telah terjadi kesalahan');
+                            }
+                        }
+                    } else {
+                        $riil = new DanaRiil;
+                        if ($getProker->id) {
+                            $riil->proker_id = $getProker->id;
+                            $riil->supplier_id =  $validatedData['riil_nama'][$key];
+                            $riil->harga_satuan = $validatedData['riil_hargasatuan'][$key];
+                            $riil->quantity = $validatedData['riil_qty'][$key];
+                            $riil->total_harga = $validatedData['riil_hargasatuan'][$key] *  $validatedData['riil_qty'][$key];
+                            $riil->status_id = $request->status_riil[$key] ?? 3;
+
                             if (
                                 $request->hasFile('riil_bukti_changes') &&
                                 isset($request->file('riil_bukti_changes')[$key]) &&
@@ -453,49 +409,14 @@ class ProkerController extends Controller
                                 $randomName = $this->renameFileToRandom($file);
                                 $path = $file->storePubliclyAs('file_bukti_riil', $randomName, 'public');
                                 $riil->bukti = $path;
+
+                                if ($riil->save()) {
+                                    redirect()->back()->with('success', 'Data Proker Berhasil Diperbarui');
+                                }
                             } else {
-                                $riil->bukti = '';
+                                redirect()->back()->with('failed', 'Telah terjadi kesalahan');
                             }
-    
-                            $riil->save();
                         }
-                    }
-                } else {
-                    foreach ($request->riil_nama as $key => $nama) {
-                        if (
-                            isset($_FILES['riil_bukti_changes']['tmp_name'][$key]) &&
-                            is_uploaded_file($_FILES['riil_bukti_changes']['tmp_name'][$key])
-                        ) {
-                            Validator::validate($request->all(), [
-                                'riil_bukti_changes.' . $key => [
-                                    File::types(['png', 'jpg', 'jpeg'])
-                                ],
-                            ]);
-                        }
-
-                        $riil = new DanaRiil([
-                            'proker_id' => $getProker->id,
-                            'supplier_id' => $nama,
-                            'harga_satuan' => $request->riil_hargasatuan[$key],
-                            'quantity' => $request->riil_qty[$key],
-                            'total_harga' => $request->rab_hargasatuan[$key] * $request->rab_qty[$key],
-                            'status_id' => $request->status_riil[$key] ?? 3,
-                        ]);
-
-                        if (
-                            $request->hasFile('riil_bukti_changes') &&
-                            isset($request->file('riil_bukti_changes')[$key]) &&
-                            $request->file('riil_bukti_changes')[$key]->isValid()
-                        ) {
-                            $file = $request->file('riil_bukti_changes')[$key];
-                            $randomName = $this->renameFileToRandom($file);
-                            $path = $file->storePubliclyAs('file_bukti_riil', $randomName, 'public');
-                            $riil->bukti = $path;
-                        } else {
-                            $riil->bukti = '';
-                        }
-
-                        $riil->save();
                     }
                 }
                 return redirect()->back()->with('success', 'Data Proker Berhasil Diperbarui');

@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             OrmawaSeeder::class,
             DepartemenSeeder::class,
+            ProkerSeeder::class,
             DanaRabSeeder::class,
             DanaRiilSeeder::class,
         ]);
