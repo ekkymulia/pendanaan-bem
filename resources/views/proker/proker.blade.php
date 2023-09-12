@@ -81,6 +81,7 @@
                                                 <option value="2" {{$proker->status_id == '2' ? 'selected' : ''}}>Tolak</option>
                                                 <option value="3" {{$proker->status_id == '3' ? 'selected' : ''}}>Menunggu</option>
                                             </select>
+                                            <a href="{{ route('proker.show', $proker->id) }}" class="btn-sm btn-link " style="cursor:pointer;">Klik untuk Print Laporan</a>
                                         </div>
                                         @else
                                         <div class="col-6">

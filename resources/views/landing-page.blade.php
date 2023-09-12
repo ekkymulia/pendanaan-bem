@@ -77,7 +77,7 @@
         <div class="container-fluid h-100">
           <div class="sticky-header">
             <header>                       
-              <nav class="navbar navbar-b navbar-dark p-0 d-flex justify-content-between navbar-trans navbar-expand-xl fixed-top p-0 nav-padding" id="sidebar-menu">
+              <nav class="navbar navbar-b navbar-light text-black bg-white p-0 d-flex justify-content-between navbar-trans navbar-expand-xl fixed-top p-0 nav-padding" id="sidebar-menu">
                 <a class="navbar-brand p-3 bg-white" href="#">
                   <img class="logo" height="30" src="{{ asset('assets/images/logo/ipb-full.png') }}" alt="">
                   <img class="logo" height="30" src="{{ asset('assets/images/logo/kpk.png') }}" alt="">
@@ -88,9 +88,9 @@
                   <button class="navbar-toggler navabr_btn-set custom_nav" type="button" data-bs-toggle="collapse" data-bs-target="#navbarDefault" aria-controls="navbarDefault" aria-expanded="false" aria-label="Toggle navigation"><span></span><span></span><span></span></button>
                   <div class="navbar-collapse justify-content-center collapse hidenav" id="navbarDefault">
                     <ul class="navbar-nav navbar_nav_modify" id="scroll-spy">
-                      <li class="nav-item"><a class="nav-link" href="#">Struktur</a></li>
-                      <li class="nav-item"><a class="nav-link" href="#">Faq</a></li>
-                      <li class="nav-item"><a class="nav-link" href="#">Panduan</a></li>
+                      <li class="nav-item"><a class="nav-link text-black" href="#">Struktur</a></li>
+                      <li class="nav-item"><a class="nav-link text-black" href="#">Faq</a></li>
+                      <li class="nav-item"><a class="nav-link text-black" href="#">Panduan</a></li>
                     </ul>
                   </div>
                   <div class="buy-btn rounded-pill"><a class="nav-link js-scroll" href="{{ route('login') }}">Login</a></div>
@@ -103,8 +103,8 @@
               <div class="content text-center">
                 <div>
                   <h6 class="content-title"><img class="arrow-decore" src="{{ asset('assets/images/landing/decore/arrow.svg') }}" alt=""><span class="sub-title">Selamat Datang</span></h6>
-                  <h1 class="wow fadeIn"><span>FORM-IMoD</span> Integrity Monitoring Database</h1>
-                  <p class="mt-3 wow fadeIn">merupakan website examines dalam upaya pemberantasan mahasiswa SV IPB dengan prinsip 3L (Lihat, Lawan, Laporkan).</p>
+                  <h1 class="wow fadeIn"><span class="text-xl">FORM-IMoD</span> <br> <h2 class="text-white">Integrity Monitoring Database</h2></h1>
+                  <p class="mt-3 wow fadeIn">website examines dalam upaya pemberantasan mahasiswa SV IPB dengan prinsip 3L (Lihat, Lawan, Laporkan).</p>
                   <div class="btn-grp mt-4">
                     <a class="wow pulse" href="{{ route('index')}}" target="_blank" data-bs-placement="top" title="Jelajahi">Jelajahi Lebih Lanjut</a>
                   </div>
@@ -219,8 +219,8 @@
             <div class="col-sm-12"> 
               <div class="landing-title">
                 <h5 class="sub-title">Jelajahi Departemen Kami</h5>
-                <h2>Temukan <span class="gradient-7">Beragam Departemen</span></h2>
-                <p>Temukan berbagai macam departemen di universitas kami. Setiap departemen menawarkan peluang unik untuk belajar dan berkembang.</p>
+                <h2>Temukan <span class="gradient-7">Beragam Ormawa</span></h2>
+                <p>Temukan berbagai macam ormawa di universitas kami. Setiap ormawa menawarkan peluang unik untuk belajar dan berkembang.</p>
               </div>
             </div>
             <div class="col-sm-12"> 
@@ -370,9 +370,9 @@
                 <li> 
                   <h6 class="mb-0">Find us on </h6>
                 </li>
-                <li> <a href="#"><i class="fa fa-facebook-square"></i></a></li>
-                <li><a href="#"> <i class="fa fa-twitter"></i></a></li>
-                <li><a href="#"> <i class="fa fa-instagram"></i></a></li>
+                {{-- <li> <a href="#"><i class="fa fa-facebook-square"></i></a></li>
+                <li><a href="#"> <i class="fa fa-twitter"></i></a></li> --}}
+                <li><a href="https://instagram.com/akabeko.ipb?igshid=MzRlODBiNWFlZA==" target="_blank"><i class="fa fa-instagram"></i></a></li>
               </ul>
             </div>
           </div>

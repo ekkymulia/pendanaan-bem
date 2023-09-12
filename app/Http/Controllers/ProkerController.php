@@ -59,9 +59,11 @@ class ProkerController extends Controller
     public function create()
     {
         $proker = [];
+        $suppliers = [];
         $danaRab = [];
         return view('proker.proker', with([
             'pageContext' => 'add',
+            'suppliers' => $suppliers,
             'proker' => $proker,
             'danaRabs' => $danaRab,
         ]));

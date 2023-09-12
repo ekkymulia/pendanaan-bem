@@ -23,7 +23,7 @@ class SupplierController extends Controller
     public function create()
     {
         $pageContext = 'add';
-        $produks = Produk::all();
+        $produks = Produk::with('suppliers')->get();
         return view('supplier/supplier', compact('pageContext', 'produks'));
     }
 
