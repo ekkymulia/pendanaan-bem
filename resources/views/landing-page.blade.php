@@ -82,10 +82,13 @@
                   <img class="logo" height="30" src="{{ asset('assets/images/logo/ipb-full.png') }}" alt="">
                   <img class="logo" height="30" src="{{ asset('assets/images/logo/kpk.png') }}" alt="">
                   <img class="logo" height="30" src="{{ asset('assets/images/logo/akabeko.png') }}" alt="">
-
                 </a>
-                <div class="d-flex px-1 py-1 gap-5">
-                  <button class="navbar-toggler navabr_btn-set custom_nav" type="button" data-bs-toggle="collapse" data-bs-target="#navbarDefault" aria-controls="navbarDefault" aria-expanded="false" aria-label="Toggle navigation"><span></span><span></span><span></span></button>
+                <div class="d-flex px-1 py-1 gap-3">
+                  <button class="navbar-toggler navabr_btn-set custom_nav border border-dark" type="button" data-bs-toggle="collapse" data-bs-target="#navbarDefault" aria-controls="navbarDefault" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="bg-dark"></span>
+                    <span class="bg-dark"></span>
+                    <span class="bg-dark"></span>
+                  </button>
                   <div class="navbar-collapse justify-content-center collapse hidenav" id="navbarDefault">
                     <ul class="navbar-nav navbar_nav_modify" id="scroll-spy">
                       <li class="nav-item"><a class="nav-link text-black" href="#">Struktur</a></li>
@@ -105,9 +108,6 @@
                   <h6 class="content-title"><img class="arrow-decore" src="{{ asset('assets/images/landing/decore/arrow.svg') }}" alt=""><span class="sub-title">Selamat Datang</span></h6>
                   <h1 class="wow fadeIn"><span class="text-xl">FORM-IMoD</span> <br> <h2 class="text-white">Integrity Monitoring Database</h2></h1>
                   <p class="mt-3 wow fadeIn">website examines dalam upaya pemberantasan mahasiswa SV IPB dengan prinsip 3L (Lihat, Lawan, Laporkan).</p>
-                  <div class="btn-grp mt-4">
-                    <a class="wow pulse" href="{{ route('index')}}" target="_blank" data-bs-placement="top" title="Jelajahi">Jelajahi Lebih Lanjut</a>
-                  </div>
                 </div>
               </div>
             </div>
@@ -359,6 +359,22 @@
             <div class="landing-title">
               <h2>Bergabunglah dengan <span class="gradient-13">Komunitas Kami</span> Hari Ini</h2>
               <p>Jadilah bagian dari komunitas ORMWA yang penuh semangat, di mana inovasi dan kolaborasi tumbuh. Sambungkan diri Anda dengan kami dan berilah dampak positif!</p>
+            </div>
+          </div>
+          <div class="row d-flex justify-content-center gap-3 mb-5">
+            <div class="col-auto d-flex justify-content-center flex-column gap-3">
+              <h4>Alamat & Kontak</h4>
+              <a href="" class="d-block text-white">KAMPUS BOGOR – Jl. Raya Pajajaran, Kota Bogor, Jawa Barat 16128</a>
+              <div class="d-flex justify-content-evenly">
+                <a href="" class="d-block text-white d-flex flex-column gap-1">
+                  <i class="fa fa-phone"></i>
+                  089506222472
+                </a>
+                <a href="" class="d-block text-white d-flex flex-column gap-1">
+                  <i class="fa fa-envelope-o"></i>
+                  akabekocifest@gmail.com
+                </a>
+              </div>
             </div>
           </div>
           <div class="sub-footer row g-2">

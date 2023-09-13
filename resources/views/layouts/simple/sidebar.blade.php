@@ -71,11 +71,13 @@
                         </a>
                     </li>
                     @endif
+                    @if (session('u_data')->user_role == '3')
                     <li class="sidebar-list"><i class="fa fa-thumb-tack"></i>
                         <a class="sidebar-link sidebar-title link-nav" href="{{ route('proker.index') }}">
                         <i data-feather="clipboard"></i><span>Proker</span>
                         </a>
                     </li>
+                    @endif
                     @if (session('u_data')->user_role == '1')
                     <li class="sidebar-list"><i class="fa fa-thumb-tack"></i>
                         <a class="sidebar-link sidebar-title link-nav" href="{{ route('ormawa.index') }}">
@@ -83,7 +85,7 @@
                         </a>
                     </li>
                     @endif
-                    @if (session('u_data')->user_role == '1' || session('u_data')->user_role == '2')
+                    @if (session('u_data')->user_role == '2')
                     <li class="sidebar-list"><i class="fa fa-thumb-tack"></i>
                         <a class="sidebar-link sidebar-title link-nav" href="{{ route('departemen.index') }}">
                         <i data-feather="users"></i><span>Departemen</span>

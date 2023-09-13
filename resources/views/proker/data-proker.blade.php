@@ -4,15 +4,19 @@
 @endsection
 @section('style')
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/vendors/datatables.css') }}">
+<style>
+   table#info-proker {
+       width: auto;
+       table-layout: auto;
+   }
+</style>
 @endsection
 @section('breadcrumb-title')
 <!-- <h3>Sample Page</h3> -->
 @endsection
 @section('breadcrumb-items')
-<li class="breadcrumb-item">Stok</li>
-<li class="breadcrumb-item">Master</li>
 <li class="breadcrumb-item">Proker</li>
-<li class="breadcrumb-item active">Data Proker</li>
+<li class="breadcrumb-item active">Daftar Proker</li>
 @endsection
 @section('content')
 <div class="container-fluid">
@@ -20,7 +24,25 @@
       <div class="col-sm-12 mt-3">
          <div class="card">
             <div class="card-header pb-0 card-no-border">
-               <h4>Daftar Data Proker</h4>
+               <div>
+                  <h4>Daftar Data Proker</h4>
+                  <table class="table" id="info-proker">
+                     <tbody>
+                       <tr>
+                           <td>Ormawa</td>
+                           <td>:</td>
+                           <td><span class="text-primary">{{ $prokers['data_dept']->ormawa->user->name }}</span></td>
+                       </tr>
+                       <tr>
+                           <td>Departemen</td>
+                           <td>:</td>
+                           <td>
+                              <span class="text-primary">{{ $prokers['data_dept']->user->name }}</span>
+                           </td>
+                       </tr>
+                     </tbody>
+                  </table>
+               </div>
                @if (session('u_data')->user_role == '3')
                <a href="{{route('proker.create')}}"><button class="btn btn-primary pull-right" type="button">Tambah Data Proker</button></a>
                @endif
@@ -33,21 +55,19 @@
                            <th>No.</th>
                            <th>Nama Proker</th>
                            <th>Ketua</th>
-                           <th>Ormawa</th>
-                           <th>Departemen</th>
                            <th>Dana Diterima</th>
+                           <th>Print</th>
                            <th></th>
                         </tr>
                      </thead>
                      <tbody>
-                        @foreach ($prokers as $proker)
+                        @foreach ($prokers['data_prokers'] as $proker)
                         <tr>
                               <td>{{ $loop->iteration }}</td>
-                              <td><a href="{{ route('proker.show', $proker->id) }}"><u>{{ $proker->nama }}</u></a></td>
+                              <td><a href="{{ route('proker.edit', $proker->id) }}"><u>{{ $proker->nama }}</u></a></td>
                               <td>{{ $proker->ketua }}</td>
-                              <td>{{ $proker->ormawa_name }}</td>
-                              <td>{{ $proker->departemen_name }}</td>
                               <td>Rp {{ $proker->dana }}</td>
+                              <td><a href="{{ route('proker.show', $proker->id) }}"> <i class="fa fa-print"></i> </a></td>
                               <td>
                                  <ul class="action align-items-center">
                                     <li class="edit"><a href="{{route('proker.edit', $proker->id)}}"><i class="icon-pencil-alt"></i></a></li>

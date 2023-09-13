@@ -7,16 +7,17 @@
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <style>
     table#info-dana {
-      width: auto;
-      table-layout: auto;
+        width: auto;
+        table-layout: auto;
     }
-  </style>
+</style>
 @endsection
 @section('breadcrumb-title')
 <!-- <h3>Sample Page</h3> -->
 @endsection
 @section('breadcrumb-items')
 <li class="breadcrumb-item">Proker</li>
+<li class="breadcrumb-item">Daftar Proker</li>
 <li class="breadcrumb-item active">
     @if ($pageContext === 'add')
         Tambah

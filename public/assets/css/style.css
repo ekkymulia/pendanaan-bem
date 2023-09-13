@@ -19887,7 +19887,7 @@ footer {
 }
 .landing-page .navbar-nav .nav-item .nav-link {
   letter-spacing: 1.5px;
-  color: #fff;
+  /* color: #fff; */
 }
 .landing-page .sticky-header header {
   background: transparent;
@@ -21238,7 +21238,7 @@ ul.dot-group li {
     padding: 15px 25px;
   }
   .navbar-toggler span {
-    background-color: #fff;
+    /* background-color: #fff; */
   }
   .landing-home .screen1 {
     /* left: 100px; */

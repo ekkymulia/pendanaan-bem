@@ -15,70 +15,6 @@
 @section('content')
 <div class="container-fluid">
    <div class="row">
-      <!-- <div class="col-sm-6 col-lg-3 col-md-3">
-         <div class="card h-100 small-widget mb-sm-0">
-            <div class="card-body h-100 primary">
-            <span class="f-light">Jumlah Proker</span>
-            <div class="d-flex align-items-end gap-1">
-                  <h4>2</h4>
-                  <span class="badge badge-primary f-12 f-w-500">Item</span>
-            </div>
-            <div class="bg-gradient">
-                  <svg class="stroke-icon svg-fill">
-                     <use href="../assets/svg/icon-sprite.svg#new-order"></use>
-                  </svg>
-            </div>
-            </div>
-         </div>
-      </div>
-      <div class="col-sm-6 col-lg-3 col-md-3">
-         <div class="card h-100 small-widget mb-sm-0">
-            <div class="card-body h-100 primary">
-            <span class="f-light">Jumlah Karbohidrat</span>
-            <div class="d-flex align-items-end gap-1">
-                  <h4>1</h4>
-                  <span class="badge badge-primary f-12 f-w-500">Item</span>
-            </div>
-            <div class="bg-gradient">
-                  <svg class="stroke-icon svg-fill">
-                     <use href="../assets/svg/icon-sprite.svg#new-order"></use>
-                  </svg>
-            </div>
-            </div>
-         </div>
-      </div>
-      <div class="col-sm-6 col-lg-3 col-md-3">
-         <div class="card h-100 small-widget mb-sm-0">
-            <div class="card-body h-100 primary">
-            <span class="f-light">Jumlah Protein</span>
-            <div class="d-flex align-items-end gap-1">
-                  <h4>0</h4>
-                  <span class="badge badge-primary f-12 f-w-500">Item</span>
-            </div>
-            <div class="bg-gradient">
-                  <svg class="stroke-icon svg-fill">
-                     <use href="../assets/svg/icon-sprite.svg#new-order"></use>
-                  </svg>
-            </div>
-            </div>
-         </div>
-      </div>
-      <div class="col-sm-6 col-lg-3 col-md-3">
-         <div class="card h-100 small-widget mb-sm-0">
-            <div class="card-body h-100 primary">
-            <span class="f-light">Jumlah Konsentrat</span>
-            <div class="d-flex align-items-end gap-1">
-                  <h4>1</h4>
-                  <span class="badge badge-primary f-12 f-w-500">Item</span>
-            </div>
-            <div class="bg-gradient">
-                  <svg class="stroke-icon svg-fill">
-                     <use href="../assets/svg/icon-sprite.svg#new-order"></use>
-                  </svg>
-            </div>
-            </div>
-         </div>
-      </div> -->
       <div class="col-sm-12 mt-3">
          <div class="card">
             <div class="card-header pb-0 card-no-border">
@@ -96,6 +32,7 @@
                            <th>No.Telp</th>
                            <th>Ketua</th>
                            <th>Wakil</th>
+                           <th>Departemen</th>
                            <th></th>
                         </tr>
                      </thead>
@@ -108,6 +45,11 @@
                               <td>{{ $ormawa->no_telp }}</td>
                               <td>{{ $ormawa->ketua ?? '-' }}</td>
                               <td>{{ $ormawa->wakil ?? '-' }}</td>
+                              <td>
+                                 <a href="{{ route('departemen.index', ['id' => $ormawa->id]) }}" class="text-decoration-underline">
+                                    Daftar Departemen
+                                 </a>
+                              </td>
                               <td>
                                  <ul class="action align-items-center">
                                     <li class="edit"><a href="{{ route('ormawa.edit', $ormawa->id) }}"><i class="icon-pencil-alt"></i></a></li>

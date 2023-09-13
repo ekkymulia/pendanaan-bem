@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\DanaRab;
 use App\Models\DanaRiil;
+use App\Models\Departemen;
 use App\Models\Produk;
 use App\Models\Proker;
 use App\Models\Supplier;
@@ -20,35 +21,16 @@ class ProkerController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         $user = session('u_data');
-
         $prokers = [];
-        $prokersQuery = Proker::select('prokers.*', 'ormawa.name as ormawa_name', 'departemen.name as departemen_name')
-            ->join('departemens', 'prokers.departemen_id', '=', 'departemens.id')
-            ->join('ormawas', 'departemens.ormawa_id', '=', 'ormawas.id')
-            ->join('users as ormawa', 'ormawas.user_id', '=', 'ormawa.id')
-            ->join('users as departemen', 'departemens.user_id', '=', 'departemen.id');
 
-        // Kasus 1: user_id 1
-        if ($user->user_role == '1') {
-            $prokers = $prokersQuery->get();
-        }
+        $deptId = ($user->user_role == '1' || $user->user_role == '2') ? $request->query('id') : $user->departemen_id;
+        $getDept = Departemen::findOrFail($deptId);
 
-        // Kasus 2: user_id 2
-        if ($user->user_role == '2') {
-            $prokers = $prokersQuery
-                ->where('ormawas.id', $user->ormawa_id)
-                ->get();
-        }
-
-        // Kasus 3: user_id 3
-        if ($user->user_role == '3') {
-            $prokers = $prokersQuery
-                ->where('departemens.id', $user->departemen_id)
-                ->get();
-        }
+        $prokers['data_prokers'] = $getDept->prokers;
+        $prokers['data_dept'] = $getDept;
 
         return view('proker.data-proker', compact('prokers'));
     }
