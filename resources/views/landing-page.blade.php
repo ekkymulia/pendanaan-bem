@@ -91,9 +91,9 @@
                   </button>
                   <div class="navbar-collapse justify-content-center collapse hidenav" id="navbarDefault">
                     <ul class="navbar-nav navbar_nav_modify" id="scroll-spy">
-                      <li class="nav-item"><a class="nav-link text-black" href="#">Struktur</a></li>
+                      <li class="nav-item"><a class="nav-link text-black" href="#">Acara</a></li>
                       <li class="nav-item"><a class="nav-link text-black" href="#">Faq</a></li>
-                      <li class="nav-item"><a class="nav-link text-black" href="#">Panduan</a></li>
+                      <li class="nav-item"><a class="nav-link text-black" href="#">Contact</a></li>
                     </ul>
                   </div>
                   <div class="buy-btn rounded-pill"><a class="nav-link js-scroll" href="{{ route('login') }}">Login</a></div>

@@ -186,10 +186,10 @@
                                             <label for="file-proposal">Upload Proposal</label>
                                         </div>
                                         <div class="col-6">
-                                            <input class="form-control" id="file-proposal" type="file" name="file_proposal" accept=".pdf, .doc, .docx" {{ session('u_data')->user_role != '3' ? 'disabled' : '' }}>
+                                            <input class="form-control" id="file-proposal" type="text" name="file_proposal" placeholder="Link docs proposal" {{ session('u_data')->user_role != '3' ? 'disabled' : '' }} value="{{ $proker->file_proposal ?? old('file_proposal') }}">
                                             @if ($proker)
-                                                <a href="/storage/{{ $proker->file_proposal }}" class="text-decoration-underline mt-2 d-inline-block {{ !$proker->file_proposal ? 'disabled' : '' }}" target="_blank">
-                                                    File proposal yang diunggah
+                                                <a href="{{ $proker->file_proposal }}" class="text-decoration-underline mt-2 d-inline-block {{ !$proker->file_proposal ? 'disabled' : '' }}" target="_blank">
+                                                    <small>File proposal yang diunggah</small>
                                                 </a>
                                             @endif
                                         </div>
@@ -201,10 +201,10 @@
                                             <label for="file-lpj">Upload LPJ</label>
                                         </div>
                                         <div class="col-6">
-                                            <input class="form-control" id="file-lpj" type="file" name="file_lpj" accept=".pdf, .doc, .docx" {{ (session('u_data')->user_role != '3') ? 'disabled' : '' }}>
+                                            <input class="form-control" id="file-lpj" type="texr" name="file_lpj" placeholder="Link docs proposal" {{ (session('u_data')->user_role != '3') ? 'disabled' : '' }} value="{{ $proker->file_lpj ?? old('file_lpj') }}">
                                             @if ($proker)
-                                                <a href="/storage/{{ $proker->file_lpj }}" class="text-decoration-underline mt-2 d-inline-block {{ !$proker->file_lpj ? 'disabled' : '' }}" target="_blank">
-                                                    File LPJ yang diunggah
+                                                <a href="{{ $proker->file_lpj }}" class="text-decoration-underline mt-2 d-inline-block {{ !$proker->file_lpj ? 'disabled' : '' }}" target="_blank">
+                                                    <small>File LPJ yang diunggah</small>
                                                 </a>
                                             @endif
                                         </div>
@@ -325,13 +325,13 @@
                                                             <tr>
                                                                 <td data-number="1">1</td>
                                                                 <td>
-                                                                    <input class="form-control" id="" type="text" placeholder="Nama" autocomplete="off" name="rab_nama[]">
+                                                                    <input class="form-control" id="" type="text" placeholder="Nama" autocomplete="off" name="rab_nama[]" {{ session('u_data')->user_role != '3' ? 'disabled' : '' }}>
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-control no-arrow" id="hargaSatuan" type="number" placeholder="Harga Satuan" autocomplete="off" name="rab_hargasatuan[]">
+                                                                    <input class="form-control no-arrow" id="hargaSatuan" type="number" placeholder="Harga Satuan" autocomplete="off" name="rab_hargasatuan[]" {{ session('u_data')->user_role != '3' ? 'disabled' : '' }}>
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-control no-arrow" id="quantity" type="number" placeholder="Qty" autocomplete="off" min="0" name="rab_qty[]">
+                                                                    <input class="form-control no-arrow" id="quantity" type="number" placeholder="Qty" autocomplete="off" min="0" name="rab_qty[]" {{ session('u_data')->user_role != '3' ? 'disabled' : '' }}>
                                                                 </td>
                                                                 <td>
                                                                     <input class="form-control" id="calcTotal" type="number" placeholder="Otomatis Terhitung" autocomplete="off" name="rab_totalharga[]" disabled>
@@ -692,7 +692,6 @@
     function calcPrice(){
         const table = document.querySelectorAll("table.calc-price");
         table.forEach(elm => {
-            console.log(elm)
             const tr = elm.querySelectorAll("tbody tr");
             tr.forEach(row => {
                 const hargaSatuan = row.querySelector("input#hargaSatuan");

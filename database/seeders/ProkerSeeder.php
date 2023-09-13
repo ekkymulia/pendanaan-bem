@@ -19,7 +19,7 @@ class ProkerSeeder extends Seeder
             'nama' => 'proker satu',
             'ketua' => 'Budi',
             'bendahara' => 'Yudi',
-            'file_proposal' => 'file_proposal/dummy_JIqkyBjA3s.pdf',
+            'file_proposal' => 'https://upload.wikimedia.org/wikipedia/commons/1/15/Bogor_Agricultural_University_%28IPB%29_symbol.svg',
         ]);
     }
 }
