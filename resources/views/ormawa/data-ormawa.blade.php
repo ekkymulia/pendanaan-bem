@@ -54,13 +54,13 @@
                                  <ul class="action align-items-center">
                                     <li class="edit"><a href="{{ route('ormawa.edit', $ormawa->id) }}"><i class="icon-pencil-alt"></i></a></li>
                                     <li class="delete">
-                                          <form action="{{ route('ormawa.destroy', $ormawa->id) }}" method="post">
-                                             @csrf
-                                             @method('delete')
-                                             <button type="submit" class="btn btn-link">
-                                                <i class="icon-trash"></i>
-                                             </button>
-                                          </form>
+                                       <form action="{{ route('ormawa.destroy', $ormawa->id) }}" method="post">
+                                          @csrf
+                                          @method('delete')
+                                          <button type="submit" class="btn btn-link">
+                                             <i class="icon-trash"></i>
+                                          </button>
+                                       </form>
                                     </li>
                                  </ul>
                               </td>

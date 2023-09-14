@@ -50,7 +50,7 @@ Route::middleware(['auth', 'login'])->group(function () {
         Route::get('ormawa', [OrmawaController::class, 'index'])->name('ormawa.index');
         Route::get('ormawa/create', [OrmawaController::class, 'create'])->name('ormawa.create');
         Route::post('ormawa', [OrmawaController::class, 'store'])->name('ormawa.store');
-        Route::delete('ormawa/{ormawa}', [OrmawaController::class, 'delete'])->name('ormawa.destroy');
+        Route::delete('ormawa/{ormawa}', [OrmawaController::class, 'destroy'])->name('ormawa.destroy');
         Route::get('ormawa/{ormawa}', [OrmawaController::class, 'show'])->name('ormawa.show');
         Route::get('ormawa/{ormawa}/edit', [OrmawaController::class, 'edit'])->name('ormawa.edit');
 

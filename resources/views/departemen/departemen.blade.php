@@ -59,10 +59,10 @@
                     <div class="mb-3">
                         <label class="form-label">Pilih Ormawa</label>
                         <select class="form-control" aria-label="Pilih Ormawa" name="ormawa_id" required>
-                            <option value="">Klik untuk Pilih Ormawa</option>
+                            <option value="" selected disabled>Klik untuk Pilih Ormawa</option>
                             @foreach ($ormawa as $omw)
                                 <option value="{{ $omw->id }}" {{ old('ormawa_id', isset($departemen) ? $departemen->ormawa_id : '') == $omw->id ? 'selected' : '' }}>
-                                    {{ $omw->nama_ormw }}
+                                    {{ $omw->user->name }}
                                 </option>
                             @endforeach
                         </select>

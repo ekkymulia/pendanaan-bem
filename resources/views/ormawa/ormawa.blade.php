@@ -45,6 +45,15 @@
                         Detail Akun Ormawa
                     @endif
                 </h4>
+
+                @if ($errors->any)
+                @foreach ($errors->all() as $error)
+                <div class="alert alert-danger dark alert-dismissible fade show" role="alert">
+                    {{ $error }}
+                    <button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close" data-bs-original-title="" title=""></button>
+                </div>
+                @endforeach
+               @endif
                 <div class="row">
                     <input type="hidden" name="mode" value="{{$mode}}">
                     <div class="col-xl-4">

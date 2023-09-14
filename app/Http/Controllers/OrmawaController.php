@@ -17,9 +17,9 @@ class OrmawaController extends Controller
     {
         $user = session('u_data');
 
-        if($user->user_role == 1){
+        if ($user->user_role == 1) {
             $ormawas = Ormawa::all();
-        }else{
+        } else {
             $ormawas = Ormawa::where('user_id', $user->user_id)->get();
         }
         return view('ormawa.data-ormawa', compact('ormawas'));
@@ -55,7 +55,7 @@ class OrmawaController extends Controller
             'alamat' => 'string|nullable',
             'no_telp' => 'string|nullable',
         ]);
-    
+
         $user = new User([
             'email' => $validatedData['email'],
             'name' => $validatedData['nama_ormawa'],
@@ -69,9 +69,9 @@ class OrmawaController extends Controller
             $profileImage->move(public_path('profile_images'), $imageName);
             $user->profile_img = 'profile_images/' . $imageName;
         }
-        
+
         $user->save();
-    
+
         $ormawa = new Ormawa([
             'nama_ormawa' => $validatedData['nama_ormawa'],
             'tahun_periode' => $validatedData['tahun_periode'],
@@ -85,9 +85,9 @@ class OrmawaController extends Controller
             'no_telp' => $validatedData['no_telp'],
             'user_id' => $user->id, // Associate the user with the Ormawa record
         ]);
-    
+
         $ormawa->save();
-    
+
         return redirect()->route('ormawa.index')->with('success', 'Ormawa created successfully.');
     }
 
@@ -115,7 +115,7 @@ class OrmawaController extends Controller
         return view('ormawa.ormawa', [
             'pageContext' => 'edit',
             'mode' => '',
-            'ormawa' => $ormawa, 
+            'ormawa' => $ormawa,
         ]);
     }
 
@@ -137,15 +137,15 @@ class OrmawaController extends Controller
             'fakultas' => 'string|nullable',
             'alamat' => 'string|nullable',
             'no_telp' => 'string|nullable',
-            'profile_img' => 'nullable|image|mimes:jpeg,png,jpg,gif', 
+            'profile_img' => 'nullable|image|mimes:jpeg,png,jpg,gif',
         ]);
-    
+
         $ormawa = Ormawa::find($id);
-    
+
         if (!$ormawa) {
             return redirect()->route('ormawa.index')->with('error', 'Ormawa not found.');
         }
-    
+
         $user = $ormawa->user;
         $user->email = $validatedData['email'];
         $user->name = $validatedData['nama_ormawa'];
@@ -156,11 +156,11 @@ class OrmawaController extends Controller
             $profileImage->move(public_path('profile_images'), $imageName);
             $user->profile_img = 'profile_images/' . $imageName;
         }
-    
+
         if (!empty($validatedData['password'])) {
             $user->password = Hash::make($validatedData['password']);
         }
-    
+
         $ormawa->update([
             'nama_ormawa' => $validatedData['nama_ormawa'],
             'tahun_periode' => $validatedData['tahun_periode'],
@@ -173,34 +173,34 @@ class OrmawaController extends Controller
             'alamat' => $validatedData['alamat'],
             'no_telp' => $validatedData['no_telp'],
         ]);
-    
+
         $ormawa->push();
         $user->push();
 
-        if($request->input('mode') == 'profile'){
+        if ($request->input('mode') == 'profile') {
             session('u_data')->user_name = $user->name;
             session('u_data')->user_profile_img = $user->profile_img;
             return redirect()->route('profile');
         }
-    
+
         return redirect()->route('ormawa.index')->with('success', 'Ormawa updated successfully.');
     }
-    
+
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
     {
         $ormawa = Ormawa::find($id);
-    
+
         if (!$ormawa) {
             return redirect()->route('ormawa.index')->with('error', 'Ormawa not found.');
         }
-    
+
         // Assuming you want to delete associated user as well
         $ormawa->user->delete();
         $ormawa->delete();
-    
+
         return redirect()->route('ormawa.index')->with('success', 'Ormawa deleted successfully.');
     }
 }

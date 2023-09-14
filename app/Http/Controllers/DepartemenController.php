@@ -145,10 +145,13 @@ class DepartemenController extends Controller
             return redirect()->route('departemen.index')->with('error', 'Departemen not found.');
         }
 
+        $ormawas = Ormawa::all();
+
         return view('departemen.departemen', [
             'pageContext' => 'edit',
             'mode' => '',
             'departemen' => $departemen,
+            'ormawa' => $ormawas
         ]);
     }
 
