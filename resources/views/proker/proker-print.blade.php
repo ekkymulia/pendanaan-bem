@@ -33,12 +33,21 @@
 <!-- <h3>Sample Page</h3> -->
 @endsection
 @section('breadcrumb-items')
-<li class="breadcrumb-item">
-    Print Settings:  Show RAB:  <button id="rabToggle" class="btn btn-success btn-sm">Ya (klik toggle)</button> Show Riil:  <button id="rillToggle" class="btn btn-success btn-sm">Ya (klik toggle)</button> Print:  <button id="printToggle" class="btn btn-primary btn-sm">Print</button>
-</li>
 @endsection
 @section('content')
 <div class="container-fluid">
+    <div class="row gap-3 justify-content-end">
+        <h5 class="col-auto">Print Settings:</h5>
+        <span class="col-auto">
+            Show RAB: <button id="rabToggle" class="btn btn-success btn-sm">Ya (klik toggle)</button> 
+        </span>
+        <span class="col-auto">
+            Show Riil: <button id="rillToggle" class="btn btn-success btn-sm">Ya (klik toggle)</button>
+        </span>
+        <span class="col-auto">
+            Print: <button id="printToggle" class="btn btn-primary btn-sm">Print</button>
+        </span>
+    </div>
    <div class="row">
       <div class="col-sm-12 mt-3">
          <div class="card shadow-none  m-0 p-0">
@@ -501,11 +510,11 @@
                                             <div class="row">
                                                 <h6 class="my-3">Lampiran</h6>
                                                 <div class="col-12 gap-2 col-rows">
-                                                <div class="row">
+                                                <div class="row justify-content-center">
                                                     @foreach ($danaRiils as $danaRiil)
-                                                    <div class="col-4">
+                                                    <div class="col-6 col-sm-5 col-lg-4">
                                                         <div class="d-flex flex-column align-items-center">
-                                                            <img src='{{url("/storage/".$danaRiil->bukti) ?? ""}}' alt="">
+                                                            <img src='{{url("/storage/".$danaRiil->bukti) ?? ""}}' alt="" class="w-100">
                                                             <span>{{$danaRiil->bukti ?? ''}}</span>
                                                         </div>
                                                     </div>
