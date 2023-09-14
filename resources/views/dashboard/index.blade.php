@@ -152,7 +152,7 @@
 				  </div>
 				  <div> 
 				 	 @if ($role == '3')
-					<h4>{{ $widget_val->w3 }}</h4><span class="f-light">Proker Disetujui</span>
+					<h4>{{ $widget_val->w3 }}</h4><span class="f-light">Proposal Disetujui</span>
 					@endif
 					@if ($role == '2')
 					<h4>{{ $widget_val->w3 }}</h4><span class="f-light">Proker Menunggu Approval</span>
@@ -248,7 +248,7 @@
 					</div>
 					<div> 
 					@if ($role == '3')
-					<h4>{{ $widget_val->w6 }}</h4><span class="f-light">Proposal Menunggu Approval</span>
+					<h4>{{ $widget_val->w6 }}</h4><span class="f-light">LPJ disetujui</span>
 					@endif
 					@if ($role == '2')
 					<h4>{{ $widget_val->w6 }}</h4><span class="f-light">Proker Disetujui</span>

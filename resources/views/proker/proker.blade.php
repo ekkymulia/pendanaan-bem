@@ -301,15 +301,19 @@
                                                                 <td>
                                                                     <input type="hidden" name="id_rab[]" value="{{ $danaRab->id }}">
                                                                     <input class="form-control" id="" type="text" placeholder="Nama" autocomplete="off" name="rab_nama[]" value="{{ $danaRab->nama }}" {{ session('u_data')->user_role != '3' ? 'disabled' : '' }}>
+                                                                    <span class="d-none">{{ $danaRab->nama }}</span>
                                                                 </td>
                                                                 <td>
                                                                     <input class="form-control no-arrow" id="hargaSatuan" type="number" placeholder="Harga Satuan" autocomplete="off" name="rab_hargasatuan[]" onchange="calcPrice()"  value="{{ $danaRab->harga_satuan }}" {{ session('u_data')->user_role != '3' ? 'disabled' : '' }}>
+                                                                    <span class="d-none">{{ $danaRab->harga_satuan }}</span>
                                                                 </td>
                                                                 <td>
                                                                     <input class="form-control no-arrow" id="quantity" type="number" placeholder="Qty" autocomplete="off" min="0" name="rab_qty[]"  onchange="calcPrice()"  value="{{ $danaRab->quantity }}" {{ session('u_data')->user_role != '3' ? 'disabled' : '' }}>
+                                                                    <span class="d-none">{{ $danaRab->quantity }}</span>
                                                                 </td>
                                                                 <td>
                                                                     <input class="form-control" id="calcTotal" type="number" placeholder="Otomatis Terhitung" autocomplete="off" name="rab_totalharga[]" disabled value="{{ $danaRab->total_harga }}" {{ session('u_data')->user_role != '3' ? 'disabled' : '' }}>
+                                                                    <span class="d-none">{{ $danaRab->total_harga }}</span>
                                                                 </td>
                                                                 <td>
                                                                     <ul class="action align-items-center">
@@ -389,6 +393,16 @@
                                                     </table>
                                                 </div>
                                                 @endif
+                                                <div class="row justify-content-end">
+                                                    <div class="col-sm-4">
+                                                        <select class="form-select mb-3" id="filterRiil" aria-label="Default select example">
+                                                            <option selected value="">Show All</option>
+                                                            <option value="setuju">Setuju</option>
+                                                            <option value="tolak">Tolak</option>
+                                                            <option value="menunggu">Menunggu</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
                                                 <div class="table-responsive">
                                                     <table class="display tbl-riil calc-price" id="basic-1-2">
                                                         <thead>
@@ -415,9 +429,11 @@
                                                                             <option 
                                                                                 value="{{ $supplier->id }}" 
                                                                                 {{$danaRiil->supplier_id == $supplier->id ? 'selected' : ''}}
+                                                                                data-searchable="false"
                                                                             >{{ $supplier->nama_supplier }} - {{ $supplier->produk->nama_produk }}</option>
                                                                         @endforeach
                                                                     </select>
+                                                                    <span class="d-none">{{ $danaRiil->supplier->nama_supplier }} - {{ $danaRiil->supplier->produk->nama_produk }}</span>
                                                                 </td>
                                                                 <td class="d-flex align-items-center gap-2 flex-column">
                                                                     <input class="form-control mt-2" style="margin-top: 13px !important;" id="hargaSatuan" type="text" required="" placeholder="Harga Satuan" autocomplete="off" name="riil_hargasatuan[]" value="{{ $danaRiil->harga_satuan }}" {{ session('u_data')->user_role != '3' ? 'disabled' : '' }}>
@@ -426,12 +442,15 @@
                                                                         <i class="fa fa-warning text-warning "></i> over mean (mean: {{ $danaRiil->mean_price ?? '-' }})
                                                                     </div>
                                                                     @endif
+                                                                    <span class="d-none">{{ $danaRiil->harga_satuan }}</span>
                                                                 </td>
                                                                 <td>
                                                                     <input class="form-control no-arrow d-flex align-items-center" required id="quantity" type="number" placeholder="Qty" autocomplete="off" min="0" name="riil_qty[]" value="{{ $danaRiil->quantity }}" {{ session('u_data')->user_role != '3' ? 'disabled' : '' }}>
+                                                                    <span class="d-none">{{ $danaRiil->quantity }}</span>
                                                                 </td>
                                                                 <td>
                                                                     <input class="form-control d-flex align-items-center" id="calcTotal" type="number" placeholder="Otomatis Terhitung" disabled autocomplete="off" name="riil_total_harga[]" value="{{ $danaRiil->total_harga }}">
+                                                                    <span class="d-none">{{ $danaRiil->total_harga }}</span>
                                                                 </td>
                                                                 <td>
                                                                     <input type="hidden" name="riil_bukti[]" value="{{ $danaRiil->bukti }}">
@@ -453,10 +472,13 @@
                                                                         <input type="hidden" name="status_riil[]" value="{{$danaRiil->status_id}}">
                                                                         @if ($danaRiil->status_id == '1')
                                                                         <h6 class="badge badge-success">Setuju</h6>
+                                                                        <span class="d-none">Setuju</span>
                                                                         @elseif($danaRiil->status_id == '2')
                                                                         <h6 class="badge badge-danger">Tolak</h6>
+                                                                        <span class="d-none">Tolak</span>
                                                                         @else
                                                                         <h6 class="badge badge-warning">Menunggu</h6>
+                                                                        <span class="d-none">Menunggu</span>
                                                                         @endif
                                                                     @endif
                                                                 </td>
@@ -557,16 +579,23 @@
 </div>
 @endsection
 @section('script')
-<script
-  src="https://code.jquery.com/jquery-3.7.1.min.js"
-  integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
-  crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<script src="{{ asset('assets/js/datatable/datatables/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('assets/js/datatable/datatables/datatable.custom.js') }}"></script>
 <script lang="javascript">
     // $(document).ready(function() {
     //     $('.js-example-basic-single').select2({
     //         placeholder: "Pilih Nama"
     //     });
     // });
+
+    const tblRab = $('#basic-1-2').DataTable({
+        
+    });
+
+    $('#filterRiil').on('change', function(){
+        tblRab.search(this.value).draw();   
+    });
 
     const addButtonRab = document.getElementById("add-row-table-rab");
     const tableBodyRab = document.querySelector("table#basic-1 tbody");
@@ -726,7 +755,5 @@
         formProker.submit();
     });
 </script>
-<script src="{{ asset('assets/js/datatable/datatables/jquery.dataTables.min.js') }}"></script>
-<script src="{{ asset('assets/js/datatable/datatables/datatable.custom.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 @endsection

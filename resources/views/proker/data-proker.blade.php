@@ -56,6 +56,7 @@
                            <th>Nama Proker</th>
                            <th>Ketua</th>
                            <th>Dana Diterima</th>
+                           <th>Status</th>
                            <th>Print</th>
                            <th></th>
                         </tr>
@@ -67,6 +68,15 @@
                               <td><a href="{{ route('proker.edit', $proker->id) }}"><u>{{ $proker->nama }}</u></a></td>
                               <td>{{ $proker->ketua }}</td>
                               <td>Rp {{ $proker->dana }}</td>
+                              <td>
+                                 @if ($proker->status_id == '1')
+                                 <h6 class="badge badge-success">Setuju</h6>
+                                 @elseif($proker->status_id == '2')
+                                 <h6 class="badge badge-danger">Tolak</h6>
+                                 @else
+                                 <h6 class="badge badge-warning">Menunggu</h6>
+                                 @endif
+                              </td>
                               <td><a href="{{ route('proker.show', $proker->id) }}"> <i class="fa fa-print"></i> </a></td>
                               <td>
                                  <ul class="action align-items-center">
