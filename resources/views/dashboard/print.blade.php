@@ -310,7 +310,7 @@
 						</div>
 						@endif
 						@if ($role == '1')
-						<div> <span class="f-light">Total Dana Yang Belum diberikan</span>
+						<div> <span class="f-light">Total Dana Yang Belum dipakai</span>
 							<h6 class="mt-1 mb-0">{{ $chartDatas->wc1 }}</h6>
 						</div>
 						@endif
@@ -340,6 +340,11 @@
 							<h6 class="mt-1 mb-0">{{ $chartDatas->wc2 }}</h6>
 						</div>
 						@endif
+						@if ($role == '1')
+						<div> <span class="f-light">Total Dana Riil</span>
+							<h6 class="mt-1 mb-0">{{ $chartDatas->wc2 }}</h6>
+						</div>
+						@endif
 					</div>
 				  </div>
 				  <div class="col-xl-12 col-md-4">
@@ -356,6 +361,11 @@
 						@endif
 						@if ($role == '2')
 						<div> <span class="f-light">Proker Mendatang</span>
+							<h6 class="mt-1 mb-0">{{ $chartDatas->wc3 }}</h6>
+						</div>
+						@endif
+						@if ($role == '1')
+						<div> <span class="f-light">Total Dana RAB</span>
 							<h6 class="mt-1 mb-0">{{ $chartDatas->wc3 }}</h6>
 						</div>
 						@endif

@@ -4,8 +4,8 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Cuba admin is super flexible, powerful, clean &amp; modern responsive bootstrap 5 admin template with unlimited possibilities.">
-    <meta name="keywords" content="admin template, Cuba admin template, dashboard template, flat admin template, responsive admin template, web app">
+    <meta name="description" content="Form Imod Akabeko Cifest KPK Integrity Monitoring Database website examines dalam upaya pemberantasan mahasiswa SV IPB dengan prinsip 3L (Lihat, Lawan, Laporkan).">
+    <meta name="keywords" content="form imod, akabeko, akabeko cifest, kpk, sv ipb, sekolah vokasi ipb, integrity monitoring database, from imod sv ipb">
     <meta name="author" content="pixelstrap">
     <link rel="icon" href="{{ asset('assets/images/favicon.png') }}" type="image/x-icon">
     <link rel="shortcut icon" href="{{ asset('assets/images/favicon.png') }}" type="image/x-icon">
@@ -33,6 +33,9 @@
     <script>
       var kalender = @json($kalenders);
     </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
       document.addEventListener('DOMContentLoaded', function() {
         var calendarEl = document.getElementById('calendar');
@@ -40,6 +43,15 @@
 
         var calendar = new FullCalendar.Calendar(calendarEl, {
           initialView: 'dayGridMonth',
+          eventDidMount: function(info) {
+            // console.log(info.event.extendedProps.description);
+            $(info.el).tooltip({
+              title: info.event.extendedProps.description,
+              placement: 'top',
+              trigger: 'hover',
+            });
+            console.log('mounted')
+          },
           events: function(info, successCallback, failureCallback) {
             $(kalender).each(function () {
               var event = {

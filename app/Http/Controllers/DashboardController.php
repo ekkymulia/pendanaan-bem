@@ -289,6 +289,8 @@ class DashboardController extends Controller
             }
 
             $chartData->wc1 = 0;
+            $chartData->wc2 = 0;
+            $chartData->wc3 = 0;
 
             foreach ($chartCategories as $ormawa) {
                 $chartDataVal = 0;
@@ -303,6 +305,8 @@ class DashboardController extends Controller
 
                         // Add the net value to the total net value for the ORMawa
                         $chartData->wc1 += $netValue;
+                        $chartData->wc2 += $danaRiilTotal;
+                        $chartData->wc3 += $danaRabTotal;
                         $chartDataVal += $netValue;
 
                         // You can access the net value for each project as $netValue
